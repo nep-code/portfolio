@@ -102,9 +102,9 @@ var TXVariables = (function () {
 
 	function init () {			
 		//all creative variables
-		AD.flipout			= $( '.flipout' );
-		AD.txt_copy1		= $( '#txt_copy1' );
-		AD.zero				= 0;
+		AD.flipout				= $( '.flipout' );
+		AD.txt_copy1			= $( '#txt_copy1' );
+		AD.zero					= 0;
 		
 		//buttons
 		AD.btn_startplaying		= $( '#btn_startplaying' );
@@ -114,50 +114,50 @@ var TXVariables = (function () {
 		AD.spr_cards			= $( '.spr_cards' );
 		
 		//frames
-		AD.INTRO			= $( '#INTRO' );
-		AD.INSTRUCTION		= $( '#INSTRUCTION' );
-		AD.GAMEBOARD		= $( '#GAMEBOARD' );
-		AD.RESULT			= $( '#RESULT' );
-		AD.ENDFRAME			= $( '#ENDFRAME' );
-		AD.FOOTER			= $( '#FOOTER' );
+		AD.INTRO				= $( '#INTRO' );
+		AD.INSTRUCTION			= $( '#INSTRUCTION' );
+		AD.GAMEBOARD			= $( '#GAMEBOARD' );
+		AD.RESULT				= $( '#RESULT' );
+		AD.ENDFRAME				= $( '#ENDFRAME' );
+		AD.FOOTER				= $( '#FOOTER' );
 		
 		//dynamic text
-		AD.countdown_3sec	= document.getElementById('countdown_3sec');
-		AD.countdown_30sec	= document.getElementById('countdown_30sec');
-		AD.matches			= document.getElementById('matches');
-		AD.txt_result		= document.getElementById('txt_result');
-		AD.txt_result2		= document.getElementById('txt_result2');
-		AD.txt_result3		= document.getElementById('txt_result3');
+		AD.countdown_3sec		= document.getElementById('countdown_3sec');
+		AD.countdown_30sec		= document.getElementById('countdown_30sec');
+		AD.matches				= document.getElementById('matches');
+		AD.txt_result			= document.getElementById('txt_result');
+		AD.txt_result2			= document.getElementById('txt_result2');
+		AD.txt_result3			= document.getElementById('txt_result3');
 		
-		AD.count			= 0;
-		AD.score			= 0;
-		AD.set				= 6;
-		AD.initElapse		= null;
-		AD.checkResult		= null;
+		AD.count				= 0;
+		AD.score				= 0;
+		AD.set					= 6;
+		AD.initElapse			= null;
+		AD.checkResult			= null;
 		
 		//gameboard
-		AD.card				= 0;
-		AD.selectedcard		= [];
-		AD.currentcard		= [];
-		AD.cardsY			= ['-150px', '-300px', '-450px', '-600px', '-750px', '-900px','-1050px'];
-		AD.cards			= [];
-		AD.ready			= true;
+		AD.card					= 0;
+		AD.selectedcard			= [];
+		AD.currentcard			= [];
+		AD.cardsY				= ['-150px', '-300px', '-450px', '-600px', '-750px', '-900px','-1050px'];
+		AD.cards				= [];
+		AD.ready				= true;
 		
 		//audio
-		AD.btn_sound		= $( '#sound' );
-		AD.audio_bg			= $( '#audio_bg' );
-		AD.sfx_countdown	= $( '#sfx_countdown' );
-		AD.sfx_flip			= $( '#sfx_flip' );
-		AD.sfx_match		= $( '#sfx_match' );
-		AD.sfx_reset		= $( '#sfx_reset' );
-		AD.sfx_gameover		= $( '#sfx_gameover' );
+		AD.btn_sound			= $( '#sound' );
+		AD.audio_bg				= $( '#audio_bg' );
+		AD.sfx_countdown		= $( '#sfx_countdown' );
+		AD.sfx_flip				= $( '#sfx_flip' );
+		AD.sfx_match			= $( '#sfx_match' );
+		AD.sfx_reset			= $( '#sfx_reset' );
+		AD.sfx_gameover			= $( '#sfx_gameover' );
 
-		AD._audio_bg		= $( '#_audio_bg' );
-		AD._sfx_countdown	= $( '#_sfx_countdown' );
-		AD._sfx_flip		= $( '#_sfx_flip' );
-		AD._sfx_match		= $( '#_sfx_match' );
-		AD._sfx_reset		= $( '#_sfx_reset' );
-		AD._sfx_gameover	= $( '#_sfx_gameover' );
+		AD._audio_bg			= $( '#_audio_bg' );
+		AD._sfx_countdown		= $( '#_sfx_countdown' );
+		AD._sfx_flip			= $( '#_sfx_flip' );
+		AD._sfx_match			= $( '#_sfx_match' );
+		AD._sfx_reset			= $( '#_sfx_reset' );
+		AD._sfx_gameover		= $( '#_sfx_gameover' );
 		
 		AD._sfx_countdown.get(0).src = 'src/audio/sfx_countdown.mp3';
 		AD._sfx_match.get(0).src = 'src/audio/sfx_match.mp3';
@@ -238,7 +238,7 @@ var TXCreative = (function () {
 		AD.ready = true;
 		AD.countdown_30sec.innerHTML = AD.count;
 		AD.matches.innerHTML = AD.score;
-		gsap.set(AD.spr_cards,{'background-position-y': 0});		
+		gsap.set(AD.spr_cards,{'background-position-y': 0});
 		gsap.delayedCall(1,cd_30sec);		
 		gsap.to(AD.audio_bg, 0.5,{volume: 0.3});
 		
@@ -249,6 +249,7 @@ var TXCreative = (function () {
 		AD.isautoplay = false;
 		clearTimeout(AD.autoplay);
 		gsap.fromTo(AD.ENDFRAME,0.2, {display:'block',autoAlpha: 0},{autoAlpha: 1, onComplete: function(){
+			gsap.set(AD.spr_cards,{rotationY: 0});
 			AD.RESULT.hide();
 		}});
 		
@@ -256,7 +257,6 @@ var TXCreative = (function () {
 	}
 	
 	function fn_AUTOPLAY () {
-		
 		clearTimeout(AD.autoplay);
 		AD.btn_startplaying.off( 'click' );				
 		AD.count = 3;
@@ -268,7 +268,7 @@ var TXCreative = (function () {
 	function ap_cardopen (e) {
 		AD.ap_card = 'card_'+AD.autoflip[AD.flip];
 		gsap.set($('#'+AD.ap_card),{'pointer-events': 'none'});
-		gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90, ease:Linear.easeNone, onComplete:ap_cardflip});	
+		gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90, ease:'none', onComplete:ap_cardflip});
 	}
 		
 	function ap_cardflip (e) {
@@ -289,17 +289,17 @@ var TXCreative = (function () {
 		}
 		
 		gsap.set($('#'+AD.ap_card),{'background-position-y': i});
-		gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false,perspective: 1000, rotationY:0, ease:Linear.easeNone, onComplete: function(){
+		gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false,perspective: 1000, rotationY:0, ease:'none', onComplete: function(){
 			setTimeout(ap_cardreturn, 500);
 		}});
 	}
 		
 	function ap_cardreturn (e) {
-		gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90,ease:Linear.easeNone, onComplete:ap_cardreturn2});
+		gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90,ease:'none', onComplete:ap_cardreturn2});
 		
 		function ap_cardreturn2 () {
 			gsap.set($('#'+AD.ap_card),{'pointer-events': 'auto','background-position-y': 0});
-			gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false, perspective: 1000,rotationY:0,ease:Linear.easeNone, onComplete: function(){
+			gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false, perspective: 1000,rotationY:0,ease:'none', onComplete: function(){
                 if(!AD.isautoplay) return;
                 if(AD.flip >= 11) 
                     AD.flip = 0;
@@ -312,7 +312,9 @@ var TXCreative = (function () {
 	}
 	
 	function fn_RESULT () {
-		var totalsec = 30 - AD.count;
+
+		gsap.killTweensOf("*");
+
 		gsap.set(AD.spr_cards,{'pointer-events': 'none' , scale: 0.91});
 		
 		if(AD.matches.innerHTML <= 3){
@@ -328,8 +330,6 @@ var TXCreative = (function () {
 			AD.txt_result2.innerHTML = "Well done! You’re on your way"; 
 			AD.txt_result3.innerHTML = 'to becoming a match-master!'; 
 		}
-		
-		gsap.killTweensOf("*");
 		
 		gsap.fromTo(AD.RESULT, 0.2,{autoAlpha: 0, display:'block'}, {autoAlpha: 1});
 		gsap.delayedCall(5, fn_STEP3);
@@ -381,7 +381,7 @@ var TXCreative = (function () {
 			AD.currentcard[AD.card] = e.currentTarget;
 			
 			gsap.set(e.currentTarget,{'pointer-events': 'none'});
-			gsap.to(e.currentTarget,0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90, ease:Linear.easeNone, onComplete:fn_cardflip});
+			gsap.to(e.currentTarget,0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90, ease:'none', onComplete:fn_cardflip});
 
 			AD.sfx_flip.get(0).currentTime = 0.02;
 			AD.sfx_flip.get(0).play();
@@ -408,7 +408,7 @@ var TXCreative = (function () {
 		}
 		AD.selectedcard.push(i);
 		gsap.set(n,{'background-position-y': i});
-		gsap.to(n,0.2,{z:0.01, force3D: false,perspective: 1000, rotationY:0, ease:Linear.easeNone, onComplete:fn_cardcheck});
+		gsap.to(n,0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:0, ease:'none', onComplete:fn_cardcheck});
 		
 	}
 	
@@ -447,11 +447,11 @@ var TXCreative = (function () {
 
 		fn_cardreset();
 
-		gsap.to([card1, card2],0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90,ease:Linear.easeNone, onComplete:fn_cardreturn2});
+		gsap.to([card1, card2],0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90,ease:'none', onComplete:fn_cardreturn2});
 
 		function fn_cardreturn2 () {			
 			gsap.set([card1, card2],{'pointer-events': 'auto', scale: 0.91, 'background-position-y': 0});
-			gsap.to([card1, card2],0.2,{z:0.01, force3D: false, perspective: 1000,rotationY:0,ease:Linear.easeNone});
+			gsap.to([card1, card2],0.2,{z:0.01, force3D: false, perspective: 1000,rotationY:0,ease:'none'});
 		}
 	}
 	
@@ -470,11 +470,11 @@ var TXCreative = (function () {
 	
 	function fn_cardcomplete () {
 		card_setup ();
-		gsap.to(AD.spr_cards,0.2,{rotationY:90,ease:Linear.easeNone, onComplete:fn_cardcomplete2});
+		gsap.to(AD.spr_cards,0.2,{rotationY:90,ease:'none', onComplete:fn_cardcomplete2});
 		
 		function fn_cardcomplete2 () {
 			gsap.set(AD.spr_cards,{'background-position-y': 0});
-			gsap.to(AD.spr_cards,0.2,{rotationY:0,ease:Linear.easeNone, onComplete: function(){
+			gsap.to(AD.spr_cards,0.2,{rotationY:0,ease:'none', onComplete: function(){
 				gsap.set(AD.spr_cards,{'pointer-events': 'auto'});
 				AD.card	= 0;
 				AD.selectedcard	= [];

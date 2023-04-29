@@ -90,7 +90,7 @@ div#container #RESULT{
 	display: none;
 	left: 0; top: 0;
 	width: 960px; height: 500px;
-	background: rgba(0,0,0,0.7) url('pop_result.png') no-repeat center 38%;
+	background: rgba(0,0,0,0.7) url('src/pop_result.png') no-repeat center 38%;
 }
 
 div#container #txt_copy2{
