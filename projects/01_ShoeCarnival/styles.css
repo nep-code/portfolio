@@ -1,0 +1,766 @@
+body { margin:0; overflow:hidden; }
+
+@font-face {
+    font-family: myFont;
+    src: url(src/Geometric415BT.woff);
+}
+
+#container, #container div, #container img{
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+	/* Rules below not implemented in browsers yet */
+	-o-user-select: none;
+	user-select: none;
+
+}
+
+#container, div#container div{
+	position: absolute;	
+	-webkit-tap-highlight-color: rgba(0,0,0,0); 
+}
+
+#container{
+	width: 960px;
+	height: 500px;
+	/*background-color: #000000;*/
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+#container .center{
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	margin: auto;
+}
+
+#container #background{
+    background-image: url(src/background.jpg);
+	width: 100%;
+	height: 100%;
+}
+
+#container #STEP_2 #videoHolder{
+	width: 960px;
+	height: 540px;
+    left: 0;
+    top: 270px;
+    display: block;
+    background: rgba(0,0,0,0.5);
+}
+
+#container #STEP_2 #videoPlayer{
+	width: 100%;
+	height: 100%;
+    transform: scale(0.7) translate(0, 5px);
+    border: 4px solid white;
+    border-radius:20px;
+}
+
+#sc_logo{
+    background: url(src/sc_logo.png) no-repeat;
+    left: 364px;
+	top: 35px;
+    width: 232px;
+	height: 23px;
+}
+
+#STEP_1{ /************************************ STEP 1 */
+    display: none;
+}
+
+#STEP_1 #showemwatchagot{
+    background: url(src/showemwatchagot.png) no-repeat;
+    left: 349px;
+	top: 109px;
+    width: 262px;
+	height: 238px;
+}
+
+#STEP_1 #btn_watchtheirbattle{
+    background-color: #ebff1d;
+    border-radius: 5px;
+    left: 329px;
+	top: 374px;
+    width: 296px;
+	height: 43px;
+    cursor: pointer;
+}
+
+#STEP_1 #txt_watchtheirbattle{
+/*    display: none;*/
+    background: url(src/txt_watchtheirbattle.png) no-repeat;
+    left: 341px;
+	top: 386px;
+    width: 252px;
+	height: 19px;
+    pointer-events:none;
+}
+
+#STEP_1 #btn_arrow{
+    background: url('src/btn_arrow.png') no-repeat;
+    left: 604px;
+	top: 390px;
+    width: 11px;
+	height: 12px;
+    pointer-events:none;
+    cursor: pointer;
+}
+
+#STEP_1 #swipetoselect{
+    font-family: myFont;
+    font-size: 150%;
+    text-align: center;
+    color: white;
+    left: -2;
+	top: 453px;
+    width: 960px;
+	height: 50px;
+    cursor: context-menu;
+}
+
+.name_left{
+    font-family: myFont;
+    font-size: 150%;
+    text-align: center;
+    color: white;
+    left: 84px;
+	top: 453px;
+    width: 205px;
+	height: 50px;
+    cursor: context-menu;
+    opacity: 0.7;
+}
+
+.name_right{
+    font-family: myFont;
+    font-size: 150%;
+    text-align: center;
+    color: white;
+    left: 702px;
+	top: 453px;
+    width: 200px;
+	height: 50px;
+    cursor: context-menu;
+    opacity: 0.7;
+}
+
+#STEP_1 #btn_swipe{
+    left: 0px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+}
+
+.gallery_dancers{ /****************** STEP 1 & 3 GALLERY */
+    display: block;
+    width: 9600px;
+	height: 500px;
+}
+
+.KK_FikShun{
+    left: 0px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+}
+
+.KK_FikShun2{
+    left: 8640px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+}
+
+.KK_FikShun_left{
+    background: url('src/dancers/KK_FikShun_left.png') no-repeat;
+    left: 0px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.KK_FikShun_right{
+    background: url('src/dancers/KK_FikShun_right.png') no-repeat;
+    left: 480px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.KK_Josh{
+    left: 960px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+}
+
+.KK_Josh_left{
+    background: url('src/dancers/KK_Josh_left.png') no-repeat;
+    left: 0px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.KK_Josh_right{
+    background: url('src/dancers/KK_Josh_right.png') no-repeat;
+    left: 480px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Simrin_FikShun{
+    left: 1920px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+}
+
+.Simrin_FikShun_left{
+    background: url('src/dancers/Simrin_FikShun_left.png') no-repeat;
+    left: 0px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Simrin_FikShun_right{
+    background: url('src/dancers/Simrin_FikShun_right.png') no-repeat;
+    left: 480px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.KK_LilSwagg{
+    left: 2880px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+}
+
+.KK_LilSwagg_left{
+    background: url('src/dancers/KK_LilSwagg_left.png') no-repeat;
+    left: 0px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.KK_LilSwagg_right{
+    background: url('src/dancers/KK_LilSwagg_right.png') no-repeat;
+    left: 480px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Kaity_Josh{
+    left: 3840px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+}
+
+.Kaity_Josh_left{
+    background: url('src/dancers/Kaity_Josh_left.png') no-repeat;
+    left: 0px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Kaity_Josh_right{
+    background: url('src/dancers/Kaity_Josh_right.png') no-repeat;
+    left: 480px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Simrin_LilSwagg{
+    left: 4800px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+}
+
+.Simrin_LilSwagg_left{
+    background: url('src/dancers/Simrin_LilSwagg_left.png') no-repeat;
+    left: 0px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Simrin_LilSwagg_right{
+    background: url('src/dancers/Simrin_LilSwagg_right.png') no-repeat;
+    left: 480px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Kaity_FikShun{
+    left: 5760px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+}
+
+.Kaity_FikShun_left{
+    background: url('src/dancers/Kaity_FikShun_left.png') no-repeat;
+    left: 0px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Kaity_FikShun_right{
+    background: url('src/dancers/Kaity_FikShun_right.png') no-repeat;
+    left: 480px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Simrin_Josh{
+    left: 6720px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+}
+
+.Simrin_Josh_left{
+    background: url('src/dancers/Simrin_Josh_left.png') no-repeat;
+    left: 0px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Simrin_Josh_right{
+    background: url('src/dancers/Simrin_Josh_right.png') no-repeat;
+    left: 480px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Kaity_LilSwagg{
+    left: 7680px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+}
+
+.Kaity_LilSwagg_left{
+    background: url('src/dancers/Kaity_LilSwagg_left.png') no-repeat;
+    left: 0px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+.Kaity_LilSwagg_right{
+    background: url('src/dancers/Kaity_LilSwagg_right.png') no-repeat;
+    left: 480px;
+	top: 0px;
+    width: 480px;
+	height: 500px;
+}
+
+#STEP_2{ /************************************ STEP 2 */
+    display: none;
+}
+
+#STEP_2 #btn_vidClose{
+    background: url('src/vidClose.png') no-repeat;
+    left: 890px;
+	top: 0px;
+    width: 70px;
+	height: 70px;
+    cursor: pointer;
+}
+
+#STEP_3{ /************************************ STEP 3 */
+    display: none;
+}
+
+#STEP_3 #s3_background{
+    background-color: #000000;
+    width: 960px;
+	height: 500px;
+    opacity: 0.5;
+}
+
+#STEP_3 #s3_title{
+    font-family: myFont;
+    font-size: 210%;
+    text-align: center;
+    text-shadow: 0px 2px 7px #000000;
+    color: #ebff1d;
+    left: 0px;
+	top: 108px;
+    width: 960px;
+	height: 50px;
+    cursor: context-menu;
+}
+
+#STEP_3 #s3_vs{
+    font-family: myFont;
+    font-size: 200%;
+    text-align: center;
+    text-shadow: 0px 2px 7px #000000;
+    color: white;
+    left: 4px;
+	top: 254px;
+    width: 960px;
+	height: 50px;
+    cursor: context-menu;
+}
+
+#STEP_3 #btn_watchanewbattle{
+    background: black url('src/watchanewbattle.png') no-repeat;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    box-shadow: 0px 2px 24px black;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    left: 332px;
+	top: 451px;
+    width: 307px;
+	height: 49px;
+    cursor: pointer;
+}
+
+#STEP_3 #btn_seetheirshoes{
+    background: black url('src/seetheirshoes.png') no-repeat;
+    box-shadow: 0px 2px 7px black;
+    border-radius: 5px;
+    left: 355px;
+	top: 374px;
+    width: 256px;
+	height: 43px;
+    cursor: pointer;
+}
+
+#STEP_3 .btn_shoe{
+    background: url('src/btn_shoe.png') no-repeat;
+    width: 33px;
+	height: 33px;
+    cursor: pointer;
+}
+
+#STEP_3 #btn_shoeleft{
+    left: 148px;
+	top: 394px;
+}
+
+#STEP_3 #btn_shoeright{
+    left: 889px;
+	top: 371px;
+}
+
+#STEP_3 .btn_vote{
+    background: url('src/vote.png') no-repeat;
+    width: 146px;
+	height: 146px;
+    cursor: pointer;
+}
+
+#STEP_3 #btn_voteleft{
+    left: 303px;
+	top: 194px;
+}
+
+#STEP_3 #btn_voteright{
+    left: 514px;
+	top: 194px;
+}
+
+#STEP_3 .bar_vote{
+    border-style: dashed;
+    border-width: 0px;
+    border-color: salmon;
+}
+
+#STEP_3 ._bar_voteleft{
+    left: 296px;
+	top: 186px;
+}
+
+#STEP_3 ._bar_voteright{
+    left: 505px;
+	top: 186px;
+}
+#STEP_4{ /************************************ STEP 4 */
+    display: none;
+}
+#STEP_4 #s4_background{
+    background-color: #000000;
+    width: 960px;
+	height: 500px;
+    opacity: 0.7;
+}
+
+
+#STEP_4 #swipetoscroll{
+    font-family: myFont;
+    font-size: 140%;
+    text-align: center;
+    color: white;
+    left: 379px;
+	top: 445px;
+    width: 200px;
+	height: 50px;
+    cursor: context-menu;
+}
+
+#STEP_4 #guys{
+    background: url('src/guys.png') no-repeat;
+    left: 880px;
+	top: 451px;
+    width: 67px;
+	height: 25px;
+}
+
+#STEP_4 #girls{
+    background: url('src/girls.png') no-repeat;
+    left: 12px;
+	top: 451px;
+    width: 65px;
+	height: 25px;
+}
+
+#STEP_4 #btn_shopnow{
+    z-index: 500;
+    top: 367px;
+    left: 353px;
+    width: 251px;
+    height: 69px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#STEP_4 #nav_bg{
+    background: url('src/nav_bg.png') no-repeat;
+    left: 0px;
+	top: 0px;
+    width: 960px;
+	height: 500px;
+    pointer-events: none;
+}
+
+#STEP_4 #s4_navleft{
+    z-index: 500;
+    top: 210px;
+    left: 0px;
+    width: 60px;
+    height: 70px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#STEP_4 #s4_navright{
+    z-index: 500;
+    top: 210px;
+    left: 900px;
+    width: 60px;
+    height: 70px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#STEP_4 #btn_GoBack{
+    background: url('src/btn_GoBack.png') no-repeat;
+    left: 823px;
+	top: 25px;
+    width: 111px;
+	height: 22px;
+    cursor: pointer;
+}
+
+#STEP_4 #gallery_shoes{
+    top: 152px;
+    width: 3885px;
+    height: 185px;
+}
+
+/*----------------------PAIR OF SHOES*/
+#STEP_4 #PairOfShoes{
+    display: none;
+}
+
+#STEP_4 .myShoes{
+    overflow: hidden;
+    border-radius: 5px;
+    left: 0px;
+	top: 0px;
+    width: 185px;
+	height: 185px;
+    border-style: solid;
+    border-width: 0px;
+    border-color: #595858;
+    box-shadow: 0px 0px 0px black;
+}
+
+#STEP_4 #pairshoe_1{
+    background: url('src/shoes/right/FikShun_CamoNike.png') no-repeat center 0px;
+    background-size: 105%;
+    left: 1235px;
+	top: 0px;
+}
+
+#STEP_4 #pairshoe_2{
+    background: url('src/shoes/left/Kaidy_BlueNikes.png') no-repeat center 0px;
+    background-size: 105%;
+    left: 1498px;
+	top: 0px;
+}
+
+#STEP_4 #btn_shopnow1{
+    z-index: 500;
+    top: 367px;
+    left: 223px;
+    width: 251px;
+    height: 69px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#STEP_4 #btn_shopnow2{
+    z-index: 500;
+    top: 367px;
+    left: 486px;
+    width: 251px;
+    height: 69px;
+    opacity: 0;
+    cursor: pointer;
+}
+/*----------------------------*/
+
+#STEP_4 .myShoe{
+    overflow: hidden;
+    border-radius: 5px;
+    left: 0px;
+	top: 0px;
+    width: 185px;
+	height: 185px;
+    border-style: solid;
+    border-width: 0px;
+    border-color: #595858;
+    box-shadow: 0px 0px 0px black;
+}
+#STEP_4 #shoe_1{
+    background-size: 105%;
+    left: 0px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_2{
+    background-size: 105%;
+    left: 195px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_3{
+    background-size: 105%;
+    left: 390px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_4{
+    background-size: 125%;
+    left: 585px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_5{
+    background-size: 125%;
+    left: 780px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_6{
+    background-size: 105%;
+    left: 975px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_7{
+    background-size: 105%;
+    left: 1170px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_8{
+    background-size: 105%;
+    left: 1365px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_9{
+    background-size: 105%;
+    left: 1560px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_10{
+    background-size: 105%;
+    left: 1755px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_11{
+    background-size: 105%;
+    left: 1950px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_12{
+    background-size: 105%;
+    left: 2145px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_13{
+    background-size: 105%;
+    left: 2340px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_14{
+    background-size: 105%;
+    left: 2535px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_15{
+    background-size: 105%;
+    left: 2730px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_16{
+    background-size: 105%;
+    left: 2925px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_17{
+    background-size: 105%;
+    left: 3120px;
+	top: 0px;
+}
+
+#STEP_4 #shoe_18{
+    background-size: 105%;
+    left: 3315px;
+	top: 0px;
+}
