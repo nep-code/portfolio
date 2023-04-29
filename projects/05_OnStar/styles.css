@@ -1,0 +1,355 @@
+body { margin:0; overflow:hidden; }
+
+div#container, div#container div, div#container img{
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+	
+	/* Rules below not implemented in browsers yet */
+	-o-user-select: none;
+	user-select: none;
+}
+
+div#container, div#container div{
+	position: absolute;	
+	-webkit-tap-highlight-color: rgba(0,0,0,0); 
+}
+
+div#container{
+	width: 960px;
+	height: 500px;
+	background-color: #000000;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+div#container .center{
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	margin: auto;
+}
+
+div#container #background{
+	background-image: url('src/bg.jpg');
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+}
+
+div#container #cta{
+    display: none;
+    left: 28px; top: 0px;
+	width: 190px;
+	height: 25px;
+	cursor: pointer;
+}
+
+
+div#container #legal{
+    display: none;
+    bottom: 0px; left: 10px;
+	width: 255px;
+	height: 40px;
+	cursor: pointer;
+}
+
+
+div#container #x_legal{
+    top: 6px; right: 8px;
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+}
+
+div#container #videoHolder{
+   display: none;
+    left: 134px;   top: 71px;
+	width: 693px;  height: 390px;
+    background-size: 100% 100%;
+}
+
+div#container #videoPlayer{
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+
+div#container #videoHolder video{
+	width: 100%;
+	height: 100%;
+}
+
+div#container #overlay{
+	left: 0px; top: 0px;
+	width: 100%; height: 100%;
+	
+	background: url('src/btn_replay.png') no-repeat center center rgba(0,0,0,.1);
+	background-size: 28% 50%;
+	cursor: pointer;
+}
+
+div#container #logo{
+    left: 18px; top: 6px;
+    width: 59px; height: 59px;
+    background: url('src/logo.png') no-repeat;
+/*    cursor: pointer;*/
+}
+
+/* GLOBAL -------------------------------- */
+
+div#container #nxt{
+    display: none;
+    right: 0; top: 70px;
+    width: 148px; height: 68px;
+    background: url('src/nxt_bg.png') no-repeat;
+    cursor: pointer;
+}
+
+div#container #nxt_txt{
+    width: 148px; height: 68px;
+    background: url('src/nxt_txt.png') no-repeat;
+}
+
+#spr_legal { 
+    display: none;
+    background: url('src/spr_legal.png') no-repeat top left; width: 458px; height: 100px; bottom: 0px;  } 
+
+div#container .spr_txt { 
+    background: url('src/spr_txt.png') no-repeat top left; width: 960px; height: 500px; background-position-y: -500px;} 
+
+div#container .spr_nav { 
+    background: url('src/spr_nav.png') no-repeat top left; height: 14px;  }
+
+div#container #NAV {
+    display: none;
+    left: 0; top:0; 
+    width: 960px; height: 70px;
+    background:white;
+    
+}
+
+div#container #NAV .nav_box { 
+    background:#cfd8df; height: 35px;  top:20px;
+}
+
+div#container #NAV #btn_s3 { left:101px; width:115px; } 
+div#container #NAV #btn_s4 { left:227px; width:206px; } 
+div#container #NAV #btn_s5 { left:443px; width:174px; } 
+div#container #NAV #btn_s6 { left:628px; width:119px; } 
+
+div#container #NAV #nav1 { background-position: 0 0; width: 96px; } 
+div#container #NAV #nav2 { background-position: 0 -14px; width: 188px; } 
+div#container #NAV #nav3 { background-position: 0 -28px; width: 155px; } 
+div#container #NAV #nav4 { background-position: 0 -42px; width: 99px; height: 12px; } 
+
+.spr_xtra { background: url('src/spr_xtra.png') no-repeat top left;  } 
+
+/* STEP 2 -------------------------------- */
+
+#STEP_2 .spr_s2_ico { 
+    top:220px;
+    width: 168px; height: 168px;
+    background: url('src/spr_s2_ico.png') no-repeat top left;
+    cursor: pointer;
+} 
+
+#STEP_2 #s2_ico1 { left:45px;  background-position: 0 0; } 
+#STEP_2 #s2_ico2 { left:285px; background-position: 0 -168px; } 
+#STEP_2 #s2_ico3 { left:524px; background-position: 0 -336px; } 
+#STEP_2 #s2_ico4 { left:746px; background-position: 0 -504px; } 
+
+/* STEP 3 -------------------------------- */
+div#container #STEP_3{
+    display: none;
+}
+
+#STEP_3 #s3_drop { left:566px; top:281px; background-position: 0 0; width: 174px; height: 11px; } 
+
+#STEP_3 #s3_circle { left:510px; top:144px; background-position: 0 -11px; width: 285px; height: 284px; } 
+
+#STEP_3 #s3_outercircle { left:487px; top:122px; width: 330px; height: 330px; } 
+#STEP_3 #s3_outercircle2 { left:487px; top:122px; width: 330px; height: 330px; } 
+#STEP_3 #s3_outercircle3 { left:487px; top:122px; width: 330px; height: 330px; } 
+
+#STEP_3 #s3_arw { 
+    left:512px; top:147px;
+    width: 280px; height: 280px;
+    background: url('src/s3_arw.png') no-repeat top left;
+}
+
+#STEP_3 #spr_s3_img { 
+    left:532px; top:166px;
+    width: 240px; height: 240px;
+    background: url('src/spr_s3_img.png') no-repeat top left;
+}
+
+#STEP_3 #blackhole { 
+    left:532px; top:166px;
+    fill: "yellow";
+} 
+
+#STEP_3 #s3_container {
+    top: 62px;
+    height:450px; 
+    width: 980px;
+    opacity: 0;
+    pointer-events: none;
+} 
+
+#STEP_3 #spr_s3_txt {
+    left:468px; top:414px;
+    width: 365px; height: 47px;
+    background: url('src/spr_s3_txt.png') no-repeat top left;
+} 
+
+#STEP_3 .spr_w { background: url('src/spr_w.png') no-repeat top left; width: 54px; height: 54px; cursor: grab !important; cursor: -moz-grab !important; cursor: -webkit-grab !important;  } 
+#STEP_3 #w01 { left:837px; top:335px; background-position: 0 0; } 
+#STEP_3 #w02 { left:358px; top:288px; background-position: 0 -54px; width: 84px; height: 84px; } 
+#STEP_3 #w03 { left:855px; top:400px; background-position: 0 -138px; width: 82px; height: 82px; } 
+#STEP_3 #w04 { left:362px; top:403px; background-position: 0 -220px; } 
+#STEP_3 #w05 { left:801px; top:135px; background-position: 0 -274px; width: 64px; height: 64px; } 
+#STEP_3 #w06 { left:888px; top:134px; background-position: 0 -338px; } 
+#STEP_3 #w07 { left:897px; top:256px; background-position: 0 -392px; width: 73px; height: 73px; } 
+#STEP_3 #w08 { left:332px; top:125px; background-position: 0 -465px; width: 67px; height: 67px; } 
+#STEP_3 #w09 { left:443px; top:102px; background-position: 0 -532px; width: 71px; height: 71px; } 
+#STEP_3 #w10 { left:401px; top:445px; background-position: 0 -603px; } 
+#STEP_3 #w11 { left:495px; top:62px;  background-position: 0 -657px; } 
+#STEP_3 #w12 { left:423px; top:346px; background-position: 0 -711px; width: 80px; height: 80px; } 
+#STEP_3 #w13 { left:841px; top:211px; background-position: 0 -791px; width: 64px; height: 64px; } 
+#STEP_3 #w14 { left:396px; top:180px; background-position: 0 -855px; width: 67px; height: 67px; } 
+#STEP_3 #w15 { left:892px; top:340px; background-position: 0 -922px; width: 68px; height: 68px; } 
+
+/* STEP 5 -------------------------------- */
+div#container #STEP_5{
+    display: none;
+}
+
+#STEP_5 #spr_s5_car { 
+    left:395px;      top:80px;
+    width: 502px;    height: 245px;
+    background: url('src/spr_s5_car.png') no-repeat top left;  }
+
+#STEP_5 .spr_s5_ico { background: url('src/spr_s5_ico.png') no-repeat top left; width: 31px; height: 26px;  } 
+#STEP_5 #s5_ico_01 { left:399px; top:456px; background-position: 0 0; height: 25px; } 
+#STEP_5 #s5_ico_02 { left:491px; top:456px; background-position: 0 -25px; height: 31px; } 
+#STEP_5 #s5_ico_03 { left:582px; top:456px; background-position: 0 -56px; height: 31px; } 
+#STEP_5 #s5_ico_04 { left:672px; top:454px; background-position: 0 -87px; width: 34px; } 
+#STEP_5 #s5_ico_05 { left:773px; top:456px; background-position: 0 -113px; width: 18px; } 
+#STEP_5 #s5_ico_06 { left:857px; top:455px; background-position: 0 -139px; width: 33px; }
+#STEP_5 #s5_ico_01_on { left:399px; top:456px; background-position: -34px 0; height: 25px; } 
+#STEP_5 #s5_ico_02_on { left:491px; top:456px; background-position: -34px -25px; height: 31px; } 
+#STEP_5 #s5_ico_03_on { left:582px; top:456px; background-position: -34px -56px; height: 31px; } 
+#STEP_5 #s5_ico_04_on { left:672px; top:454px; background-position: -34px -87px; width: 34px; } 
+#STEP_5 #s5_ico_05_on { left:773px; top:456px; background-position: -34px -113px; width: 18px; } 
+#STEP_5 #s5_ico_06_on { left:857px; top:455px; background-position: -34px -139px; width: 33px; } 
+
+#STEP_5 .s5_ico { cursor: pointer } 
+
+#STEP_5 .s5_ico_on { visibility: hidden } 
+
+#STEP_5 #spr_s5_txt { 
+    left:394px;      top:294px;
+    height: 93px;    width:507px;
+    background: url('src/spr_s5_txt.png') no-repeat top left; } 
+
+#STEP_5 #s5_circle { left:462px; top:203px; background-position: 0 -295px; width: 71px; height: 71px; } 
+#STEP_5 #s5_circle2 { left:741px; top:203px; background-position: 0 -295px; width: 71px; height: 71px; } 
+#STEP_5 #s5_circle3 { left:-100px; top:-100px; background-position: 0 -295px; width: 71px; height: 71px; } 
+
+#STEP_5 .s5_glow { background: url('src/s5_glow.png') no-repeat top left; width: 100%; height: 100%; } 
+
+#STEP_5 #s5_scrubber { left:393px; top:394px; background-position: 0 -366px; width: 40px; height: 33px; } 
+
+#STEP_5 #s5_txtbox { 
+    left:391px;     top:292px;
+    width:513px;    height:99px;
+    background: url('src/s5_txtbox.png') no-repeat top left;  }
+
+#STEP_5 #s5_bar { 
+    left:370px;     top:403px;
+    width:552px;    height:42px;
+    background: url('src/s5_bar.png') no-repeat top left;  }
+
+/* STEP 6 -------------------------------- */
+div#container #STEP_6{
+    display: none;
+    left:320px;     top:70px; 
+    width:640px;    height:430px;
+    overflow: hidden;
+}
+
+#STEP_6 .s6_f{
+    display: none;
+    left: 0;        top: 0;
+    width:640px;    height:430px;
+}
+
+#STEP_6 .r_center{
+	left: 10px; top: 20px; right: 0px;
+	margin: auto;
+}
+
+#STEP_6 #s6_back{
+    display: none;
+    top: 365px; left: 290px; /*left: 240px;*/
+    width: 70px; height: 60px;
+    cursor:pointer;
+}
+
+#STEP_6 #s6_startover{
+    display: none;
+    top: 365px; left: 340px;
+    width: 70px; height: 60px;
+    cursor:pointer; 
+}
+
+#STEP_6 .spr_s6_btn { 
+    left: 10px; top: 373px; right: 0px;
+    margin: auto;
+    background: url('src/spr_s6_btn.png') no-repeat top left;  } 
+#STEP_6 .spr_s6_btn.s6_ico_goback { background-position: 0 0; width: 26px; height: 26px; } 
+#STEP_6 .spr_s6_btn.s6_ico_startover { background-position: 0 -26px; width: 24px; height: 28px; } 
+
+#STEP_6 .f3_ico_goback { right: 100px; } 
+#STEP_6 .f3_ico_startover { left: 110px; } 
+
+#STEP_6 .spr_s6_ico_q { 
+    left: 10px; top: 137px; right: 0px;
+	margin: auto;
+    width: 170px; height: 170px;
+    background: url('src/spr_s6_ico_q.png') no-repeat top left;
+    cursor:pointer; 
+} 
+#STEP_6 #s6_q1_01 { right: 390px;background-position: 0 0; } 
+#STEP_6 #s6_q1_02 { background-position: 0 -170px; } 
+#STEP_6 #s6_q1_03 { left: 400px; background-position: 0 -340px; } 
+#STEP_6 #s6_ico_q2_01_left { right:210px; background-position: 0 -510px; } 
+#STEP_6 #s6_ico_q2_01_right { left:220px; background-position: 0 -680px; } 
+#STEP_6 #s6_ico_q2_02_left { right:210px; background-position: 0 -850px; } 
+#STEP_6 #s6_ico_q2_02_right { left:220px; background-position: 0 -1020px; } 
+#STEP_6 #s6_ico_q2_03_left { right:210px; background-position: 0 -1190px; } 
+#STEP_6 #s6_ico_q2_03_right { left:220px; background-position: 0 -1360px; } 
+
+#STEP_6 .spr_s6_ico_r { background: url('src/spr_s6_ico_r.png') no-repeat top left; height: 330px; } 
+#STEP_6 #s6_ico_r_01_left { background-position: 0 0; width: 299px; } 
+#STEP_6 #s6_ico_r_01_right { background-position: -299px 0; width: 268px; } 
+#STEP_6 #s6_ico_r_02_left { background-position: -567px 0; width: 279px; height: 331px; } 
+#STEP_6 #s6_ico_r_02_right { background-position: -846px 0; width: 309px; height: 331px; } 
+#STEP_6 #s6_ico_r_03_left { background-position: -1155px 0; width: 358px; } 
+#STEP_6 #s6_ico_r_03_right { background-position: -1513px 0; width: 362px; height: 331px; }  
+
+#STEP_6 .spr_s6_txt { 
+    left: 10px; top: 85px; right: 0px;
+	margin: auto;
+    background: url('src/spr_s6_txt.png') no-repeat top left; height: 17px;  } 
+#STEP_6 #s6_q1_txt { background-position: 0 0; width: 340px; } 
+#STEP_6 #s6_txt_q2_01 { background-position: 0 -17px; width: 451px; } 
+#STEP_6 #s6_txt_q2_02 { background-position: 0 -34px; width: 343px; } 
+#STEP_6 #s6_txt_q2_03 { background-position: 0 -51px; width: 362px; } 
+#STEP_6 .spr_s6_txt.s6_txt_goback { top:406px; background-position: 0 -68px; width: 50px; height: 11px; } 
+#STEP_6 .spr_s6_txt.s6_txt_startover { top:406px; background-position: 0 -79px; width: 62px; height: 11px; }
+
+#STEP_6 .f3_txt_goback { right: 100px; } 
+#STEP_6 .f3_txt_startover { left: 110px; } 
