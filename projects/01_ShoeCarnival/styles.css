@@ -1,8 +1,8 @@
-body { margin:0; overflow:hidden; }
+body { margin:0; overflow:hidden; background: #C4CED4; }
 
 @font-face {
     font-family: myFont;
-    src: url(src/Geometric415BT.woff);
+    src: url('src/Geometric415BT.woff');
 }
 
 #container, #container div, #container img{
@@ -21,11 +21,13 @@ body { margin:0; overflow:hidden; }
 }
 
 #container{
+    display: block;
 	width: 960px;
 	height: 500px;
-	/*background-color: #000000;*/
 	background-repeat: no-repeat;
 	overflow: hidden;
+    position: relative;
+    margin: auto;
 }
 
 #container .center{
@@ -37,30 +39,30 @@ body { margin:0; overflow:hidden; }
 }
 
 #container #background{
-    background-image: url(src/background.jpg);
+    background-image: url('src/background.jpg');
 	width: 100%;
 	height: 100%;
 }
 
 #container #STEP_2 #videoHolder{
-	width: 960px;
-	height: 540px;
+    display: block;
     left: 0;
     top: 270px;
-    display: block;
+	width: 960px;
+	height: 540px;
     background: rgba(0,0,0,0.5);
 }
 
 #container #STEP_2 #videoPlayer{
 	width: 100%;
 	height: 100%;
-    transform: scale(0.7) translate(0, 5px);
+    transform: translateZ(0) scale(0.7);
     border: 4px solid white;
     border-radius:20px;
 }
 
 #sc_logo{
-    background: url(src/sc_logo.png) no-repeat;
+    background: url('src/sc_logo.png') no-repeat;
     left: 364px;
 	top: 35px;
     width: 232px;
@@ -72,7 +74,7 @@ body { margin:0; overflow:hidden; }
 }
 
 #STEP_1 #showemwatchagot{
-    background: url(src/showemwatchagot.png) no-repeat;
+    background: url('src/showemwatchagot.png') no-repeat;
     left: 349px;
 	top: 109px;
     width: 262px;
@@ -91,7 +93,7 @@ body { margin:0; overflow:hidden; }
 
 #STEP_1 #txt_watchtheirbattle{
 /*    display: none;*/
-    background: url(src/txt_watchtheirbattle.png) no-repeat;
+    background: url('src/txt_watchtheirbattle.png') no-repeat;
     left: 341px;
 	top: 386px;
     width: 252px;
