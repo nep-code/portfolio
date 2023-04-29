@@ -119,7 +119,7 @@ div#container #_trynow {
 div#container .bg_char {
 	width: 203px;
 	height: 203px;
-	background: url('src/bg_char.jpg') no-repeat top left;
+	background: url('src/char_bg.jpg') no-repeat top left;
 	border-radius: 203px;
 	visibility: hidden;
 } 
