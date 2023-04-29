@@ -1,0 +1,475 @@
+
+body { margin:0; overflow:hidden; }
+
+@font-face {
+	font-family: myFont;
+	src: url('src/LatinotypeTextaBlack.woff');
+}
+
+div#container, div#container div, div#container img{
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+	
+	/* Rules below not implemented in browsers yet */
+	-o-user-select: none;
+	user-select: none;
+
+}
+
+div#container, div#container div{
+	position: absolute;	
+	width: 100%; height: 100%;
+	-webkit-tap-highlight-color: rgba(0,0,0,0); 
+}
+
+div#container .center{
+	left: 0; top: 0; right: 0; bottom: 0;
+	margin: auto;
+}
+
+div#container{
+	width: 960px; height: 500px;
+	background-color: #000000;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+/* IMAGES */
+
+div#container .bg{
+	left: 0; top: 0;
+	width: 960px; height: 500px;
+	background: url('src/bg.jpg') no-repeat;
+}
+
+div#container #img_skater{
+	left: 505px;
+    top: 16px;
+	width: 361px; height: 360px;
+	background: url('src/img_skater.png') no-repeat;
+	
+}
+
+div#container #img_chevron{
+	left: 505px;
+    top: 16px;
+	width: 361px; height: 360px;
+	background: url('src/img_chevron.png') no-repeat;
+	
+}
+
+div#container #spr_banner{
+	left: 0; top: 0;
+	width: 333px; height: 469px;
+	background: url('src/spr_banner.png') no-repeat;
+}
+
+div#container .spr_btn{
+	height: 25px;
+	background: url('src/spr_btn.png') no-repeat;
+	-webkit-filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.2)); /* Safari */
+    filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.2));
+}
+
+div#container #txt_howtoplay{
+	bottom: 37px;
+    right: 62px;
+	width: 417px; height: 53px;
+	background: url('src/spr_howtoplay.png') no-repeat;
+	-webkit-filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.5)); /* Safari */
+    filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.5));
+}
+
+div#container .skater{
+	left: 206px; top: 0;
+	width: 564px; height: 384px;
+	display: none;
+	background: url('src/spr_skater.png') no-repeat;
+}
+
+div#container #logo{
+	left: 41px; top: 21px;
+	width: 93px; height: 64px;
+	display: none;
+	background: url('src/logo.png') no-repeat;
+}
+
+div#container .spr_arw{
+	left: 0; top: 0; right: 0; bottom: 0;
+	margin: auto;
+	width: 92px; height: 92px;
+	display: none;
+	background: url('src/spr_arw.png') no-repeat;
+}
+
+div#container #callout{
+	left: 47px; top: 118px;
+	width: 869px; height: 203px;
+	display: none;
+	background: url('src/spr_callout.png') no-repeat;
+	
+}
+
+div#container #targetbox{
+	left: 375px; bottom: 0;
+	width: 206px; height: 136px;
+	display: none;
+	background: url('src/img_targetbox.png') no-repeat;
+	
+}
+
+div#container .img_x{
+	left: 0; top: 0; right: 0; bottom: 0;
+	margin: auto;
+	width: 99px; height: 96px;
+	display: none;
+	background: url('src/img_x.png') no-repeat;
+	
+}
+
+div#container #img_arrowburst{
+	left: 387px;
+    bottom: 0;
+	width: 180px; height: 135px;
+	display: none;
+	background: url('src/img_arrowburst.png') no-repeat;
+	
+}
+
+div#container #img_starburst{
+	left: 377px;
+    bottom: -52px;
+	width: 210px; height: 210px;
+	display: none;
+	background: url('src/img_starburst.png') no-repeat;
+	
+}
+
+div#container .img_sparkle{
+	width: 158px; height: 187px;
+	display: none;
+	background: url('src/img_sparkle.png') no-repeat;
+}
+
+/* ALL BOX */
+
+div#container #_allbox{
+	left: -110px; bottom: 0;
+	width: 1176px; height: 106px;
+/*	display: none;*/
+}
+
+div#container #spr_box{	left: 0; top: 0; width: 150px; height: 106px; }
+
+div#container ._box { 
+	bottom: 0;
+	width: 150px; height: 106px;
+}
+
+div#container ._box0 { left: 0; }
+div#container ._box1 { left: 171px; }
+div#container ._box2 { left: 342px; }
+div#container ._box3 { left: 513px; }
+div#container ._box4 { left: 685px; }
+div#container ._box5 { left: 856px; }
+div#container ._box6 { left: 1027px; }
+
+div#container .box { 
+	left: 960px; bottom: 0;
+	width: 150px; height: 106px;
+}
+
+div#container #allbox{
+	left: 960px; bottom: 0;
+	width: 10752px; height: 106px;
+/*	display: none;*/
+}
+
+div#container .box_color1 {
+	background: #2c30d5; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#2c30d5, #1f5e9f); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#2c30d5, #1f5e9f); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#2c30d5, #1f5e9f); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#2c30d5, #1f5e9f); /* Standard syntax */
+}
+
+div#container .box_color2 {
+	background: #cb146a; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#cb146a, #7d1959); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#cb146a, #7d1959); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#cb146a, #7d1959); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#cb146a, #7d1959); /* Standard syntax */
+}
+
+div#container .box_color3 {
+	background: #fff88a; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#fff88a, #fe6729); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#fff88a, #fe6729); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#fff88a, #fe6729); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#fff88a, #fe6729); /* Standard syntax */
+}
+
+div#container .box_color4 {
+	background: #32f295; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#32f295, #197d79); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#32f295, #197d79); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#32f295, #197d79); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#32f295, #197d79); /* Standard syntax */
+}
+
+div#container .box_color5 {
+	background: #fc640b; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#fc640b, #bf2c30); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#fc640b, #bf2c30); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#fc640b, #bf2c30); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#fc640b, #bf2c30); /* Standard syntax */
+}
+
+/* BUTTONS */
+
+div#container .spr_btn.btn_play { background-position: 0 0; width: 143px; height: 32px; } 
+div#container .spr_btn.btn_playagain { background-position: 0 -42px; width: 121px; } 
+div#container .spr_btn.btn_watchthespot { background-position: 0 -77px; width: 154px; } 
+div#container .spr_btn.btn_letsroll { background-position: 0 -112px; width: 135px; height: 30px; } 
+
+div#container #btn_play{
+	left: 94px;
+    top: 416px;
+	width: 143px; height: 32px;
+	cursor: pointer;
+}
+
+div#container #btn_playagain{
+	left: 23px; top: 308px;
+	width: 121px; height: 25px;
+	cursor: pointer;
+	display: none;
+}
+
+div#container #btn_watchthespot{
+	left: 152px; top: 308px;
+	width: 154px; height: 25px;
+	cursor: pointer;
+	display: none;
+}
+
+div#container #btn_letsroll{
+	left: 98px;
+    top: 419px;
+	width: 135px; height: 30px;
+	cursor: pointer;
+	display: none;
+}
+
+div#container #btn_x:hover,
+div#container #btn_play:hover > .spr_btn.btn_play,
+div#container #btn_playagain:hover > .spr_btn.btn_playagain,
+div#container #btn_watchthespot:hover > .spr_btn.btn_watchthespot,
+div#container #btn_letsroll:hover > .spr_btn.btn_letsroll{
+	-ms-transform: scale(0.95, 0.95);
+	-webkit-transform: scale(0.95, 0.95);
+	transform: scale(0.95, 0.95);
+}
+
+/* CREATIVE */
+
+div#container .bg1{
+	background-position-y: 0;
+}
+
+div#container .bg2{
+	background-position-y: -500px;
+	display: none;
+}
+
+div#container .flr{
+	top: 233px;
+	height: 154px;
+}
+
+div#container .sf0{
+	background-position-y: -1000px;
+/*	background:yellowgreen;*/
+	opacity:0;
+}
+
+div#container .sf1{
+	background-position-y: -1154px;
+/*	background:sandybrown;*/
+	opacity:0;
+}
+
+div#container .ss{
+	background-position-y: 0;
+	display: none;
+}
+
+div#container .s0{
+	background-position-y: -394px;
+	display: none;
+}
+
+div#container .s1{
+	background-position-y: -3546px;
+	display: none;
+}
+
+div#container .s2{
+	background-position-y: -1182px;
+	display: none;
+}
+
+div#container .s3{
+	background-position-y: -4728px;
+	display: none;
+}
+
+div#container .s4{
+	background-position-y: -2364px;
+	display: none;
+}
+
+div#container #sound{
+	right: -1px; top: 1px;
+    width: 30px; height: 30px;
+	opacity: 0.36;
+	transform: scale(0.6, 0.6);
+	cursor: pointer;
+}
+
+div#container #sound:after{
+	width: 100%; height: 100%;
+	background: url('src/spr_audio.png') no-repeat;
+    content: "";
+    position: absolute;
+    display: block;    
+}
+
+div#container #sound:hover{
+	opacity: 1;
+}
+
+div#container #sound.mute:after{
+    background-position-y: -40px;
+}
+
+div#container #banner{
+	left: 103px; top: 0;
+	width: 333px; height: 469px;
+	background: #ee7624; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#ee7624, #ffa400); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#ee7624, #ffa400); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#ee7624, #ffa400); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#ee7624, #ffa400); /* Standard syntax */
+	box-shadow: -2px 8px 30px rgba(0,0,0,0.7);
+}
+
+div#container #txt_timer{
+	left: 15px;
+    top: 313px;
+    width: 90px;
+    height: 70px;
+    font-family: myFont;
+    font-size: 355%;
+    color: white;
+    text-align: left;
+    cursor: context-menu;
+    line-height: 110%;
+    letter-spacing: 1px;
+	text-shadow: 2px 5px 2px rgba(0,0,0,0.5);
+	display: none;
+}
+
+div#container .arw_y{
+	left: -4px;
+    top: 394px;
+	width: 92px; height: 92px;
+	background-position-y: -102px;
+	display: none;
+}
+
+/* ANIMATION */
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.animated.bounceIn {
+  display: block;
+  animation-duration: .75s;
+}
+
+
+@keyframes bounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(.9, .9, .9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(.97, .97, .97);
+  }
+	
+  95% {
+	opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+
+  to {
+    opacity: 0;
+	transform: scale3d(.5, .5, .5);
+  }
+}
+
+.bounceIn {
+  	animation-name: bounceIn;
+}
+
+/* VIDEO */
+
+div#container #videoHolder{
+	width: 960px; height: 540px;
+	/*width: 960px; height: 540px; <<< FULLSCREEN*/
+	background: url('src/preview.jpg') no-repeat #000;
+	background-size: cover;
+	display: none;
+}
+
+div#container #videoPlayer, div#container #videoHolder video{
+	width: 100%; height: 100%;
+}
+
+div#container #videoPlay{
+	left: 0px; top: 0px;
+	width: 100%; height: 100%;
+	background: url('src/btn_play.png') no-repeat center center rgba(0,0,0,0.5);
+	display: none;
+}
+
+div#container #btn_x{
+	right: 5px; top: 28px;
+	width: 31px; height: 30px;
+	background: url('src/btn_x.png') no-repeat;
+	cursor: pointer;
+	-webkit-filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.2)); /* Safari */
+    filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.2));
+}
