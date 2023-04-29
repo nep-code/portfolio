@@ -241,7 +241,7 @@ div#container #STEP_5{
     width: 502px;    height: 245px;
     background: url('src/spr_s5_car.png') no-repeat top left;  }
 
-#STEP_5 .spr_s5_ico { background: url('src/spr_s5_ico.png') no-repeat top left; width: 31px; height: 26px;  } 
+#STEP_5 .spr_s5_ico { background: url('src/spr_s5_ico.png') no-repeat top left; width: 31px; height: 26px; } 
 #STEP_5 #s5_ico_01 { left:399px; top:456px; background-position: 0 0; height: 25px; } 
 #STEP_5 #s5_ico_02 { left:491px; top:456px; background-position: 0 -25px; height: 31px; } 
 #STEP_5 #s5_ico_03 { left:582px; top:456px; background-position: 0 -56px; height: 31px; } 

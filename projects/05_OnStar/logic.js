@@ -219,11 +219,11 @@ var TXCreative = (function () {
         });
         
         nxt.on('mouseover', function(){
-            gsap.to(nxt, 0.4, {x: 0, ease: Power2.easeInOut});
+            gsap.to(nxt, 0.4, {x: 0, ease: 'power2.inOut'});
         });
         
         nxt.on('mouseout', function(){
-            gsap.to(nxt, 0.2, {x:110, ease: Power2.easeInOut});
+            gsap.to(nxt, 0.2, {x:110, ease: 'power2.inOut'});
         });
         
         cta.on('click', function(){
@@ -249,7 +249,7 @@ var TXCreative = (function () {
         });
         
         btn_legal.on('mouseover', function(){
-            gsap.to(spr_legal, 0.4, {y: 0, ease: Power2.easeOut});
+            gsap.to(spr_legal, 0.4, {y: 0, ease: 'power2.out'});
         });
 
         TXVideo.init();
@@ -333,12 +333,12 @@ var TXCreative = (function () {
         
     function nav_mouseover(e){
         var i = '#' + this.id + ' .spr_nav';
-        gsap.to(i, 0.2, {scale: 0.95, ease: Power2.easeInOut});
+        gsap.to(i, 0.2, {scale: 0.95, ease: 'power2.inOut'});
     }
         
     function nav_mouseout(e){
         var i = '#' + this.id + ' .spr_nav';
-        gsap.to(i, 0.1, {scale: 1, ease: Power2.easeInOut});
+        gsap.to(i, 0.1, {scale: 1, ease: 'power2.inOut'});
     }
 
 	return {
@@ -410,11 +410,11 @@ var STEP_2 = (function () {
         }
 
         function s2_mouseover(e){
-            gsap.to(this, 0.2, {scale: 1.09, y:-3, ease: Power2.easeInOut});
+            gsap.to(this, 0.2, {scale: 1.09, y:-3, ease: 'power2.inOut'});
         }
 
         function s2_mouseout(e){
-            gsap.to(this, 0.1, {scale: 1, y:0, ease: Power2.easeInOut});
+            gsap.to(this, 0.1, {scale: 1, y:0, ease: 'power2.inOut'});
         }
 
 	}
@@ -466,12 +466,12 @@ var STEP_3 = (function () {
                 if (cnt >= urls.length) {
                     s3_reset();
                     _S3.css('display', 'block');
-                    gsap.fromTo(_S3, 0.2, {alpha: 0}, {alpha: 1, ease: Power2.easeOut});
+                    gsap.fromTo(_S3, 0.2, {alpha: 0}, {alpha: 1, ease:'power2.out'});
                     
                     if(currentSTEP ==2){
                         TXCreative.showNav();
                         NAV.css('display', 'block');
-                        gsap.from(NAV, 0.2, {y:-70, ease:Power2.easeOut});
+                        gsap.from(NAV, 0.2, {y:-70, ease:'power2.out'});
                     }
 
                     currentSTEP = 3;
@@ -514,7 +514,7 @@ var STEP_3 = (function () {
 
         function s3_onPress(e){
             s3_reset();
-            gsap.to(this.target, 0.5, {scale: 1, yoyo:true, repeat:-1, ease: Power2.easeInOut});  
+            gsap.to(this.target, 0.5, {scale: 1, yoyo:true, repeat:-1, ease: 'power2.inOut'});  
             
             switch(this.target.id){
                 case 'w01': w=0; break;
@@ -550,14 +550,14 @@ var STEP_3 = (function () {
                 spr_s3_txt.css({display:'block','background-position': '0 '+pos_s3_txt[w]});
                 s3_outercircle2.css('display', 'block');
                 s3_outercircle3.css('display', 'block');
-                gsap.fromTo( spr_s3_img, 0.5, {alpha:0}, {alpha:1, ease:Power2.easeOut});
-                gsap.fromTo( spr_s3_txt, 0.5, {alpha:0}, {alpha:1, ease:Power2.easeOut});
-                gsap.fromTo(s3_outercircle, 3, {scale:0.74,alpha:1}, {scale:1, alpha:0, repeat:-1, ease: Power2.easeOut});
-                gsap.fromTo(s3_outercircle2, 3, {scale:0.74,alpha:1}, {delay:1, scale:1, alpha:0, repeat:-1, ease: Power2.easeOut});
-                gsap.fromTo(s3_outercircle3, 3, {scale:0.74,alpha:1}, {delay:2, scale:1, alpha:0, repeat:-1, ease: Power2.easeOut});
+                gsap.fromTo(spr_s3_img, 0.5, {alpha:0}, {alpha:1, ease:'power2.out'});
+                gsap.fromTo(spr_s3_txt, 0.5, {alpha:0}, {alpha:1, ease:'power2.out'});
+                gsap.fromTo(s3_outercircle, 3, {scale:0.74,alpha:1}, {scale:1, alpha:0, repeat:-1, ease: 'power2.out'});
+                gsap.fromTo(s3_outercircle2, 3, {scale:0.74,alpha:1}, {delay:1, scale:1, alpha:0, repeat:-1, ease: 'power2.out'});
+                gsap.fromTo(s3_outercircle3, 3, {scale:0.74,alpha:1}, {delay:2, scale:1, alpha:0, repeat:-1, ease: 'power2.out'});
                 gsap.to(s3_circle, 0.2, {alpha:0});
             }
-            gsap.to(this.target, 0.3, {x:0,y:0, ease: Power2.easeInOut}); 
+            gsap.to(this.target, 0.3, {x:0,y:0, ease: 'power2.inOut'}); 
         }
         
         function s3_onDrag(e){
@@ -565,16 +565,16 @@ var STEP_3 = (function () {
              if (this.hitTest(blackhole, '50%')) {
                  if(!touched){
                      touched = true;
-                     gsap.to(s3_arw, 0.3, {alpha:0, ease: Power2.easeInOut});
-                     gsap.to(s3_outercircle, 0.3, {scale:1.04, ease: Power2.easeInOut});
-                     gsap.to(s3_circle, 0.3, {scale:1, ease: Power2.easeInOut});
+                     gsap.to(s3_arw, 0.3, {alpha:0, ease: 'power2.inOut'});
+                     gsap.to(s3_outercircle, 0.3, {scale:1.04, ease: 'power2.inOut'});
+                     gsap.to(s3_circle, 0.3, {scale:1, ease: 'power2.inOut'});
                  }
                } else {
                  if(touched){
                      touched = false;
-                     gsap.to(s3_arw, 0.2, {alpha:1, ease: Power2.easeInOut});
-                     gsap.to(s3_outercircle, 0.2, {scale:1, ease: Power2.easeInOut});
-                     gsap.to(s3_circle, 0.2, {scale:0.80, ease: Power2.easeInOut});
+                     gsap.to(s3_arw, 0.2, {alpha:1, ease: 'power2.inOut'});
+                     gsap.to(s3_outercircle, 0.2, {scale:1, ease: 'power2.inOut'});
+                     gsap.to(s3_circle, 0.2, {scale:0.80, ease: 'power2.inOut'});
                  }
                }
         }
@@ -605,7 +605,7 @@ var STEP_4 = (function () {
         if(currentSTEP ==2){
             TXCreative.showNav();
             NAV.css('display', 'block');
-            gsap.from(NAV, 0.2, {y:-70, ease:Power2.easeOut});
+            gsap.from(NAV, 0.2, {y:-70, ease:'power2.out'});
         }
         
         currentSTEP = 4;
@@ -694,11 +694,11 @@ var STEP_5 = (function () {
                 if (cnt >= urls.length) {
                     s5_reset();
                     _S5.css('display', 'block');
-                    gsap.fromTo(_S5, 0.2, {alpha: 0}, {alpha: 1, ease: Power2.easeOut});
+                    gsap.fromTo(_S5, 0.2, {alpha: 0}, {alpha: 1, ease: 'power2.out'});
                     if(currentSTEP ==2){
                         TXCreative.showNav();
                         NAV.css('display', 'block');
-                        gsap.from(NAV, 0.2, {y:-70, ease:Power2.easeOut});
+                        gsap.from(NAV, 0.2, {y:-70, ease:'power2.out'});
                     }
                     currentSTEP = 5;
                 }
@@ -710,10 +710,10 @@ var STEP_5 = (function () {
         
         spr_legal.css('z-index', 10000);
         
-        gsap.fromTo(s5_circle, 3, {rotation:0}, { rotation:360, repeat:-1, ease:Linear.easeNone});
-        gsap.fromTo(s5_circle2, 3, {rotation:0}, { rotation:360, repeat:-1, ease:Linear.easeNone});
-        gsap.fromTo(s5_circle3, 3, {rotation:0}, { rotation:360, repeat:-1, ease:Linear.easeNone});
-        gsap.fromTo(s5_glow, 1, {alpha:1}, { alpha:0.2, yoyo:true, repeat:-1, ease:Linear.easeNone});
+        gsap.fromTo(s5_circle, 3, {rotation:0}, { rotation:360, repeat:-1, ease:'none'});
+        gsap.fromTo(s5_circle2, 3, {rotation:0}, { rotation:360, repeat:-1, ease:'none'});
+        gsap.fromTo(s5_circle3, 3, {rotation:0}, { rotation:360, repeat:-1, ease:'none'});
+        gsap.fromTo(s5_glow, 1, {alpha:1}, { alpha:0.2, yoyo:true, repeat:-1, ease:'none'});
         
         if(!s5_loaded){
             s5_loaded = true;
@@ -737,39 +737,39 @@ var STEP_5 = (function () {
             s5_circle.css({left:'462px', top:'203px'});
             s5_circle2.css({left:'741px', top:'203px'});
             s5_circle3.css({left:'-100px', top:'-100px'});
-            gsap.to(s5_scrubber, 0, {css:{left:'393px'}});
+            gsap.to(s5_scrubber, 0, {left:393});
             gsap.to(s5_ico_01_on, 0, {autoAlpha:1});
             gsap.to(spr_legal, 0, {y: 140});
             
             gsap.fromTo(s5_ico_01_on, 0.3,{scale:1},
-                    {scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone,});
+                    {scale:1.2, yoyo:true, repeat:1, ease:'none',});
             gsap.fromTo(s5_ico_01, 0.3,{scale:1},
-                    {scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone});
+                    {scale:1.2, yoyo:true, repeat:1, ease:'none'});
             
             gsap.fromTo(s5_ico_02_on, 0.3,{scale:1, autoAlpha:0},
-                    {delay:0.2, autoAlpha:1,scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone});
+                    {delay:0.2, autoAlpha:1,scale:1.2, yoyo:true, repeat:1, ease:'none'});
             gsap.fromTo(s5_ico_02, 0.3,{scale:1},
-                    {delay:0.2, scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone});
+                    {delay:0.2, scale:1.2, yoyo:true, repeat:1, ease:'none'});
             
             gsap.fromTo(s5_ico_03_on, 0.3,{scale:1, autoAlpha:0},
-                    {delay:0.4, autoAlpha:1,scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone});
+                    {delay:0.4, autoAlpha:1,scale:1.2, yoyo:true, repeat:1, ease:'none'});
             gsap.fromTo(s5_ico_03, 0.3,{scale:1},
-                    {delay:0.4, scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone});
+                    {delay:0.4, scale:1.2, yoyo:true, repeat:1, ease:'none'});
             
             gsap.fromTo(s5_ico_04_on, 0.3,{scale:1, autoAlpha:0},
-                    {delay:0.6, autoAlpha:1,scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone});
+                    {delay:0.6, autoAlpha:1,scale:1.2, yoyo:true, repeat:1, ease:'none'});
             gsap.fromTo(s5_ico_04, 0.3,{scale:1},
-                    {delay:0.6, scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone});
+                    {delay:0.6, scale:1.2, yoyo:true, repeat:1, ease:'none'});
             
             gsap.fromTo(s5_ico_05_on, 0.3,{scale:1, autoAlpha:0},
-                    {delay:0.8, autoAlpha:1,scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone});
+                    {delay:0.8, autoAlpha:1,scale:1.2, yoyo:true, repeat:1, ease:'none'});
             gsap.fromTo(s5_ico_05, 0.3,{scale:1},
-                    {delay:0.8, scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone});
+                    {delay:0.8, scale:1.2, yoyo:true, repeat:1, ease:'none'});
             
             gsap.fromTo(s5_ico_06_on, 0.3,{scale:1, autoAlpha:0},
-                    {delay:1, autoAlpha:1,scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone});
+                    {delay:1, autoAlpha:1,scale:1.2, yoyo:true, repeat:1, ease:'none'});
             gsap.fromTo(s5_ico_06, 0.3,{scale:1},
-                    {delay:1, scale:1.2, yoyo:true, repeat:1, ease:Linear.easeNone});
+                    {delay:1, scale:1.2, yoyo:true, repeat:1, ease:'none'});
             iReady = true;
         }
         
@@ -777,22 +777,22 @@ var STEP_5 = (function () {
             containment: s5_bar,
             stop: function(){
                 if($(this).position().left <=440){
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'395px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:395, ease: 'power2.inOut'});
                 }
                 else if($(this).position().left >=441 && $(this).position().left <=533){
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'485px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:485, ease: 'power2.inOut'});
                 }
                 else if($(this).position().left >=534 && $(this).position().left <=625){
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'580px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:580, ease: 'power2.inOut'});
                 }
                  else if($(this).position().left >=626 && $(this).position().left <=717){
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'671px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:671, ease: 'power2.inOut'});
                 }
                  else if($(this).position().left >=718 && $(this).position().left <=809){
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'763px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:763, ease: 'power2.inOut'});
                 }
                  else if($(this).position().left >=810){
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'854px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:854, ease: 'power2.inOut'});
                 }
             },
             drag: function(){
@@ -820,22 +820,22 @@ var STEP_5 = (function () {
         function s5_click(){ 
             switch(this.id){
                 case 's5_ico_01': if(w!=0)changeFrame(0);
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'395px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:395, ease:'power2.inOut'});
                     break;
                 case 's5_ico_02': if(w!=1)changeFrame(1);
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'485px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:485, ease:'power2.inOut'});
                     break;
                 case 's5_ico_03': if(w!=2)changeFrame(2);
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'580px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:580, ease:'power2.inOut'});
                     break;
                 case 's5_ico_04': if(w!=3)changeFrame(3);
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'671px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:671, ease:'power2.inOut'});
                     break;
                 case 's5_ico_05': if(w!=4)changeFrame(4);
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'763px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:763, ease:'power2.inOut'});
                     break;
                 case 's5_ico_06': if(w!=5)changeFrame(5);
-                    gsap.to(s5_scrubber, 0.2, {css:{left:'854px'}, ease: Power2.easeInOut});
+                    gsap.to(s5_scrubber, 0.2, {left:854, ease:'power2.inOut'});
                     break;
             }
         }
@@ -848,8 +848,8 @@ var STEP_5 = (function () {
             s5_circle.css({left:pos_cir[e].x, top:pos_cir[e].y});
             s5_circle2.css({left:pos_cir2[e].x, top:pos_cir2[e].y});
             s5_circle3.css({left:pos_cir3[e].x, top:pos_cir3[e].y});
-            gsap.fromTo(spr_s5_txt, 0.2,{alpha:0}, {alpha:1, ease: Power2.easeOut});
-            gsap.fromTo(s5_cir, 0.4,{scale:0.3}, {scale:1, ease: Power2.easeOut});
+            gsap.fromTo(spr_s5_txt, 0.2,{alpha:0}, {alpha:1, ease: 'power2.out'});
+            gsap.fromTo(s5_cir, 0.4,{scale:0.3}, {scale:1, ease: 'power2.out'});
             gsap.to(s5_ico_on, 0.2, {autoAlpha:0});
             gsap.to($(ico), 0.2, {autoAlpha:1});
         }
@@ -917,11 +917,11 @@ var STEP_6 = (function () {
                 if (cnt >= urls.length) {
                     s6_reset();
                     _S6.css('display', 'block');
-                    gsap.fromTo(_S6, 0.2, {alpha: 0}, {alpha: 1, ease: Power2.easeOut});
+                    gsap.fromTo(_S6, 0.2, {alpha: 0}, {alpha: 1, ease: 'power2.out'});
                     if(currentSTEP ==2){
                         TXCreative.showNav();
                         NAV.css('display', 'block');
-                        gsap.from(NAV, 0.2, {y:-70, ease:Power2.easeOut});
+                        gsap.from(NAV, 0.2, {y:-70, ease:'power2.out'});
                     }
                     
                     currentSTEP = 6;
@@ -943,8 +943,7 @@ var STEP_6 = (function () {
             s6_back.on('mouseout', s6_out);
             s6_startover.on('mouseout', s6_out);
         }
-        
-        
+
         function s6_reset(e){
             spr_txt.css('background-position', '0 -2500px');
             cta.css({top:'325px',width:'248px'});
@@ -957,8 +956,8 @@ var STEP_6 = (function () {
             s6_f1.css('display', 'block');
             f1_ico_q1.css('pointer-events', 'auto');
             
-            gsap.fromTo(s6_q1_txt, 0.3, {alpha: 0}, {alpha: 1, ease: Power2.easeOut});
-            gsap.fromTo(f1_ico_q1, 0.5, {scale: 0.2}, {scale: 1, ease: Back.easeOut});
+            gsap.fromTo(s6_q1_txt, 0.3, {alpha: 0}, {alpha: 1, ease:'power2.out'});
+            gsap.fromTo(f1_ico_q1, 0.5, {scale: 0.2}, {scale: 1, ease:'back.out'});
             gsap.to(s6_f, 0, {x:0,y:0});
         }
         
@@ -968,7 +967,7 @@ var STEP_6 = (function () {
                     gsap.to(s6_ico_goback, 0.2, {y: -5});
                     break;
                 case 's6_startover':
-                    gsap.to(s6_ico_startover, 2, {rotation: -360, repeat: -1, ease:Linear.easeNone, transformOrigin:"center 45%"});
+                    gsap.to(s6_ico_startover, 2, {rotation: -360, repeat: -1, ease:'none', transformOrigin:"center 45%"});
                     break;
                 }
         }
@@ -1018,20 +1017,20 @@ var STEP_6 = (function () {
         
         function goLeft(){
             s6_f_from[currentBack].css('display','block');
-            gsap.fromTo(s6_f_to[currentBack], 0.5, {x:0}, {x:640, ease: Power2.easeInOut, onComplete: hideFrame});
-            gsap.fromTo(s6_f_from[currentBack], 0.5, {x:-640}, {x:0, ease: Power2.easeInOut});
+            gsap.fromTo(s6_f_to[currentBack], 0.5, {x:0}, {x:640, ease: 'power2.inOut', onComplete: hideFrame});
+            gsap.fromTo(s6_f_from[currentBack], 0.5, {x:-640}, {x:0, ease: 'power2.inOut'});
         }
         
         function goRight(){
             s6_f_from[currentBack].css('display','block');
-            gsap.fromTo(s6_f_to[currentBack], 0.5, {x:0}, {x:-640, ease: Power2.easeInOut, onComplete: hideFrame});
-            gsap.fromTo(s6_f_from[currentBack], 0.5, {x:640}, {x:0, ease: Power2.easeInOut});
+            gsap.fromTo(s6_f_to[currentBack], 0.5, {x:0}, {x:-640, ease: 'power2.inOut', onComplete: hideFrame});
+            gsap.fromTo(s6_f_from[currentBack], 0.5, {x:640}, {x:0, ease: 'power2.inOut'});
         }
         
         function goDown(){
             s6_f_from[currentBack].css('display','block');
-            gsap.fromTo(s6_f_to[currentBack], 0.5, {y:0}, {y:-430, ease: Power2.easeInOut, onComplete: hideFrame});
-            gsap.fromTo(s6_f_from[currentBack], 0.5, {y:430}, {y:0, ease: Power2.easeInOut});
+            gsap.fromTo(s6_f_to[currentBack], 0.5, {y:0}, {y:-430, ease: 'power2.inOut', onComplete: hideFrame});
+            gsap.fromTo(s6_f_from[currentBack], 0.5, {y:430}, {y:0, ease: 'power2.inOut'});
         }
         
         function hideFrame(){
@@ -1085,20 +1084,20 @@ var STEP_6 = (function () {
         
         function backLeft(){
             s6_f_to[currentBack].css('display','block');
-            gsap.fromTo(s6_f_from[currentBack], 0.5, {x:0}, {x:-640, ease: Power2.easeInOut, onComplete: hideFrame2});
-            gsap.fromTo(s6_f_to[currentBack], 0.5, {x:640}, {x:0, ease: Power2.easeInOut});
+            gsap.fromTo(s6_f_from[currentBack], 0.5, {x:0}, {x:-640, ease: 'power2.inOut', onComplete: hideFrame2});
+            gsap.fromTo(s6_f_to[currentBack], 0.5, {x:640}, {x:0, ease: 'power2.inOut'});
         }
         
         function backRight(){
             s6_f_to[currentBack].css('display','block');
-            gsap.fromTo(s6_f_from[currentBack], 0.5, {x:0}, {x:640, ease: Power2.easeInOut, onComplete: hideFrame2});
-            gsap.fromTo(s6_f_to[currentBack], 0.5, {x:-640}, {x:0, ease: Power2.easeInOut});
+            gsap.fromTo(s6_f_from[currentBack], 0.5, {x:0}, {x:640, ease: 'power2.inOut', onComplete: hideFrame2});
+            gsap.fromTo(s6_f_to[currentBack], 0.5, {x:-640}, {x:0, ease: 'power2.inOut'});
         }
         
         function backTop(){
             s6_f_to[currentBack].css('display','block');
-            gsap.fromTo(s6_f_from[currentBack], 0.5, {y:0}, {y:430, ease: Power2.easeInOut, onComplete: hideFrame2});
-            gsap.fromTo(s6_f_to[currentBack], 0.5, {y:-430}, {y:0, ease: Power2.easeInOut});
+            gsap.fromTo(s6_f_from[currentBack], 0.5, {y:0}, {y:430, ease: 'power2.inOut', onComplete: hideFrame2});
+            gsap.fromTo(s6_f_to[currentBack], 0.5, {y:-430}, {y:0, ease: 'power2.inOut'});
         }
         
         function hideFrame2(){
