@@ -8,13 +8,13 @@ var TXConfig = (function () {
 		'src/spr_social.png', //spr_social
 		'src/spr_char.jpg', //spr_chars
 		'src/spr_snickers.png', //spr_snickers
-		'src/_glow.png', //_glow
+		'src/glow.png', //_glow
 		'src/spr_chili.png', //spr_chili
 		'src/spr_bean.png', //spr_bean
 		'src/spr_caramel.png', //spr_caramel
 		'src/instruction.png', //instruction
 		'src/copy.png', //copy
-		'src/_trynow.png', //_trynow
+		'src/trynow.png', //_trynow
 		'src/char_bg.jpg', //char_bg
 		'src/spr_message.png' //spr_message
 	],

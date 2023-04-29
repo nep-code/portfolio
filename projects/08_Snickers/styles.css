@@ -69,7 +69,7 @@ div#container .spr_snickers {
 div#container #_glow {
 	width: 265px;
 	height: 264px;
-	background: url('src/_glow.png') no-repeat top left;
+	background: url('src/glow.png') no-repeat top left;
 } 
 
 div#container .spr_chili {
@@ -113,7 +113,7 @@ div#container #copy {
 div#container #_trynow {
 	width: 70px;
 	height: 27px;
-	background: url('src/_trynow.png') no-repeat top left;
+	background: url('src/trynow.png') no-repeat top left;
 } 
 
 div#container .bg_char {
