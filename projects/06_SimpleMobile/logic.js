@@ -29,7 +29,6 @@ var TXConfig = (function () {
 	],
 		// ADD EXTERNAL JAVSCRIPTS HERE [JS]:
         init_JS = [
-			// UNCOMMENT TO USE TWEENMAX [greensock.com/docs]:
 			'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js',
 			'https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js' //howler
 	],
@@ -38,25 +37,7 @@ var TXConfig = (function () {
 		otherAssets = 0,
         totalAssets = init_Images.length + init_JS.length,
 		
-		is_mobile = /Mobi/.test(navigator.userAgent),		
-		is_chrome = navigator.userAgent.indexOf('Chrome') > -1,
-		is_firefox = navigator.userAgent.indexOf('Firefox') > -1,
-		is_safari = navigator.userAgent.indexOf("Safari") > -1,
-		is_opera = navigator.userAgent.toLowerCase().indexOf("op") > -1,
-		is_android = navigator.userAgent.toLowerCase().indexOf("android") > -1,
-		is_explorer;
-		
-	if ((is_chrome)&&(is_safari)) 
-		is_safari = false;
-	
-	if ((is_chrome)&&(is_opera)) 
-		is_chrome = false;	
-	
-	// IE10 || IE11 || IE EDGE
-	if (navigator.userAgent.indexOf('MSIE') > -1 ||
-		navigator.userAgent.indexOf('Trident/') > -1 || 
-		navigator.userAgent.indexOf('Edge/') > -1)
-		is_explorer = true;
+		is_mobile = ("ontouchstart" in document.documentElement) ? true : false;
 	
 	return {
 		loadedAssets              	: loadedAssets,
@@ -65,9 +46,7 @@ var TXConfig = (function () {
 		init_JS           			: init_JS,
 		other_Images				: other_Images,
 		otherAssets				 	: otherAssets,
-		is_mobile					: is_mobile,
-		is_safari					: is_safari,
-		is_explorer					: is_explorer
+		is_mobile					: is_mobile
 	};
 
 })();
@@ -185,7 +164,15 @@ var TXVariables = (function () {
 		
 		gsap.ticker.lagSmoothing(false); //continues animation when a tab is inactive
 		
-		$('#ie_cursor').css('background-image', 'url(' + TXConfig.init_Images[1] + ')');
+		if(TXConfig.is_mobile) {
+			$('#txt_intro').css('background-image', 'url(src/txt_intro_mob.png)');
+			$('#instruction').css('background-image', 'url(src/instruction_mob.png)');
+			AD.spr_legal.addClass('mobile');
+			AD.spr_disclaimer.addClass('mobile');
+			$('#ie_cursor').hide();
+		} else {
+			$('#ie_cursor').css('background-image', 'url(' + TXConfig.init_Images[1] + ')');
+		}
 		
 		TXCreative.fn_STEP1();
 	}
@@ -267,7 +254,6 @@ var TXCreative = (function () {
 		
 		gsap.set([AD.spr_copy, AD.bg_end], {alpha:0, backgroundPositionY: '0'});
 		gsap.set(AD.spr_disclaimer, {left:294, autoAlpha:1});
-		
 		
 		TXStrings.init();
 		TXTimer.start();
@@ -619,7 +605,6 @@ var TXCursor = (function () {
 				
 		transform = $('#ad_container').css('transform');
 			
-		
 		if (transform != 'none') {
 			transformExists = true;	
 			try{
@@ -644,9 +629,16 @@ var TXCursor = (function () {
 		gameShieldTop = gameShieldCorner.top;
 		
 		// Add listeners
-		$(window).on('mousedown', onCanvasHolderDown);
-		$(window).on('mouseup', onCanvasHolderUp);
-		AD.canvasHolder.on('mousemove', onCanvasHolderMove);
+		if(AD.is_mobile) {
+			$(window).on('touchend', onCanvasHolderUp);
+			AD.canvasHolder.on('touchstart', onCanvasHolderDown);		
+			AD.canvasHolder.on('touchmove', onCanvasHolderMove);
+		} else {
+			$(window).on('mousedown', onCanvasHolderDown);
+			$(window).on('mouseup', onCanvasHolderUp);
+			AD.canvasHolder.on('mousemove', onCanvasHolderMove);
+		}
+		
 		
 		$(window).on("blur", onCanvasHolderUp);
 
@@ -668,13 +660,37 @@ var TXCursor = (function () {
 		function onCanvasHolderDown(e) {
 			
 			// Get mouse coords
-			if (transformExists) {
-				mouseX = (e.pageX - gameShieldLeft) / scale; // get scaled coordinates
-				mouseY = (e.pageY - gameShieldTop) / scale;
-			}
-			else {
-				mouseX = e.clientX - gameShieldLeft;
-				mouseY = e.clientY - gameShieldTop;
+			if ( TXConfig.is_mobile ) {
+				e.preventDefault();
+				if (e.touches) {
+					if (transformExists) {
+						mouseX = (e.touches[0].offsetX) / scale; // get scaled coordinates
+						mouseY = (e.touches[0].offsetY) / scale;
+					}
+					else {
+						mouseX = e.touches[0].offsetX / scale;
+						mouseY = e.touches[0].offsetY / scale;
+					}
+				}
+				else {
+					if (transformExists) {
+						mouseX = (e.originalEvent.touches[0].offsetX) / scale; // get scaled coordinates
+						mouseY = (e.originalEvent.touches[0].offsetY) / scale;
+					}
+					else {
+						mouseX = e.originalEvent.touches[0].clientX;
+						mouseY = e.originalEvent.touches[0].clientY;
+					}
+				}
+			} else {
+				if (transformExists) {
+					mouseX = (e.pageX - gameShieldLeft) / scale; // get scaled coordinates
+					mouseY = (e.pageY - gameShieldTop) / scale;
+				}
+				else {
+					mouseX = e.clientX - gameShieldLeft;
+					mouseY = e.clientY - gameShieldTop;
+				}
 			}
 			
 			mouseXOld = mouseX;
@@ -702,14 +718,40 @@ var TXCursor = (function () {
 			mouseXOld = mouseX;
 			mouseYOld = mouseY;
 			
-			// Get mouse coords
-			if (transformExists) {
-				mouseX = (e.pageX - gameShieldLeft) / scale; // get scaled coordinates
-				mouseY = (e.pageY - gameShieldTop) / scale;
+			if ( TXConfig.is_mobile ) {
+				
+				e.preventDefault();
+				
+				if (e.touches) {
+					if (transformExists) {
+						mouseX = (e.touches[0].pageX - gameShieldLeft) / scale; // get scaled coordinates
+						mouseY = (e.touches[0].pageY - gameShieldTop) / scale;
+					}
+					else {
+						mouseX = e.touches[0].clientX;
+						mouseY = e.touches[0].clientY;
+					}
+				}
+				else {
+					if (transformExists) {
+						mouseX = (e.originalEvent.touches[0].pageX - gameShieldLeft) / scale; // get scaled coordinates
+						mouseY = (e.originalEvent.touches[0].pageY - gameShieldTop) / scale;
+					}
+					else {
+						mouseX = e.originalEvent.touches[0].clientX;
+						mouseY = e.originalEvent.touches[0].clientY;
+					}
+				}
 			}
 			else {
-				mouseX = e.clientX - gameShieldLeft;
-				mouseY = e.clientY - gameShieldTop;
+				if (transformExists) {
+					mouseX = (e.pageX - gameShieldLeft) / scale; // get scaled coordinates
+					mouseY = (e.pageY - gameShieldTop) / scale;
+				}
+				else {
+					mouseX = e.clientX - gameShieldLeft;
+					mouseY = e.clientY - gameShieldTop;
+				}
 			}
 			
 			if (AD.mouseIsDown) {
@@ -727,7 +769,12 @@ var TXCursor = (function () {
 		
 		// draw cursor
 		function drawCursor() {
-			$('#ie_cursor').css({left:mouseX-10 + 'px', top: mouseY-54 + 'px'});
+			if(TXConfig.is_mobile) {
+				ctx_cursor.clearRect(0,0, 960, 500);
+				ctx_cursor.drawImage(cursor,mouseX-10,mouseY-54,cursorWidth,cursorHeight);
+			} else {
+				$('#ie_cursor').css({left:mouseX-10 + 'px', top: mouseY-54 + 'px'});
+			}
 		}
 
 		// start animations
