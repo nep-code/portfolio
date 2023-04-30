@@ -451,6 +451,17 @@ div#container #crowd.animate {
 	animation: crowd .4s steps(2) infinite;
 }
 
+div#container #game_container {
+	top: 500px;
+}
+
+div#container #game_container #game_content {
+	left: 0px;
+	top: 0px;
+	width: 960px;
+	height: 400px;
+}
+
 /* player */
 
 div#container #player {
@@ -461,6 +472,14 @@ div#container #player {
 	background: transparent;
     border-radius: 25px;
 	display: none;
+}
+
+div#container #game_container #crosshair {
+    left: 0px;
+    top: 22px;
+    width: 45px;
+    height: 40px;
+    background-color: rgba(0,255,0,0);
 }
 
 div#container #character {
@@ -494,14 +513,6 @@ div#container #character.dance {
 
 /* items */
 
-div#container .items {
-	left: 720px;
-	width: 40px;
-	height: 100px;
-	background: transparent;
-    border-radius: 25px;
-}
-
 div#container .items .sprite{
 	left: -45px;
 	top: -102px;
@@ -519,29 +530,33 @@ div#container .bot_items {
 	top: 394px;
 }
 
-div#container .items .sprite.chicken {
+div#container .sprite.chicken {
 	background-position-x: -1350px;
 	animation: moveup .32s steps(2) infinite;
 }
 
-div#container .items .sprite.bucket {
+div#container .sprite.bucket {
 	background-position-x: -1200px;
 	animation: moveup .32s steps(2) infinite;
 }
 
-div#container .items .sprite.opponent1 {
+div#container .sprite.opponent1 {
 	background-position-x: -600px;
 	animation: opponent1 .3s steps(2) infinite;
 }
 
-div#container .items .sprite.opponent2 {
+div#container .sprite.opponent2 {
 	background-position-x: -900px;
 	animation: opponent2 .3s steps(2) infinite;
 }
 
-div#container .items .sprite.shadow{
+div#container .sprite.shadow{
 	background-position-x: -1500px;
 	display: none;
+}
+
+div#container .sprite.shadow{
+	display: block;
 }
 
 /* ANIMATIONS */
@@ -572,7 +587,7 @@ div#container .items .sprite.shadow{
     100% { background-position-x: -1200px; }
 }
 
-@keyframes moveup{
+@keyframes moveup {
     100% { top: -125px; }
 }
 

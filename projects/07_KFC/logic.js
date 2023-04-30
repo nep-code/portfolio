@@ -28,28 +28,11 @@ var TXConfig = (function () {
         	'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/Draggable.min.js'
 			
 	],
-		/** SET true IF MOBILE OR false IF DESKTOP [true/false]: */
-		is_mobile = false,
-		
         loadedAssets = 0,
 		otherAssets = 0,
         totalAssets = init_Images.length + init_JS.length,
-		
-		is_explorer,
-		is_chrome = navigator.userAgent.indexOf('Chrome') > -1,
-		is_firefox = navigator.userAgent.indexOf('Firefox') > -1,
-		is_safari = navigator.userAgent.indexOf("Safari") > -1,
-		is_opera = navigator.userAgent.toLowerCase().indexOf("op") > -1,
-		is_android = navigator.userAgent.toLowerCase().indexOf("android") > -1;
-		
-		if ((is_chrome)&&(is_safari)) is_safari = false;
-		if ((is_chrome)&&(is_opera)) is_chrome = false;	
-	
-		// IE10 || IE11 || IE EDGE
-		if (navigator.userAgent.indexOf('MSIE') > -1 ||
-			navigator.userAgent.indexOf('Trident/') > -1 || 
-			navigator.userAgent.indexOf('Edge/') > -1)
-			is_explorer = true;		
+		stageScale = 1,
+		is_mobile = ("ontouchstart" in document.documentElement) ? true : false;	
 	
 	return {
 		loadedAssets    : loadedAssets,
@@ -59,7 +42,7 @@ var TXConfig = (function () {
 		other_Images	: other_Images,
 		otherAssets		: otherAssets,
 		is_mobile		: is_mobile,
-		is_safari		: is_safari
+		stageScale		: stageScale
 	};
 
 })();
@@ -161,15 +144,11 @@ var TXVariables = (function () {
 		AD.plus 			= $('#plus');
 		AD.touchdown 		= $('#touchdown');		
 		AD.items 			= $('.items');
-		AD.top_items 		= $('.top_items');
-		AD.mid_items 		= $('.mid_items');
-		AD.bot_items 		= $('.bot_items');
 		AD.itemInterval 	= null;
 		AD.endInterval 		= null;
 		AD.currentItem		= 4;
 		AD.currentPlayer	= 263;
-		AD.currentItems 	= [];
-		AD.score			= 0;		
+		AD.currentItems 	= [];	
 		AD.options	 		= [0,1,2,3,4,5];
 		AD.ready			= true;		
 		AD.itemSpeed 		= 1.961;
@@ -216,10 +195,9 @@ var TXCreative = (function () {
 		// LOAD OTHER IMAGES:
 		TXAd.loadotherImages(TXConfig.other_Images);
 		
-		// LOAD VIDEO:
+		TX_Game.INIT();
+		TX_Controller.INIT();
 		TXVideo.init();
-		
-		// LOAD AUDIO:
 		TXAudio.init();	
 		
 		fn_headline();
@@ -227,7 +205,8 @@ var TXCreative = (function () {
 	
 	function fn_STEP2 () {
 		// LOAD GAME
-		TXGame.init();
+		gsap.set('#game_container', {top:0});
+		TX_Game.START();
 	}
 	
 	function fn_STEP3 () {
@@ -235,7 +214,7 @@ var TXCreative = (function () {
 		AD.STEP_3.show();
 		AD.confetti1.show();
 		AD.confetti1.addClass('animate');
-		gsap.fromTo(AD.confetti1,0.8,{top:-680},{top:0, ease:Power0.easeNone, onComplete: function(){
+		gsap.fromTo(AD.confetti1,0.8,{top:-680},{top:0, ease:'none', onComplete: function(){
 			gsap.delayedCall(15, fn_outconfetti12);
 		}});
 		
@@ -276,7 +255,7 @@ var TXCreative = (function () {
 			case 'btn_playagain':
 				AD.sndURL[4].play();
 				AD.STEP_3.hide();
-				TXGame.reset();
+				TX_Game.RESET();
 				fn_STEP2();								
 				break;
 			case 'LOGOPANEL':
@@ -296,11 +275,9 @@ var TXCreative = (function () {
 				break;
 		}
 	}
-	
-	
-	
+		
 	function fn_headline () {
-		gsap.fromTo(AD.ball,1,{left:660, rotation:20},{left:-124, rotation:-20, ease:Power0.easeNone});
+		gsap.fromTo(AD.ball,1,{left:660, rotation:20},{left:-124, rotation:-20, ease:'none'});
 		gsap.fromTo(AD.ball,0.5,{top:160},{top:40, ease:Power1.easeOut, onComplete: function(){
 			gsap.fromTo(AD.ball,0.5,{top:40},{top:160, ease:Power1.easeIn, onComplete: fn_complete});
 		}});
@@ -359,6 +336,459 @@ var TXCreative = (function () {
 	return {
 		fn_STEP1 : fn_STEP1,
 		fn_STEP3 : fn_STEP3
+	};
+
+})();
+
+/********************************************************************** CONTROLLER
+	 * TX_Controller.INIT();			- create controller
+	 * TX_Controller.START();			- start controller
+	 * TX_Controller.RESET();			- reset controller
+	 */
+var TX_Controller = (function() {
+		
+	var script = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/Draggable.min.js',
+
+	container 			= '#container #controller_container',
+	mid_btn 			= '#container #controller_mid_btn',
+	up_btn 				= '#container #controller_up_btn',
+	down_btn 			= '#container #controller_down_btn',
+	player				= '#container #player',
+	btn					= '#container .controller_btn',
+
+	active				= false,
+	keymoveup			= null,
+	currentLane			= 1,
+	keyReady			= true,
+		
+	INIT = function() {
+		$.getScript(script, CONFIG);
+	},
+
+	CONFIG = function() {
+		let _containerLeft          = 0,
+			_containerTop        	= 0,
+			_containerWidth         = 660,
+			_containerHeight        = 500,
+			_containerColor         = 'rgba(0,0,255,0)',
+			_thumbWidth         	= 660,
+			_thumbHeight        	= 500,
+			_playerPosition			= gsap.getProperty(player, 'top');
+
+		$('#MAINPANEL').append(
+			"<div id='controller_container'>" +
+				"<div id='controller_mid_btn'></div>" +
+				"<div id='controller_up_btn' class='controller_btn'></div>" +
+				"<div id='controller_down_btn' class='controller_btn'></div>" +
+			"</div>"			
+		);
+
+		$(container).css({
+			left: _containerLeft,
+			top: _containerTop,
+			width: _containerWidth,
+			height: _containerHeight,
+			backgroundColor: _containerColor,
+			display: 'none'
+		});
+
+		$(mid_btn).css({
+			top: 0,
+			width: '100%',
+			height: '100%',
+			backgroundColor: 'rgba(255,0,255,0)'
+		});
+		
+		$(up_btn).css({
+			top: _playerPosition - _thumbHeight - 40,
+			width: _thumbWidth,
+			height: _thumbHeight,
+			backgroundColor: 'rgba(0,0,255,0)'
+		});
+
+		$(down_btn).css({
+			top: _playerPosition + 20,
+			width: _thumbWidth,
+			height: _thumbHeight,
+			backgroundColor: 'rgba(255,0,0,0)'
+		});
+
+		ADD_EVENTS();
+	},
+
+	ADD_EVENTS = function() {
+		if(!TXConfig.is_mobile) {
+			$(container).hide();
+			$(document).keydown(KEYPRESS_ON);
+			$(document).keyup(KEYPRESS_OFF);
+		} else {
+			$(btn).bind('touchstart mousedown', KEYPRESS_ON);
+			$(btn).bind('touchend mouseup', KEYPRESS_OFF);
+			Draggable.create(mid_btn, {
+				zIndexBoost:false,
+				type:"y",
+				onDrag: function() { 
+					if(this.y < 0) MOVE_UP();
+					else if(this.y > 0) MOVE_DOWN();
+				},
+				onDragEnd: function() {
+					KEYPRESS_OFF();
+				  	gsap.set(mid_btn, {y:0}); 
+				}
+			});
+		}
+	},
+
+	KEYPRESS_ON = function(e) {
+		if(e.keyCode == 38 || this.id == 'controller_up_btn') {
+			e.preventDefault();
+			MOVE_UP();
+		}
+		else if(e.keyCode == 40 || this.id == 'controller_down_btn') {
+			e.preventDefault();
+			MOVE_DOWN();
+		}
+	},
+
+	MOVE_UP = function () {
+		active = true;
+		keymoveup = true;
+	},
+
+	MOVE_DOWN = function () {
+		active = true;
+		keymoveup = false;
+	},
+
+	ON_KEYMOVE = function(e) {
+		if(active) {
+			let lanes		= [132,263,394],
+				contentPosY	= [-125,0,125],
+				speed		= 0.3;
+				
+			if(keymoveup) {
+				if(currentLane !== 0 && keyReady) {
+					keyReady = false;
+					currentLane--;
+					gsap.to(container, speed,{top:contentPosY[currentLane], ease:'none'});
+					gsap.to(player, speed,{top:lanes[currentLane], ease:'none', onComplete: ()=> keyReady = true });
+				}
+			}
+			else {
+				if(currentLane < (lanes.length-1) && keyReady) {
+					keyReady = false;
+					currentLane++;
+					gsap.to(container, speed,{top:contentPosY[currentLane], ease:'none'});
+					gsap.to(player, speed,{top:lanes[currentLane], ease:'none', onComplete: ()=> keyReady = true});
+				}
+			}
+		}		
+	},
+
+	KEYPRESS_OFF = function(e) {
+		active = false;
+	},
+
+	START = function(e) {
+		if(!TXConfig.is_mobile) {
+			$(container).hide();
+			$(document).keydown(KEYPRESS_ON);
+			$(document).keyup(KEYPRESS_OFF);
+		} else {
+			$(container).show();
+			$(btn).bind('touchstart mousedown', KEYPRESS_ON);
+			$(btn).bind('touchend mouseup', KEYPRESS_OFF);
+		}
+		gsap.ticker.add(ON_KEYMOVE);
+	},
+
+	RESET = function(e) {
+		active = false;
+		currentLane = 1;
+
+		$(container).css({top: 0});
+
+		if(!TXConfig.is_mobile) {
+			$(document).off('keydown');
+			$(document).off('keyup');
+		} else {
+			$(container).hide();
+			$(btn).unbind('touchstart mousedown');
+			$(btn).unbind('touchend mouseup');
+			
+		}
+		gsap.ticker.remove(ON_KEYMOVE);
+	},
+
+	STOP = function(e) {
+		active = false;
+		if(!TXConfig.is_mobile) {
+			$(document).off('keydown');
+			$(document).off('keyup');
+		} else {
+			$(container).hide();
+			$(btn).unbind('touchstart mousedown');
+			$(btn).unbind('touchend mouseup');
+			
+		}
+		gsap.ticker.remove(ON_KEYMOVE);
+	};
+		
+	return {
+		INIT 	: INIT,
+		START	: START,
+		RESET	: RESET,
+		STOP	: STOP
+	};
+	
+})();
+
+var TX_Game = (function() {
+
+	var script = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/TextPlugin.min.js',
+
+	content		= '#game_content',
+	lanes		= [150,282,416],
+	score		= 0,
+	npc			= {
+				origin: 660,
+				width: 50,
+				height: 60,
+				positions: [0,2,1,0,1,2,0,2,1,0,1,2,1,0,1,2,0,2,1,0,1,2,1,0,1,2,0,2,1,0,1,2,1,0,1,2,0,2,1,0],
+				speed: 1.82,
+				interval: 0.6,
+				current_count: 0,
+				max_count: 40,
+				url: 'src/sprite.png'
+			},
+
+	INIT = function() {
+		$.getScript(script);
+		//gsap.ticker.lagSmoothing(false); //continues animation when a tab is inactive
+	},
+
+	START = function() {
+		ANIMATE_BG();
+		ANIMATE_PLAYER();
+		ANIMATE_NPC();
+		TX_Controller.START();
+	},
+
+	RESET = function() {
+		let player 	= '#player';
+
+		npc.current_count = 0;
+		score = 0;
+
+		STOP();
+		UPDATE_SCORE(score);
+		TX_Controller.RESET();
+
+		$("div.npc").remove();
+		gsap.set(player, {top:263, left:80});
+		gsap.set(AD.touchdown, {right:-360});
+		AD.character.removeClass('dance');
+	},
+
+	STOP = function() {
+		TX_Controller.STOP();
+		gsap.killTweensOf('.npc, .npc div');
+		gsap.killTweensOf(ANIMATE_NPC);
+	},
+
+	CREATE_NPC = function(n) {
+		let id 		= '#npc_' + n,
+			items	= ['bucket', 'chicken', 'opponent1', 'opponent2'];
+
+		$(content).prepend(
+			"<div id='npc_" + n + "' class='npc' >" +
+				"<div class='sprite shadow'></div>" +
+				"<div class='items sprite'></div>" +
+			"</div>"			
+		);
+
+		$(id).css({
+			left: npc.origin,
+			top: lanes[npc.positions[n]],
+			width: npc.width,
+			height: npc.height-2
+		});
+
+		if(npc.positions[n]==2) gsap.set(id,{zIndex:1});
+
+		$(id + ' div').css({
+			left: -40,
+			top: -130
+		});
+
+		$(id + ' .items').addClass(items[Math.floor(Math.random()*items.length)]);
+
+		switch (npc.positions[n]) {
+			case 0: $(id).addClass('top'); break;
+			case 1: $(id).addClass('mid'); break;
+			case 2: $(id).addClass('bot');  break;
+		}
+	},
+
+	ANIMATE_BG = function() {
+		gsap.fromTo(AD.field,0.8,{left:0},{left:-355, ease:'none', repeat:-1});
+		gsap.fromTo(AD.crowd,0.9,{left:0},{left:-353, ease:'none', repeat:-1});
+		AD.crowd.addClass('animate');
+	},
+
+	ANIMATE_PLAYER = function() {
+		AD.character.addClass('run');
+		AD.player.show();
+	},
+
+	ANIMATE_HIT = function(npc) {
+		var currentitem = npc + ' .items';
+
+		if($(currentitem).hasClass('bucket')) {			
+			AD.sndURL[1].currentTime = 0;
+			AD.sndURL[1].play();
+			score +=10;
+			document.getElementById('plus').innerHTML = '+10';
+			gsap.fromTo(AD.plus,0.4,{alpha:1, top: -20},{alpha:0, top: -100, ease:'power2.in'});
+			UPDATE_SCORE(score);
+			$(npc).hide();
+		} else if($(currentitem).hasClass('chicken')) {
+			AD.sndURL[2].currentTime = 0;
+			AD.sndURL[2].play();
+			score +=5;
+			document.getElementById('plus').innerHTML = '+5';				
+			gsap.fromTo(AD.plus,0.4,{alpha:1, top: -20},{alpha:0, top: -100, ease:'power2.in'});
+			UPDATE_SCORE(score);
+			$(npc).hide();
+		} else if ($(currentitem).hasClass('opponent1') || $(currentitem).hasClass('opponent2')) {
+			AD.sndURL[3].currentTime = 0;
+			AD.sndURL[3].play();
+			AD.ready = false;
+			gsap.fromTo(AD.character,2.8,{alpha:0.5},{alpha:0.5, onComplete: fn_ready});		
+			AD.stars.addClass('animate');
+		}
+
+		function fn_ready () {
+			gsap.set(AD.character,{alpha:1});
+			AD.ready = true;
+			AD.stars.removeClass('animate');
+		}
+	},
+
+	ANIMATE_NPC = function() {
+		let count 		= npc.current_count,
+			max_count 	= npc.max_count,
+			speed 		= npc.speed,
+			width 		= npc.width,
+			interval	= npc.interval,
+			$npc		= '#npc_'+count;
+
+		CREATE_NPC(count);
+
+		gsap.to($npc, {
+			duration:speed,
+			left:-Math.abs(width+100), 
+			ease:'none',
+			onUpdate: ()=> HITCHECK(count),
+			onComplete: ()=> ENDCHECK(count)
+		});
+
+		if($($npc+' .items').hasClass("chicken") || $($npc+' .items').hasClass("bucket")) $($npc+' .shadow').show();
+
+		if(count < max_count-1) gsap.delayedCall(interval, ANIMATE_NPC);
+
+		npc.current_count +=1;
+	},
+
+	HITCHECK = function(n) {
+		let player 		= '#crosshair',
+			id			= '#npc_'+n,
+			playerPosY	= $('#player').offset().top / TXConfig.stageScale;
+			
+		if(COLLISION($(player), $(id))){
+			if(AD.ready) {
+				$(id).removeClass('ready');
+				ANIMATE_HIT(id);
+			}
+			//ENDCHECK(n);
+		}
+
+		if(playerPosY <= 253){
+			//TOP
+			if($(id).hasClass('top')) $(id).css('z-index', 0);
+			$(player).css('z-index', 1);
+			if($(id).hasClass('mid')) $(id).css('z-index', 2);
+		}
+		else if(playerPosY >= 273){
+			//TOP
+			if($(id).hasClass('mid')) $(id).css('z-index', 0);
+			if($(id).hasClass('top')) $(id).css('z-index', 0);
+			$(player).css('z-index', 1);
+		}
+
+	},
+
+	UPDATE_SCORE = function(n) {
+		let txt_score= '#score';
+		if(n <=9) gsap.set(txt_score, {text:'00' + n});
+		else if(score <=99) gsap.set(txt_score, {text:'0' + n});
+		else gsap.set(txt_score, {text:n});
+	},
+
+	ENDCHECK = function(n) {
+		let max_count 	= npc.max_count-1;
+
+		$('#npc_'+n).remove();
+		
+		if(n === max_count-1) {
+			TX_Controller.STOP();
+			ENDGAME();
+		}
+	},
+
+	ENDGAME = function() {
+		gsap.fromTo(AD.touchdown,0.81,{right:-360},{/* delay:0.22, */ delay:0.14, right:0, ease: 'none', onComplete: function(){
+			gsap.killTweensOf(AD.field);
+			/* gsap.set(AD.field,{left:-89}); */
+			gsap.killTweensOf(AD.crowd);
+			gsap.fromTo(AD.player,1,{left: 80},{left:580, ease: 'none', onComplete: fn_dance});
+		}});
+		
+		function fn_dance () {
+			AD.character.removeClass('run');			
+			AD.character.addClass('dance');
+			AD.stars.removeClass('animate');
+			gsap.set(AD.character,{alpha:1});
+			document.getElementById('txt_points').innerHTML = 'You got ' + AD.score + ' points. Nice job!';
+			TXCreative.fn_STEP3();
+		}
+	},
+
+	COLLISION = function($div1, $div2) {
+		var x1 = $div1.offset().left / TXConfig.stageScale,
+			y1 = $div1.offset().top / TXConfig.stageScale,
+			h1 = $div1.outerHeight(true),
+			w1 = $div1.outerWidth(true),
+			b1 = y1 + h1,
+			r1 = x1 + w1,
+			x2 = $div2.offset().left / TXConfig.stageScale,
+			y2 = $div2.offset().top / TXConfig.stageScale,
+			h2 = $div2.outerHeight(true),
+			w2 = $div2.outerWidth(true),
+			b2 = y2 + h2,
+			r2 = x2 + w2;
+
+		if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
+		else return true;
+	},
+
+	R = function(min,max) {return min+Math.random()*(max-min);};
+
+	return {
+		INIT 	: INIT,
+		START	: START,
+		RESET	: RESET,
+		STOP	: STOP
 	};
 
 })();
@@ -566,245 +996,6 @@ var	TXVideo = (function () {
 		destroy		: destroy,
 		playVideo	: playVideo,
 		pauseVideo	: pauseVideo
-	};
-
-})();
-
-/**###################################################
- * SET UP NEW GAME HERE
- * ###################################################
- */	
-var TXGame = (function () {
-	
-	function init () {
-		gsap.fromTo(AD.field,0.8,{left:0},{left:-355, ease:Power0.easeNone, repeat:-1});
-		gsap.fromTo(AD.crowd,0.9,{left:0},{left:-353, ease:Power0.easeNone, repeat:-1});
-
-		AD.crowd.addClass('animate');
-		AD.character.addClass('run');
-		AD.player.show();
-		fn_loopitems();		
-		window.addEventListener('keydown', fn_keydown, false);
-		
-		gsap.ticker.add(fn_ticker);
-		
-		gsap.delayedCall(15, fn_checkendgame);
-	}
-	
-	function fn_ticker () {
-		for (var i=0;i<=4;i++){
-			fn_checkhit('#top_item' + i);
-			fn_checkhit('#mid_item' + i);
-			fn_checkhit('#bot_item' + i);
-		}
-	}
-	
-	function fn_checkhit(item) {
-	  	if(!AD.ready) return;
-		var currentitem = item + ' ._items',
-			itemhit = Draggable.hitTest(AD.player, $(item));
-		if (itemhit && $(item).hasClass('ready') ) {
-			$(item).removeClass('ready');
-			
-			if($(currentitem).hasClass('bucket')) {
-				AD.sndURL[1].currentTime = 0;
-				AD.sndURL[1].play();
-				AD.score +=10;
-				document.getElementById('plus').innerHTML = '+10';
-				gsap.fromTo(AD.plus,0.4,{alpha:1, top: -20},{alpha:0, top: -100, ease:Power2.easeIn});
-				fn_updatescore(item);
-			} else if($(currentitem).hasClass('chicken')) {
-				AD.sndURL[2].currentTime = 0;
-				AD.sndURL[2].play();
-				AD.score +=5;
-				document.getElementById('plus').innerHTML = '+5';				
-				gsap.fromTo(AD.plus,0.4,{alpha:1, top: -20},{alpha:0, top: -100, ease:Power2.easeIn});
-				fn_updatescore(item);
-			} else if ($(currentitem).hasClass('opponent1') || $(currentitem).hasClass('opponent2')) {
-				AD.sndURL[3].currentTime = 0;
-				AD.sndURL[3].play();
-				AD.ready = false;
-				gsap.fromTo(AD.character,2.8,{alpha:0.5},{alpha:0.5, onComplete: fn_ready});		
-				AD.stars.addClass('animate');
-			}
-		}
-		
-		function fn_ready () {
-			gsap.set(AD.character,{alpha:1});
-			AD.ready = true;
-			AD.stars.removeClass('animate');
-		}
-	}
-	
-	function fn_checkendgame () {
-		if(AD.field.position().left<= -250){
-			fn_endgame();
-		} else 
-			AD.endInterval = gsap.delayedCall(0.01, fn_checkendgame);
-	}
-	
-	function fn_endgame() {
-		AD.itemInterval.kill();
-		gsap.fromTo(AD.touchdown,0.8,{right:-360},{delay:1.2, right:0, ease: Power0.easeNone, onComplete: function(){
-			gsap.killTweensOf(AD.field);
-			gsap.set(AD.field,{left:-89});
-			gsap.killTweensOf(AD.crowd);
-			gsap.fromTo(AD.player,1,{left: 80},{left:580, ease: Power0.easeNone, onComplete: fn_dance});
-			window.removeEventListener('keydown', fn_keydown, false);
-		}});
-		
-		function fn_dance () {
-			AD.character.removeClass('run');			
-			AD.character.addClass('dance');
-			AD.stars.removeClass('animate');
-			gsap.set(AD.character,{alpha:1});
-			document.getElementById('txt_points').innerHTML = 'You got ' + AD.score + ' points. Nice job!';
-			TXCreative.fn_STEP3();
-		}
-	}
-
-	function fn_keydown (e) {
-		switch (e.key) {
-			case 'Up': // Up
-			case 'ArrowUp':
-				e.preventDefault();
-				if(AD.currentPlayer !=132) AD.currentPlayer-=131;
-				break;
-			case 'Down': // Down
-			case 'ArrowDown':
-				e.preventDefault();
-				if(AD.currentPlayer !=394) AD.currentPlayer+=131;
-				break;
-			default: return;
-		}
-		gsap.to(AD.player,0.2,{top:AD.currentPlayer,onComplete: function(){
-			fn_changeposition(AD.currentPlayer);
-		}});
-	}
-				  
-	function fn_changeposition(currentPlayer) {
-		gsap.set(AD.top_items,{zIndex:0});
-		switch(currentPlayer){
-			case 132:
-				gsap.set([AD.mid_items,AD.bot_items],{zIndex:2});
-				gsap.set(AD.player,{zIndex:1});
-			   break;
-			case 263:
-				gsap.set(AD.mid_items,{zIndex:0});
-				gsap.set(AD.bot_items,{zIndex:2});
-				gsap.set(AD.player,{zIndex:1});
-			   break;
-			case 394:
-				gsap.set([AD.mid_items,AD.bot_items],{zIndex:1});
-				gsap.set(AD.player,{zIndex:2});
-			   break;
-			
-			default: return;
-		}
-	}
-	
-	function fn_loopitems () {
-		if(AD.currentItem == 4) AD.currentItem = 0;
-			else AD.currentItem +=1;
-
-			shuffle(AD.options);
-		
-			var bot_item = '#bot_item' + AD.currentItem,
-				mid_item = '#mid_item' + AD.currentItem,
-				top_item = '#top_item' + AD.currentItem;
-
-			fn_changeitem (AD.options[0], bot_item);
-			fn_changeitem (AD.options[1], mid_item);
-			fn_changeitem (AD.options[2], top_item);
-
-			if(AD.options[0] != 5)
-			gsap.fromTo(bot_item, AD.itemSpeed,
-				{left:720, display: 'block'},{left:-150, ease:Power0.easeNone});
-		
-			if(AD.options[1] != 5)
-			gsap.fromTo(mid_item, AD.itemSpeed,
-				{left:720, display: 'block'},{delay: 0.15, left:-150, ease:Power0.easeNone});
-		
-			if(AD.options[2] != 5)
-			gsap.fromTo(top_item, AD.itemSpeed,
-				{left:720, display: 'block'},{delay: 0.35, left:-150, ease:Power0.easeNone});
-
-		AD.itemInterval = gsap.delayedCall( randomNum(0.5, 0.8), fn_loopitems);	
-	}
-	
-	function fn_updatescore(item) {
-		$(item).hide();
-		if(AD.score <=9)
-	  		document.getElementById('score').innerHTML = '00'+ AD.score;
-		else if(AD.score <=99)
-	  		document.getElementById('score').innerHTML = '0'+ AD.score;
-		else
-			document.getElementById('score').innerHTML = AD.score;
-	}
-	
-	function fn_changeitem (option,item) {
-		var currentitem = item + ' ._items',
-			currentshadow = item + ' .shadow';
-		
-		$(currentitem).removeClass('opponent1');
-		$(currentitem).removeClass('opponent2');
-		$(currentitem).removeClass('chicken');
-		$(currentitem).removeClass('bucket');
-		
-		$(currentshadow).removeClass('active');
-		
-		switch(option){
-			case 0: // opponent 1
-				$(currentitem).addClass('opponent1');
-			   break;
-			case 1: // opponent 2
-				$(currentitem).addClass('opponent2');
-			   break;
-			case 2:
-			case 3: // chicken
-				$(currentitem).addClass('chicken');
-				$(currentshadow).addClass('active');
-			   break;			
-			case 4: // bucket
-				$(currentitem).addClass('bucket');
-				$(currentshadow).addClass('active');
-			   break;
-		}
-		
-		$(item).addClass('ready');
-	}
-	
-	function fn_reset () {
-		AD.character.removeClass('dance');
-		gsap.set(AD.player, {left:80});
-		gsap.set(AD.touchdown, {right:-360});
-		AD.score = 0;
-		AD.ready = true;
-		document.getElementById('score').innerHTML = '000';
-				
-		gsap.ticker.remove(fn_ticker);
-	}
-	
-	function randomNum(min, max) {
-		return Math.random() * (max - min) + min;
-	}
-	
-	function shuffle(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-        while (0 !== currentIndex) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-        return array;
-    }
-
-	// public
-	return {
-		init : init,
-		reset : fn_reset
 	};
 
 })();
