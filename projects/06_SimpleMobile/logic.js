@@ -163,15 +163,18 @@ var TXVariables = (function () {
 		AD.timeInterval		= null;
 		
 		gsap.ticker.lagSmoothing(false); //continues animation when a tab is inactive
+
+		TXConfig.is_mobile = true;
 		
 		if(TXConfig.is_mobile) {
 			$('#txt_intro').css('background-image', 'url(src/txt_intro_mob.png)');
 			$('#instruction').css('background-image', 'url(src/instruction_mob.png)');
 			AD.spr_legal.addClass('mobile');
 			AD.spr_disclaimer.addClass('mobile');
-			$('#ie_cursor').hide();
+			$('#ie_cursor').remove();
 		} else {
 			$('#ie_cursor').css('background-image', 'url(' + TXConfig.init_Images[1] + ')');
+			AD.button.css('cursor','pointer');
 		}
 		
 		TXCreative.fn_STEP1();
@@ -202,8 +205,6 @@ var TXCreative = (function () {
 		
 		// LOAD OTHER IMAGES:
 		TXAd.loadotherImages(TXConfig.other_Images);
-		
-		AD.button.css('cursor','pointer');
 		
 		tl.to( AD.s1, 0.5, {delay: 0.1, alpha:1})
 		.to(AD.intro_string, 0.1, {rotation: random(-1,1), x:random(-5,5), y:random(-3,3)})
@@ -481,9 +482,9 @@ var TXStrings = (function () {
 		
 		tl.set($('#'+AD.strings[AD.strings.length-1] +' .string') ,{alpha:0})
 		.fromTo($('#'+AD.strings[AD.strings.length-1] +' .cut_left'), 0.14,
-			{force3D:true, alpha:1, left: mark-1020},{alpha:1, left: -760, scaleX:0.5, ease:'power1.in'})
+			{/* force3D:true,  */alpha:1, left: mark-1020},{alpha:1, left: -760, scaleX:0.5, ease:'power1.in'})
 		.fromTo($('#'+AD.strings[AD.strings.length-1] +' .cut_right'), 0.14,
-			{force3D:true, alpha:1, left: mark-20},{alpha:1, left: 770, scaleX:0.5, ease:'power1.in'},'<');
+			{/* force3D:true,  */alpha:1, left: mark-20},{alpha:1, left: 770, scaleX:0.5, ease:'power1.in'},'<');
 		
 		function complete () {
 			$("#"+AD.strings[AD.strings.length-1]).remove();
@@ -575,6 +576,9 @@ var TXCursor = (function () {
 			canvas_cursor,
 			ctx_cursor,
 
+			cursorWidth = 145,
+			cursorHeight = 151,
+
 			mouseX = 0,
 			mouseY = 0,
 			mouseXOld = 0,
@@ -585,7 +589,7 @@ var TXCursor = (function () {
 			particles = [],
 			particleCount = 0,
 
-			fpsInterval, now, then, elapsed,
+			fpsInterval, startTime, now, then, elapsed,
 			
 			transform, values, a, b, scale,
 
@@ -602,7 +606,7 @@ var TXCursor = (function () {
 		
 		canvas_cursor = document.getElementById('cursorHolder');
 		ctx_cursor = canvas_cursor.getContext('2d');
-				
+
 		transform = $('#container').css('transform');
 			
 		if (transform != 'none') {
@@ -629,7 +633,7 @@ var TXCursor = (function () {
 		gameShieldTop = gameShieldCorner.top;
 		
 		// Add listeners
-		if(AD.is_mobile) {
+		if(TXConfig.is_mobile) {
 			$(window).on('touchend', onCanvasHolderUp);
 			AD.canvasHolder.on('touchstart', onCanvasHolderDown);		
 			AD.canvasHolder.on('touchmove', onCanvasHolderMove);
