@@ -672,7 +672,6 @@ var STEP_5 = (function () {
             s5_ico_05_on    = $( '#STEP_5 #s5_ico_05_on' ),
             s5_ico_06_on    = $( '#STEP_5 #s5_ico_06_on' ),
             s5_cir          = $( '#STEP_5 .s5_cir' ),
-            s5_ico          = $( '#STEP_5 .s5_ico' ),
             s5_ico_on       = $( '#STEP_5 .s5_ico_on' ),
             nxt_txt         = $( '#container #nxt_txt' ),
             w               = 0,
@@ -714,6 +713,52 @@ var STEP_5 = (function () {
         gsap.fromTo(s5_circle2, 3, {rotation:0}, { rotation:360, repeat:-1, ease:'none'});
         gsap.fromTo(s5_circle3, 3, {rotation:0}, { rotation:360, repeat:-1, ease:'none'});
         gsap.fromTo(s5_glow, 1, {alpha:1}, { alpha:0.2, yoyo:true, repeat:-1, ease:'none'});
+
+        Draggable.create(s5_scrubber, {
+            type: "left",
+            bounds: s5_bar,
+            onDrag: function() {
+                if($(this.target).position().left <=440){
+                    if(w!=0)changeFrame(0);
+                }
+                else if($(this.target).position().left >=441 && $(this.target).position().left <=533){
+                    if(w!=1)changeFrame(1);
+                }
+                else if($(this.target).position().left >=534 && $(this.target).position().left <=625){
+                    if(w!=2)changeFrame(2);
+                }
+                else if($(this.target).position().left >=626 && $(this.target).position().left <=717){
+                    if(w!=3)changeFrame(3);
+                }
+                 else if($(this.target).position().left >=718 && $(this.target).position().left <=809){
+                    if(w!=4)changeFrame(4);
+                }
+                 else if($(this.target).position().left >=810){
+                    if(w!=5)changeFrame(5);
+                }
+            },
+            onRelease: function(){
+                if($(this.target).position().left <=440){
+                    gsap.to(s5_scrubber, 0.2, {left:395, ease: 'power2.inOut'});
+                }
+                else if($(this.target).position().left >=441 && $(this.target).position().left <=533){
+                    gsap.to(s5_scrubber, 0.2, {left:485, ease: 'power2.inOut'});
+                }
+                else if($(this.target).position().left >=534 && $(this.target).position().left <=625){
+                    gsap.to(s5_scrubber, 0.2, {left:580, ease: 'power2.inOut'});
+                }
+                 else if($(this.target).position().left >=626 && $(this.target).position().left <=717){
+                    gsap.to(s5_scrubber, 0.2, {left:671, ease: 'power2.inOut'});
+                }
+                 else if($(this.target).position().left >=718 && $(this.target).position().left <=809){
+                    gsap.to(s5_scrubber, 0.2, {left:763, ease: 'power2.inOut'});
+                }
+                 else if($(this.target).position().left >=810){
+                    gsap.to(s5_scrubber, 0.2, {left:854, ease: 'power2.inOut'});
+                }
+            }
+
+        });
         
         if(!s5_loaded){
             s5_loaded = true;
@@ -724,7 +769,6 @@ var STEP_5 = (function () {
             s5_ico_05.on('click', s5_click);
             s5_ico_06.on('click', s5_click);
         }
-        
         
         function s5_reset(e){
             $( '#container #STEP_5' ).css('display','none');
@@ -772,50 +816,6 @@ var STEP_5 = (function () {
                     {delay:1, scale:1.2, yoyo:true, repeat:1, ease:'none'});
             iReady = true;
         }
-        
-        s5_scrubber.draggable({axis: "x",
-            containment: s5_bar,
-            stop: function(){
-                if($(this).position().left <=440){
-                    gsap.to(s5_scrubber, 0.2, {left:395, ease: 'power2.inOut'});
-                }
-                else if($(this).position().left >=441 && $(this).position().left <=533){
-                    gsap.to(s5_scrubber, 0.2, {left:485, ease: 'power2.inOut'});
-                }
-                else if($(this).position().left >=534 && $(this).position().left <=625){
-                    gsap.to(s5_scrubber, 0.2, {left:580, ease: 'power2.inOut'});
-                }
-                 else if($(this).position().left >=626 && $(this).position().left <=717){
-                    gsap.to(s5_scrubber, 0.2, {left:671, ease: 'power2.inOut'});
-                }
-                 else if($(this).position().left >=718 && $(this).position().left <=809){
-                    gsap.to(s5_scrubber, 0.2, {left:763, ease: 'power2.inOut'});
-                }
-                 else if($(this).position().left >=810){
-                    gsap.to(s5_scrubber, 0.2, {left:854, ease: 'power2.inOut'});
-                }
-            },
-            drag: function(){
-                if($(this).position().left <=440){
-                if(w!=0)changeFrame(0);
-                }
-                else if($(this).position().left >=441 && $(this).position().left <=533){
-                    if(w!=1)changeFrame(1);
-                }
-                else if($(this).position().left >=534 && $(this).position().left <=625){
-                    if(w!=2)changeFrame(2);
-                }
-                else if($(this).position().left >=626 && $(this).position().left <=717){
-                    if(w!=3)changeFrame(3);
-                }
-                 else if($(this).position().left >=718 && $(this).position().left <=809){
-                    if(w!=4)changeFrame(4);
-                }
-                 else if($(this).position().left >=810){
-                    if(w!=5)changeFrame(5);
-                }
-            }
-        });
         
         function s5_click(){ 
             switch(this.id){
