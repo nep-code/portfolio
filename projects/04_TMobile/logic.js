@@ -1,69 +1,80 @@
-/* Project: T-Mobile | Developer: Neptali Calonge | Date: Nov 16, 2017 */
-(function() {
+/* Project: Simple Mobile | Developer: Neptali Calonge | Date: May 23, 2018 */
+(function () {
 
 var TXConfig = (function () {
+		// ADD INITIAL IMAGES HERE [GIF,PNG,JPG]:
+	var init_Images = [
+		'src/cursor.png', //cursor
+		'src/cursor2.png', //cursor2
+		'src/spr_logo.png', //logo
+		'src/bg_intro.jpg', //bg_intro
+        'src/txt_intro.png', //txt_intro
+		'src/intro_string.png', //intro_string
+		'src/spr_disclaimer.png' //spr_disclaimer
+	],
+		// ADD OTHER IMAGES HERE [GIF,PNG,JPG]:
+		other_Images = [		
+        'src/spr_cheer.png', //spr_cheer
+		'src/instruction.png', //instruction
+		'src/sandtimer.png', //img_timer
+		'src/replay.png', //_replay
+		'src/sandtimer.png', //img_timer
+		'src/bg_end.jpg', //bg_end
+		'src/learnmore.png', //_learnmore
+		'src/spr_copy.png', //spr_copy
+		'src/spr_legal.png', //spr_legal
+		'src/spr_message.png', //spr_message
+		'src/spr_strings.png', //spr_strings
+		'src/greenglow.png' //greenglow
+	],
+		// ADD EXTERNAL JAVSCRIPTS HERE [JS]:
+        init_JS = [
+			'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js',
+			'https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js' //howler
+	],
 	
-	var creativeImages = [
-        'src/bg.png',
-		'src/spr_btn.png',
-		'src/txt_logo1.png',
-		'src/txt_copy1.png'
-	],
-		
-		otherImages = [
-        'src/txt_footer.png',
-		'src/btn_switchnow.png',
-		'src/pop_instruction.png',
-		'src/pop_result.png',
-		'src/txt_copy2.png',
-		'src/spr_cards.png',
-		'src/bg2.jpg',
-		'src/txt_copy3.png'
-	],
-		
-        creativeScripts = [
-		'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js'
-	],
-
         loadedAssets = 0,
 		otherAssets = 0,
-        totalAssets = creativeImages.length + creativeScripts.length;
-
+        totalAssets = init_Images.length + init_JS.length,
+		is_mobile = ("ontouchstart" in document.documentElement) ? true : false;
+	
 	return {
-		loadedAssets               : loadedAssets,
-		totalAssets                : totalAssets,
-		creativeImages             : creativeImages,
-		creativeScripts            : creativeScripts,
-		otherImages				   : otherImages,
-		otherAssets				   : otherAssets
+		loadedAssets              	: loadedAssets,
+		totalAssets               	: totalAssets,
+		init_Images            		: init_Images,
+		init_JS           			: init_JS,
+		other_Images				: other_Images,
+		otherAssets				 	: otherAssets,
+		is_mobile					: is_mobile
 	};
 
 })();
 
+
 var TXAd = (function () {
     
 	function init () {
-		loadImages ( TXConfig.creativeImages );
-		loadScripts( TXConfig.creativeScripts );		
+		loadImages ( TXConfig.init_Images );
+		loadScripts( TXConfig.init_JS );
 	}
 
 	function loadImages ( urls ) {
-		for ( var i = 0; i < urls.length; i++ ) {
-			var url = urls[i];
+		for ( let i = 0; i < urls.length; i++ ) {
+			let url = urls[i];
 			$( '<img />' ).attr( 'src', url ).on('load', updateAssetsLoaded);
 		}
 	}
 	
 	function loadotherImages ( urls ) {
-		for ( var i = 0; i < urls.length; i++ ) {
-			var url = urls[i];
+		for ( let i = 0; i < urls.length; i++ ) {
+			let url = urls[i];
 			$( '<img />' ).attr( 'src', url ).on('load', otherImagesLoaded);
 		}
 	}
     
 	function loadScripts ( urls ) {
-		for ( var i = 0; i < urls.length; i++ ) {
-			var url = urls[i];
+		for ( let i = 0; i < urls.length; i++ ) {
+			let url = urls[i];
 			$.getScript( url, updateAssetsLoaded);
 		}
 	}
@@ -75,15 +86,6 @@ var TXAd = (function () {
 	
 	function otherImagesLoaded () {
 		TXConfig.otherAssets += 1;
-		if ( TXConfig.otherAssets == TXConfig.otherImages.length ){
-			gsap.fromTo([AD.INSTRUCTION,AD.GAMEBOARD,AD.FOOTER],0.2, 
-				{display:'block',autoAlpha: 0},
-				{autoAlpha: 1, onComplete: function(){
-					AD.INTRO.hide();					
-					gsap.delayedCall(1,TXCreative.cd_3sec);
-					AD.sfx_countdown.get(0).play();
-				}});
-		}
 	}
 
 	return {
@@ -98,86 +100,79 @@ var TXAd = (function () {
  * ###################################################
  */
 var AD = {};
+
 var TXVariables = (function () {
 
-	function init () {			
-		//all creative variables
-		AD.flipout				= $( '.flipout' );
-		AD.txt_copy1			= $( '#txt_copy1' );
-		AD.zero					= 0;
-		
-		//buttons
-		AD.btn_startplaying		= $( '#btn_startplaying' );
-		AD.btn_switchtoday		= $( '#btn_switchtoday' );
-		AD.btn_playagain		= $( '#btn_playagain' );
-		AD.btn_switchnow		= $( '#btn_switchnow' );
-		AD.spr_cards			= $( '.spr_cards' );
-		
-		//frames
-		AD.INTRO				= $( '#INTRO' );
-		AD.INSTRUCTION			= $( '#INSTRUCTION' );
-		AD.GAMEBOARD			= $( '#GAMEBOARD' );
-		AD.RESULT				= $( '#RESULT' );
-		AD.ENDFRAME				= $( '#ENDFRAME' );
-		AD.FOOTER				= $( '#FOOTER' );
-		
-		//dynamic text
-		AD.countdown_3sec		= document.getElementById('countdown_3sec');
-		AD.countdown_30sec		= document.getElementById('countdown_30sec');
-		AD.matches				= document.getElementById('matches');
-		AD.txt_result			= document.getElementById('txt_result');
-		AD.txt_result2			= document.getElementById('txt_result2');
-		AD.txt_result3			= document.getElementById('txt_result3');
-		
-		AD.count				= 0;
-		AD.score				= 0;
-		AD.set					= 6;
-		AD.initElapse			= null;
-		AD.checkResult			= null;
-		
-		//gameboard
-		AD.card					= 0;
-		AD.selectedcard			= [];
-		AD.currentcard			= [];
-		AD.cardsY				= ['-150px', '-300px', '-450px', '-600px', '-750px', '-900px','-1050px'];
-		AD.cards				= [];
-		AD.ready				= true;
-		
-		//audio
-		AD.btn_sound			= $( '#sound' );
-		AD.audio_bg				= $( '#audio_bg' );
-		AD.sfx_countdown		= $( '#sfx_countdown' );
-		AD.sfx_flip				= $( '#sfx_flip' );
-		AD.sfx_match			= $( '#sfx_match' );
-		AD.sfx_reset			= $( '#sfx_reset' );
-		AD.sfx_gameover			= $( '#sfx_gameover' );
+	function init () {
 
-		AD._audio_bg			= $( '#_audio_bg' );
-		AD._sfx_countdown		= $( '#_sfx_countdown' );
-		AD._sfx_flip			= $( '#_sfx_flip' );
-		AD._sfx_match			= $( '#_sfx_match' );
-		AD._sfx_reset			= $( '#_sfx_reset' );
-		AD._sfx_gameover		= $( '#_sfx_gameover' );
+		// ADD VARIABLES FOR HTML ID ELEMENTS HERE [#id]:
+		AD.introPanel		= $( '#introPanel' );
+		AD.stringPanel		= $( '#stringPanel' );
+		AD.cheerPanel		= $( '#cheerPanel' );
+		AD.sandTimer		= $( '#sandTimer' );
+		AD.topSand			= $( '#topSand' );
+		AD.midSand			= $( '#midSand' );
+		AD.hidSand			= $( '#hidSand' );
+		AD.botSand			= $( '#botSand' );
+		AD.crosshair		= $( '#crosshair' );
+		AD.canvasHolder		= $( '#canvasHolder' );
+		AD.txt_cheer		= $( '#txt_cheer' );
+		AD.btn_replay		= $( '#btn_replay' );
+		AD.instruction		= $( '#instruction' );
+		AD.canvasHolder 	= $( '#canvasHolder' );
+		AD.cursorHolder 	= $( '#cursorHolder' );
+		AD.bg_end			= $( '#bg_end' );
+		AD.txt_message		= $( '#txt_message' );
+		AD.spr_copy			= $( '#spr_copy' );
+		AD.spr_legal		= $( '#spr_legal' );
+		AD.intro_string		= $( '#intro_string' );
+		AD.left_string		= $( '#left_string' );
+		AD.right_string		= $( '#right_string' );
+		AD.cursorHolder2 	= $( '#cursorHolder2' );
+		AD.sidePanel 		= $( '#sidePanel' );
+		AD.greenglow 		= $( '#greenglow' );
+		AD.dim		 		= $( '#dim' );
+		AD.simcard			= $( '#simcard' );
+		AD.spr_disclaimer	= $( '#spr_disclaimer' );
 		
-		AD._sfx_countdown.get(0).src = 'src/audio/sfx_countdown.mp3';
-		AD._sfx_match.get(0).src = 'src/audio/sfx_match.mp3';
-		AD._sfx_flip.get(0).src = 'src/audio/sfx_flip.mp3';		
-		AD._sfx_reset.get(0).src = 'src/audio/sfx_reset.mp3';
-		AD._sfx_gameover.get(0).src = 'src/audio/sfx_gameover.mp3';
+		// ADD VARIABLES FOR HTML CLASS ELEMENTS HERE [.class]:
+		AD.button			= $( '.button' );
+		AD.s1				= $( '.s1' );
+		AD.s3				= $( '.s3' );
 		
-		AD.audio_bg.get(0).load();
-		AD.sfx_countdown.get(0).load();
-		AD.sfx_flip.get(0).load();
-		AD.sfx_match.get(0).load();
-		AD.sfx_reset.get(0).load();
-		AD.sfx_gameover.get(0).load();
+		// ADD OTHER VARIABLES HERE: 
+		AD.timer			= null;
+		AD.status			= null;
+		AD.initBGM			= true;
+		AD.strings			= [];
+		AD.stringID			= null;
+		AD.zero				= 0;
+		AD.gametime			= false;
+		AD.targetCount		= 30;
+		AD.readytocut		= false;
+		AD.stringPosY		= ['-240px','-360px','-480px','-600px','-720px','-840px'];
+		AD.wiggle			= 15;
+		AD.initMobile		= true;
+		AD.mouseIsDown 		= false;
+		AD.hitInterval		= null;
+		AD.step_1			= true;
+		AD.cheerInterval	= null;
+		AD.cuts				= 0;
+		AD.time				= 20;
+		AD.timeInterval		= null;
 		
-		//autoplay
-		AD.autoplay			= null;
-		AD.isautoplay		= true;
-		AD.autoflip			= [0,1,2,3,4,5,6,7,8,9,10,11];
-		AD.flip				= 0; 
-		AD.ap_card 			= null;
+		gsap.ticker.lagSmoothing(false); //continues animation when a tab is inactive
+		
+		if(TXConfig.is_mobile) {
+			$('#txt_intro').css('background-image', 'url(src/txt_intro_mob.png)');
+			$('#instruction').css('background-image', 'url(src/instruction_mob.png)');
+			AD.spr_legal.addClass('mobile');
+			AD.spr_disclaimer.addClass('mobile');
+			$('#ie_cursor').remove();
+		} else {
+			$('#ie_cursor').css('background-image', 'url(' + TXConfig.init_Images[1] + ')');
+			AD.button.css('cursor','pointer');
+		}
 		
 		TXCreative.fn_STEP1();
 	}
@@ -195,386 +190,709 @@ var TXVariables = (function () {
 var TXCreative = (function () {
 
 	function fn_STEP1 () {
-		AD.btn_startplaying.on( 'click', fn_buttons );
-		AD.btn_switchtoday.on( 'click', fn_buttons );		
-		AD.btn_switchnow.on( 'click', fn_buttons );
-		AD.btn_sound.on( 'click', fn_sound );
-		AD.spr_cards.on( 'click', fn_cardpick );
-		AD.spr_cards.mouseover( 'over', fn_cardover );
-		AD.spr_cards.mouseout( 'over', fn_cardout );
-		
-		AD.btn_startplaying.mouseover( 'over', function(){ gsap.fromTo(AD.btn_startplaying, 0.1, {scale:1}, {scale:1.05});   } );
-		AD.btn_startplaying.mouseout( 'out', function(){ gsap.fromTo(AD.btn_startplaying, 0.1, {scale:1.05}, {scale:1});   } );
-			
-		gsap.from(AD.flipout,0.5, {top:960});
-		gsap.from(AD.txt_copy1,0.5, {delay:0.2, top:960});
-		gsap.from(AD.btn_startplaying,0.5, {delay:0.4, top:960});
-		gsap.fromTo(AD.btn_startplaying,0.2, {delay:1, scale:1}, {delay:1, scale:1.2});
-		gsap.to(AD.btn_startplaying,0.2, {delay:1.1, scale:1, onComplete: function(){
-			AD.btn_playagain.on( 'click', fn_buttons );
+		var tl = gsap.timeline({onComplete:function(){
+			gsap.set( AD.simcard, { background: 'url('+TXConfig.init_Images[1]+') no-repeat'});
+			introCut();
 		}});
-		
-		//AD.autoplay = setTimeout(fn_AUTOPLAY, 9000);
 
-		//AD.audio_bg.get(0).currentTime = 0;
-		//AD.audio_bg.get(0).play();
+		TXAudio.init();
+
+		AD.button.on( 'click', fn_buttons);
 		
-		// lower the sound volumes
-		AD.sfx_flip.get(0).volume = 0.3;
-		AD.sfx_match.get(0).volume = 0.3;
-		AD.sfx_reset.get(0).volume = 0.3;
-		AD.sfx_gameover.get(0).volume = 0.3;
+		TXAd.loadotherImages(TXConfig.other_Images);
+		
+		tl.to( AD.s1, 0.5, {delay: 0.1, alpha:1})
+		.to(AD.intro_string, 0.1, {rotation: random(-1,1), x:random(-5,5), y:random(-3,3)})
+		.to(AD.intro_string, 0.1, {rotation: random(-1,1), x:random(-5,5), y:random(-3,3)})
+		.to(AD.intro_string, 0.1, {rotation: random(-1,1), x:random(-5,5), y:random(-3,3)})
+		.to(AD.intro_string, 0.1, {rotation: random(-1,1), x:random(-5,5), y:random(-3,3)});
+		
+		//gsap.to(AD.intro_string, 1, {rotation: random(-1,1)})
+		function introCut(){	
+		 	gsap.to( AD.simcard, 0.5, { delay: 0.1, left:335, top: 325, ease:'back.in', 
+				onComplete: function(){		
+					gsap.set(AD.left_string, {width:400});
+					gsap.set(AD.right_string, {left:400});
+					gsap.to( AD.left_string, 0.2, {left:-400, scaleX:0.5} );
+					gsap.to( AD.right_string, 0.2, {left:1000, scaleX:0.5, onComplete: function(){
+					
+					setTimeout(function(){
+						TXCursor.init();
+						gsap.to(AD.introPanel, 0.2, {autoAlpha:0});
+						gsap.fromTo(AD.sidePanel, 0.2, {left:-161, display:'block'}, {left:0, onComplete: fn_STEP2});
+					}, 3000);
+				}});
+			}});
+		}
+
+		function random(min, max) { // min and max included 
+			return Math.random() * (max - min + 1) + min
+		}
+		
 	}
 	
 	function fn_STEP2 () {
-		card_setup ();
-		AD.ENDFRAME.hide();
-		AD.count = 30;
-		AD.score = 0;
-		AD.set = 6;
-		AD.card	= 0;
-		AD.selectedcard	= [];
-		AD.currentcard = [];
-		AD.ready = true;
-		AD.countdown_30sec.innerHTML = AD.count;
-		AD.matches.innerHTML = AD.score;
-		gsap.set(AD.spr_cards,{'background-position-y': 0});
-		gsap.delayedCall(1,cd_30sec);		
-		gsap.to(AD.audio_bg, 0.5,{volume: 0.3});
+		AD.gametime = true;
 		
-		AD.initElapse = setTimeout(ap_cardopen, 5000);
+		AD.introPanel.hide();
+		gsap.killTweensOf([AD.s3,AD.spr_disclaimer]);
+		
+		gsap.set(
+			[ AD.s3, AD.btn_replay ],
+		{ display:'none', autoAlpha:0 });
+		
+		gsap.set(
+			[ AD.cheerPanel, AD.stringPanel, AD.instruction, AD.canvasHolder ],
+		{ display:'block', autoAlpha:1 });
+		
+		AD.canvasHolder.css({'cursor':'none'}); 
+		
+		gsap.set([AD.spr_copy, AD.bg_end], {alpha:0, backgroundPositionY: '0'});
+		gsap.set(AD.spr_disclaimer, {left:294, autoAlpha:1});
+		
+		TXStrings.init();
+		TXTimer.start();
+		AD.readytocut = true;
+		AD.cuts = 0;
+		AD.time	= 20;
+		
+		AD.hitInterval = setInterval(fn_checkHit, 1);
+		
+		AD.timeInterval = setInterval(fn_checkTime, 1000);
+			
+		if(AD.initBGM){
+			AD.initBGM = false;
+			AD.sndURL[0].play();
+		}
+		
 	}
 	
 	function fn_STEP3 () {
-		AD.isautoplay = false;
-		clearTimeout(AD.autoplay);
-		gsap.fromTo(AD.ENDFRAME,0.2, {display:'block',autoAlpha: 0},{autoAlpha: 1, onComplete: function(){
-			gsap.set(AD.spr_cards,{rotationY: 0});
-			AD.RESULT.hide();
-		}});
-		
-		gsap.to(AD.audio_bg, 0.5,{volume: 1});
-	}
+		var tl = gsap.timeline();
+		AD.gametime = false;
+		clearTimeout(AD.timer);
+		clearInterval(AD.hitInterval);
+		clearInterval(AD.cheerInterval);
+		clearInterval(AD.timeInterval);
+		gsap.killTweensOf('*');
 	
-	function fn_AUTOPLAY () {
-		clearTimeout(AD.autoplay);
-		AD.btn_startplaying.off( 'click' );				
-		AD.count = 3;
-		AD.countdown_3sec.innerHTML = AD.count;
-		TXAd.loadotherImages(TXConfig.otherImages);
-		shuffle(AD.autoflip);
-	}
-	
-	function ap_cardopen (e) {
-		AD.ap_card = 'card_'+AD.autoflip[AD.flip];
-		gsap.set($('#'+AD.ap_card),{'pointer-events': 'none'});
-		gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90, ease:'none', onComplete:ap_cardflip});
-	}
-		
-	function ap_cardflip (e) {
-		var i = null;
-		switch(AD.ap_card){
-			case 'card_0': i = AD.cards[0]; break;
-			case 'card_1': i = AD.cards[1]; break;
-			case 'card_2': i = AD.cards[2]; break;
-			case 'card_3': i = AD.cards[3]; break;
-			case 'card_4': i = AD.cards[4]; break;
-			case 'card_5': i = AD.cards[5]; break;
-			case 'card_6': i = AD.cards[6]; break;
-			case 'card_7': i = AD.cards[7]; break;
-			case 'card_8': i = AD.cards[8]; break;
-			case 'card_9': i = AD.cards[9]; break;
-			case 'card_10': i = AD.cards[10]; break;
-			case 'card_11': i = AD.cards[11]; break;
-		}
-		
-		gsap.set($('#'+AD.ap_card),{'background-position-y': i});
-		gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false,perspective: 1000, rotationY:0, ease:'none', onComplete: function(){
-			setTimeout(ap_cardreturn, 500);
-		}});
-	}
-		
-	function ap_cardreturn (e) {
-		gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90,ease:'none', onComplete:ap_cardreturn2});
-		
-		function ap_cardreturn2 () {
-			gsap.set($('#'+AD.ap_card),{'pointer-events': 'auto','background-position-y': 0});
-			gsap.to($('#'+AD.ap_card),0.2,{z:0.01, force3D: false, perspective: 1000,rotationY:0,ease:'none', onComplete: function(){
-                if(!AD.isautoplay) return;
-                if(AD.flip >= 11) 
-                    AD.flip = 0;
-				else 
-                    AD.flip++;
-                if(AD.flip<2)
-				    AD.autoplay = setTimeout(ap_cardopen, 1000);
-			}});
-		}
-	}
-	
-	function fn_RESULT () {
+		if(AD.strings.length == AD.zero) gsap.set(AD.txt_message, {backgroundPositionY: '0'});
+		else gsap.set(AD.txt_message, {backgroundPositionY: '-36px'});
 
-		gsap.killTweensOf("*");
-
-		gsap.set(AD.spr_cards,{'pointer-events': 'none' , scale: 0.91});
+		tl.set([ AD.cheerPanel, AD.stringPanel, AD.instruction, AD.canvasHolder, AD.sandTimer ], {display:'none'})
+		.set(AD.bg_end,{ display:'block', autoAlpha:1 })
+		.fromTo(AD.greenglow, 1, {scale:0, autoAlpha:0},{scale:1, autoAlpha:1})
+		.set(AD.spr_copy, {autoAlpha:1, backgroundPositionY: '-532px'})
+		.to(AD.greenglow, 1, {autoAlpha:0})
+		.set(AD.spr_disclaimer, {autoAlpha:0},'+=1')
+		.set(AD.btn_replay,{ display:'block', autoAlpha:1 })
+		.fromTo(AD.s3, 0.5, {display:'block', autoAlpha:0},{autoAlpha:1});
 		
-		if(AD.matches.innerHTML <= 3){
-			AD.txt_result.innerHTML = ' ';
-			AD.txt_result2.innerHTML = 'Nice try! Give it another shot and '; 
-			AD.txt_result3.innerHTML = 'see if you can do better!';
-		} else if (AD.matches.innerHTML >= 7) {
-			AD.txt_result.innerHTML = ' ';
-			AD.txt_result2.innerHTML = "Unreal! Your matching skills";
-			AD.txt_result3.innerHTML = 'are rock star level!';
-		} else {
-			AD.txt_result.innerHTML = ' ';
-			AD.txt_result2.innerHTML = "Well done! You’re on your way"; 
-			AD.txt_result3.innerHTML = 'to becoming a match-master!'; 
-		}
-		
-		gsap.fromTo(AD.RESULT, 0.2,{autoAlpha: 0, display:'block'}, {autoAlpha: 1});
-		gsap.delayedCall(5, fn_STEP3);
-		
-		AD.sfx_gameover.get(0).currentTime = 0;
-		AD.sfx_gameover.get(0).play();
+		TXTimer.reset();		
 	}
 	
 	function fn_buttons () {
-		switch(this.id){
-			case 'btn_startplaying':
-				AD.isautoplay = true;
-				clearTimeout(AD.autoplay);
-				AD.btn_startplaying.off( 'click' );				
-				AD.count = 3;
-				AD.countdown_3sec.innerHTML = AD.count;
-				TXAd.loadotherImages(TXConfig.otherImages);	
-				gsap.to('#btn_startplaying', 0.5,{autoAlpha: 0});
+		switch (this.id) {
+			case 'btn_replay':
+				if(AD.strings != AD.zero) TXStrings.remove();
+				fn_STEP2();
 				break;
-			case 'btn_switchtoday':
-                AD.isautoplay=false;
-				window.open("https://www.t-mobile.com/", "_blank");
-				if(!AD.btn_sound.hasClass( 'mute' ))fn_sound ();
-				break;
-			case 'btn_playagain':
-				gsap.set(AD.spr_cards,{'pointer-events': 'auto'});
-				fn_STEP2 ();
-				break;
-			case 'btn_switchnow':
-				AD.isautoplay = false;
-				clearTimeout(AD.autoplay);
-				window.open("https://www.t-mobile.com/", "_blank");
-				if(!AD.btn_sound.hasClass( 'mute' ))fn_sound ();
+			case 'btn_findfreedom':
+				window.open("https://www.simplemobile.com/", "_blank");
 				break;
 		}
 	}
 	
-	function fn_cardpick (e) {
-		
-		if(!AD.ready) { 
-			return; 
-		}
-		else {
-			AD.isautoplay = false;
-			clearTimeout(AD.autoplay);
-			clearTimeout(AD.initElapse);
-			AD.ready = false;
-			
-			AD.currentcard[AD.card] = e.currentTarget;
-			
-			gsap.set(e.currentTarget,{'pointer-events': 'none'});
-			gsap.to(e.currentTarget,0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90, ease:'none', onComplete:fn_cardflip});
+	function collision($div1, $div2) {
+		var x1 = $div1.offset().left,
+			y1 = $div1.offset().top,
+			h1 = $div1.outerHeight(true),
+			w1 = $div1.outerWidth(true),
+			b1 = y1 + h1,
+			r1 = x1 + w1,
+			x2 = $div2.offset().left,
+			y2 = $div2.offset().top,
+			h2 = $div2.outerHeight(true),
+			w2 = $div2.outerWidth(true),
+			b2 = y2 + h2,
+			r2 = x2 + w2;
 
-			AD.sfx_flip.get(0).currentTime = 0.02;
-			AD.sfx_flip.get(0).play();
-		}
-		
+		if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
+		return true;
 	}
 	
-	function fn_cardflip (e) {
-		var i = null;
-		var n = AD.currentcard[AD.card];
-		switch(n.id){
-			case 'card_0': i = AD.cards[0]; break;
-			case 'card_1': i = AD.cards[1]; break;
-			case 'card_2': i = AD.cards[2]; break;
-			case 'card_3': i = AD.cards[3]; break;
-			case 'card_4': i = AD.cards[4]; break;
-			case 'card_5': i = AD.cards[5]; break;
-			case 'card_6': i = AD.cards[6]; break;
-			case 'card_7': i = AD.cards[7]; break;
-			case 'card_8': i = AD.cards[8]; break;
-			case 'card_9': i = AD.cards[9]; break;
-			case 'card_10': i = AD.cards[10]; break;
-			case 'card_11': i = AD.cards[11]; break;
-		}
-		AD.selectedcard.push(i);
-		gsap.set(n,{'background-position-y': i});
-		gsap.to(n,0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:0, ease:'none', onComplete:fn_cardcheck});
-		
-	}
-	
-	function card_setup () {
-		shuffle(AD.cardsY);
-		AD.cards = [];
-		for ( var i = 0; i < 6; i++ ) {
-			AD.cards.push(AD.cardsY[i]);
-			AD.cards.push(AD.cardsY[i]);
-		}
-		shuffle(AD.cards);
-	}
-	
-	function fn_cardcheck () {
-		if(AD.card == AD.zero){
-			AD.card = 1;
-			AD.ready = true;
-		} else {			
-			if(AD.selectedcard[0] == AD.selectedcard[1]){
-				AD.score++;
-				AD.matches.innerHTML = AD.score;
-				gsap.set([AD.currentcard[0],AD.currentcard[1]],{'pointer-events': 'none'});
-				AD.sfx_match.get(0).currentTime = 0.04;
-				AD.sfx_match.get(0).play();
-				fn_cardreset ();
-			} else {
-				gsap.delayedCall(0.7, fn_cardreturn);
+	function fn_checkHit() {
+		// Cut String
+		if(AD.mouseIsDown && AD.readytocut && AD.gametime){
+			var n = 0;
+			while(n < AD.targetCount){
+				if(collision(AD.crosshair, $('#'+AD.strings[AD.strings.length-1] +' .target'+n)) && AD.strings.length > AD.zero){
+					AD.readytocut = false;
+					TXStrings.cut($('#'+AD.strings[AD.strings.length-1] +' .target'+n).offset().left);
+				}			
+			n++;
 			}
-			
-		}
-	}
-		
-	function fn_cardreturn () {
-		var card1 = AD.currentcard[0],
-			card2 = AD.currentcard[1];
-
-		fn_cardreset();
-
-		gsap.to([card1, card2],0.2,{z:0.01, force3D: false, perspective: 1000, rotationY:90,ease:'none', onComplete:fn_cardreturn2});
-
-		function fn_cardreturn2 () {			
-			gsap.set([card1, card2],{'pointer-events': 'auto', scale: 0.91, 'background-position-y': 0});
-			gsap.to([card1, card2],0.2,{z:0.01, force3D: false, perspective: 1000,rotationY:0,ease:'none'});
 		}
 	}
 	
-	function fn_cardreset () {
-		if(AD.score == AD.set){
-			fn_cardcomplete ();
-			AD.set += 6;
-		} else {
-			AD.card	= 0;
-			AD.selectedcard	= [];
-			AD.currentcard = [];
-			AD.ready = true;
+	function fn_checkTime () {
+		if(AD.time == AD.zero)
+			clearInterval(AD.timeInterval);
+		else if(AD.time <=5 && AD.cuts != AD.zero){
+			gsap.set(AD.txt_cheer, {backgroundPositionY:-168});
+			gsap.set(AD.cheerPanel, {autoAlpha:1, display: 'block'});	
 		}
-		
+		AD.time--;
 	}
 	
-	function fn_cardcomplete () {
-		card_setup ();
-		gsap.to(AD.spr_cards,0.2,{rotationY:90,ease:'none', onComplete:fn_cardcomplete2});
-		
-		function fn_cardcomplete2 () {
-			gsap.set(AD.spr_cards,{'background-position-y': 0});
-			gsap.to(AD.spr_cards,0.2,{rotationY:0,ease:'none', onComplete: function(){
-				gsap.set(AD.spr_cards,{'pointer-events': 'auto'});
-				AD.card	= 0;
-				AD.selectedcard	= [];
-				AD.currentcard = [];
-				AD.ready = true;
-			}});
-		}
-		
-		AD.sfx_reset.get(0).currentTime = 0;
-		AD.sfx_reset.get(0).play();
-	}
-	
-	function fn_cardover (e) {
-		gsap.set(this,{z:0.01, force3D: false, perspective: 1000, scale: 0.96});
-	}
-	
-	function fn_cardout (e) {
-		gsap.set(this,{z:0.01, force3D: false, perspective: 1000, scale: 0.91});
-	}
-	
-	function cd_3sec () {
-		
-		if(AD.count <= 1){
-			gsap.set(AD.countdown_3sec,{left:'564px', top:'176px','font-size': '710%' });
-			AD.countdown_3sec.innerHTML = 'GO!';
-			gsap.delayedCall(1,cd_3sec_complete);
-		} else {			
-			AD.count--;
-			AD.countdown_3sec.innerHTML = AD.count;
-			gsap.delayedCall(1,cd_3sec);
-		}
-		
-		function cd_3sec_complete(){
-			gsap.fromTo(AD.INSTRUCTION, 0.2,{autoAlpha: 1}, {autoAlpha: 0, onComplete: fn_STEP2});
-		}
-	}
-	
-	function cd_30sec () {
-		if(AD.count <= AD.zero){
-			fn_RESULT();
-			AD.isautoplay = false;
-			clearTimeout(AD.autoplay);
-        } else if(AD.count<=18 && AD.isautoplay){
-            fn_RESULT();
-        } else {
-			AD.count--;
-		
-			if(AD.count <=9){
-				AD.countdown_30sec.innerHTML = '0' + AD.count;
-			} else {
-				AD.countdown_30sec.innerHTML = AD.count;
-			}
-			gsap.delayedCall(1,cd_30sec);
-		}
-		
-	}
-		
-	function fn_sound () {
-		var isMuted = AD.btn_sound.hasClass( 'mute' );
-        AD.isautoplay=false;
-		if ( isMuted ) {
-			AD.btn_sound.removeClass( 'mute' );
-			AD.audio_bg.get(0).muted = false;
-			AD.sfx_countdown.get(0).muted = false;
-			AD.sfx_flip.get(0).muted = false;
-			AD.sfx_match.get(0).muted = false;
-			AD.sfx_reset.get(0).muted = false;
-			AD.sfx_gameover.get(0).muted = false;
-		}
-
-		else {
-			AD.btn_sound.addClass( 'mute' );
-			AD.audio_bg.get(0).muted = true;
-			AD.sfx_countdown.get(0).muted = true;
-			AD.sfx_flip.get(0).muted = true;
-			AD.sfx_match.get(0).muted = true;
-			AD.sfx_reset.get(0).muted = true;
-			AD.sfx_gameover.get(0).muted = true;
-		}
-	}
-	
-	function shuffle(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-        while (0 !== currentIndex) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-        return array;
-    }
-		
 	return {
 		fn_STEP1 : fn_STEP1,
-		cd_3sec	 : cd_3sec
+		fn_STEP2 : fn_STEP2,
+		fn_STEP3 : fn_STEP3
+	};
+
+})();
+
+/**###################################################
+ * SET UP TIMER
+ * ###################################################
+ */	
+var TXTimer = (function () {
+	// private
+	function start () {
+		
+		var totalsec = 20;
+
+		gsap.to(AD.sandTimer ,0.5, {rotation:0, onComplete: function(){
+			gsap.to(AD.topSand, 0.1,{top:10, ease:'none', onComplete: function(){
+				gsap.fromTo(AD.midSand, 0.1,{autoAlpha:1}, {top:52,ease:'none', onComplete: fn_animateSand});
+			}});
+		}});
+		
+		AD.cheerInterval = setInterval(function(){
+			gsap.set(AD.txt_cheer, {alpha:0});
+			gsap.set(AD.txt_cheer, {delay:0.5, alpha:1});
+		}, 3000);
+		
+		function fn_animateSand() {
+			gsap.to(AD.hidSand, totalsec-0.25,{top:-25, ease:'power2.in', onComplete: function(){
+				gsap.to(AD.hidSand, 0.25,{top:0, ease:'none', onComplete: end});
+			}});
+			gsap.fromTo(AD.botSand, totalsec, {autoAlpha:1},{top:71, ease:'none'});
+		}
+		
+		AD.sandTimer.show();
+	}
+	
+	function reset () {
+		gsap.set(AD.txt_cheer, {backgroundPositionY:0});
+		gsap.set(AD.sandTimer ,{rotation:180});
+		gsap.set(AD.topSand ,{top:-15});
+		gsap.set(AD.botSand ,{top:128, autoAlpha:0});
+		gsap.set(AD.midSand ,{top:-9, autoAlpha:0});
+		gsap.set(AD.hidSand ,{top:-56});
+	}
+	
+	function end () {
+		if(AD.gametime) TXCreative.fn_STEP3();
+	}
+	
+	// public
+	return {
+		start : start,
+		reset : reset
+	};
+
+})();
+
+
+/**###################################################
+ * SET UP STRINGS
+ * ###################################################
+ */	
+var TXStrings = (function () {
+	// private
+	function init () {
+		for (let s = 0; s < 20; s++) {
+			createString();
+		}
+	}
+		
+	function createString() {
+		var n = 60,
+			stringPosY = AD.stringPosY[randomInt(0, 6)],
+			_rotate = randomInt(-90, 90);
+		
+		AD.stringID = 'string_' + AD.strings.length;			
+		AD.stringPanel.append('<div id='+AD.stringID+' class="strings"><div class="string"></div></div>');
+			
+		gsap.set('#'+AD.stringID, {
+			width: 1020,
+			height: 50, 
+			rotation: _rotate,
+			background: 'transparent'
+			/*filter: 'drop-shadow(0px 5px 30px black)'*/
+		});
+		
+		if(_rotate >= -20 && _rotate <= 20)	{
+			// HORIZONTAL
+			gsap.set('#'+AD.stringID, { left: randomInt(-150, -70), top: randomInt(145, 310) });	
+		}	
+					
+		else if(_rotate <= -60 || _rotate >= 60) {
+			// VERTICAL
+			gsap.set('#'+AD.stringID, { left: randomInt(-322, 70), top: randomInt(100, 300) });
+		}			
+		else {
+			// IN BETWEEN
+			gsap.set('#'+AD.stringID, { left: -110, top: randomInt(160, 290) });
+		}
+		
+		gsap.set('#'+AD.stringID + ' .string', {
+			backgroundPositionY: stringPosY
+		});
+		
+		for (let i = 0; i < AD.targetCount; i++) { 
+			$('#'+AD.stringID).append('<div class="target target'+i+'" style="left:'+n+'px"></div>');
+			n = n + 30;
+		}
+		
+		AD.strings.push(AD.stringID);
+		update_endPanel();
+		
+	}
+	
+	function removeString () {
+		for (let i = AD.strings.length-1; i > -1 ; i--) {
+			$("#"+AD.strings[i]).remove();
+			AD.strings.pop();			
+		}
+	}
+	
+	function cutString (mark) {
+		var tl = gsap.timeline({onComplete: complete});
+
+		$('#'+AD.strings[AD.strings.length-1]).append('<div class="cut_left spr_strings"></div><div class="cut_right spr_strings"></div>');		
+		
+		tl.set($('#'+AD.strings[AD.strings.length-1] +' .string') ,{alpha:0})
+		.fromTo($('#'+AD.strings[AD.strings.length-1] +' .cut_left'), 0.14,
+			{/* force3D:true,  */alpha:1, left: mark-1020},{alpha:1, left: -760, scaleX:0.5, ease:'power1.in'})
+		.fromTo($('#'+AD.strings[AD.strings.length-1] +' .cut_right'), 0.14,
+			{/* force3D:true,  */alpha:1, left: mark-20},{alpha:1, left: 770, scaleX:0.5, ease:'power1.in'},'<');
+		
+		function complete () {
+			$("#"+AD.strings[AD.strings.length-1]).remove();
+			AD.strings.pop();
+			update_endPanel();
+			AD.readytocut = true;
+		}
+		
+		if(AD.cuts == AD.zero){
+			clearInterval(AD.cheerInterval);
+			AD.cheerPanel.hide();
+		} 
+		else if (AD.cuts == 1){
+			if(AD.time >= 15) {
+				gsap.set(AD.txt_cheer, {backgroundPositionY:-56});
+				gsap.to(AD.cheerPanel, 0.2, {delay:3,autoAlpha:0});
+			}
+				
+			else {
+				gsap.set(AD.txt_cheer, {backgroundPositionY:-112});
+				gsap.to(AD.cheerPanel, 0.2, {delay:3,autoAlpha:0});
+			}
+				
+			gsap.set(AD.cheerPanel, {autoAlpha:1, display: 'block'});
+		}
+		
+		AD.cuts++;
+		
+		var woosh = randomInt(1,6);
+		
+		AD.sndURL[woosh].currentTime = 0;
+		AD.sndURL[woosh].play();
+		
+	}
+		
+	function randomInt(min, max) {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		return Math.floor(Math.random() * (max - min)) + min;
+	}
+	
+	function update_endPanel() {
+		var currentString = AD.strings.length-1;
+		
+		if(AD.strings.length <=20){
+			var n = AD.strings.length / 20;
+			gsap.to([AD.bg_end, AD.spr_copy], 0.2,{alpha: 1 - n.toFixed(1) });
+			
+			if(n == AD.zero){
+				TXCreative.fn_STEP3();
+			}
+			else {
+				if(!AD.gametime) return;
+				
+				if (AD.strings.length == 1){
+					gsap.set(AD.spr_copy, {backgroundPositionY: '-266px'});
+				} else {
+					gsap.set(AD.spr_copy, {backgroundPositionY: '0'});
+				}
+
+				gsap.set('.strings', {zIndex: 0});
+				gsap.set(AD.dim, {zIndex: 1});
+				gsap.set('#string_'+currentString, {zIndex: 2});
+			}
+
+		}
+	}
+	
+	// public
+	return {
+		init 		: init,
+		remove		: removeString,
+		cut			: cutString,
+		randomInt	: randomInt
+	};
+
+})();
+
+/**###################################################
+ * SET UP SLASH TRAIL & MOUSE CURSOR
+ * ###################################################
+ */	
+var TXCursor = (function () {
+	// private
+	function init () {
+		var fps = 60,
+			canvas_trail,
+			ctx_trail,
+			canvas_cursor,
+			ctx_cursor,
+
+			cursorWidth = 145,
+			cursorHeight = 151,
+
+			mouseX = 0,
+			mouseY = 0,
+			mouseXOld = 0,
+			mouseYOld = 0,
+
+			alphaFadeRate = 0.05,
+			radiusShrinkRate = 0.8,
+			particles = [],
+			particleCount = 0,
+
+			fpsInterval, startTime, now, then, elapsed,
+			
+			transform, values, a, b, scale,
+
+			gameShieldCorner, gameShieldLeft, gameShieldTop,
+			
+			transformExists = false,		
+			
+			cursor = new Image();
+		
+		cursor.src = TXConfig.init_Images[0];
+		
+		canvas_trail = document.getElementById('trailHolder');
+		ctx_trail = canvas_trail.getContext('2d');
+		
+		canvas_cursor = document.getElementById('cursorHolder');
+		ctx_cursor = canvas_cursor.getContext('2d');
+
+		transform = $('#container').css('transform');
+			
+		if (transform != 'none') {
+			transformExists = true;	
+			try{
+				values = transform.split('(')[1];
+				values = values.split(')')[0];
+				values = values.split(',');
+				a = values[0];
+				b = values[1];
+				scale = Math.sqrt(a*a + b*b);
+			}
+			catch(error) {
+				scale = 1;
+			}
+		}
+		else {			
+			transformExists = false;
+			scale = 1;
+		}
+		
+		gameShieldCorner = AD.canvasHolder.offset(); // Upper left hand corner of gameShield
+		gameShieldLeft = gameShieldCorner.left;
+		gameShieldTop = gameShieldCorner.top;
+		
+		// Add listeners
+		if(TXConfig.is_mobile) {
+			$(window).on('touchend', onCanvasHolderUp);
+			AD.canvasHolder.on('touchstart', onCanvasHolderDown);		
+			AD.canvasHolder.on('touchmove', onCanvasHolderMove);
+		} else {
+			$(window).on('mousedown', onCanvasHolderDown);
+			$(window).on('mouseup', onCanvasHolderUp);
+			AD.canvasHolder.on('mousemove', onCanvasHolderMove);
+		}
+		
+		$(window).on("blur", onCanvasHolderUp);
+
+		startAnimating();
+
+		// Particle class
+		function Particle() {
+			this.x1 = 0;
+			this.y1 = 0;
+			this.x2 = 0;
+			this.y2 = 0;
+			this.width = 15;
+			this.height = 15;
+			this.alpha = 1;
+			this.radius = 15;
+		}
+
+		// Mouse functions
+		function onCanvasHolderDown(e) {
+			
+			// Get mouse coords
+			if ( TXConfig.is_mobile ) {
+				e.preventDefault();
+				if (e.touches) {
+					if (transformExists) {
+						mouseX = (e.touches[0].offsetX) / scale; // get scaled coordinates
+						mouseY = (e.touches[0].offsetY) / scale;
+					}
+					else {
+						mouseX = e.touches[0].offsetX / scale;
+						mouseY = e.touches[0].offsetY / scale;
+					}
+				}
+				else {
+					if (transformExists) {
+						mouseX = (e.originalEvent.touches[0].offsetX) / scale; // get scaled coordinates
+						mouseY = (e.originalEvent.touches[0].offsetY) / scale;
+					}
+					else {
+						mouseX = e.originalEvent.touches[0].clientX;
+						mouseY = e.originalEvent.touches[0].clientY;
+					}
+				}
+			} else {
+				if (transformExists) {
+					mouseX = (e.pageX - gameShieldLeft) / scale; // get scaled coordinates
+					mouseY = (e.pageY - gameShieldTop) / scale;
+				}
+				else {
+					mouseX = e.clientX - gameShieldLeft;
+					mouseY = e.clientY - gameShieldTop;
+				}
+			}
+			
+			mouseXOld = mouseX;
+			mouseYOld = mouseY;
+			
+			// Update Cursor
+			cursor.src = TXConfig.init_Images[1];
+			drawCursor();		
+			AD.mouseIsDown = true;
+			
+		}
+		
+		function onCanvasHolderUp(e) {
+			
+			// Update Cursor
+			cursor.src = TXConfig.init_Images[0];
+			ctx_cursor.shadowBlur = 0;
+			drawCursor();
+			
+			AD.mouseIsDown = false;
+		}
+		
+		function onCanvasHolderMove(e) {
+			
+			mouseXOld = mouseX;
+			mouseYOld = mouseY;
+			
+			if ( TXConfig.is_mobile ) {
+				
+				e.preventDefault();
+				
+				if (e.touches) {
+					if (transformExists) {
+						mouseX = (e.touches[0].pageX - gameShieldLeft) / scale; // get scaled coordinates
+						mouseY = (e.touches[0].pageY - gameShieldTop) / scale;
+					}
+					else {
+						mouseX = e.touches[0].clientX;
+						mouseY = e.touches[0].clientY;
+					}
+				}
+				else {
+					if (transformExists) {
+						mouseX = (e.originalEvent.touches[0].pageX - gameShieldLeft) / scale; // get scaled coordinates
+						mouseY = (e.originalEvent.touches[0].pageY - gameShieldTop) / scale;
+					}
+					else {
+						mouseX = e.originalEvent.touches[0].clientX;
+						mouseY = e.originalEvent.touches[0].clientY;
+					}
+				}
+			}
+			else {
+				if (transformExists) {
+					mouseX = (e.pageX - gameShieldLeft) / scale; // get scaled coordinates
+					mouseY = (e.pageY - gameShieldTop) / scale;
+				}
+				else {
+					mouseX = e.clientX - gameShieldLeft;
+					mouseY = e.clientY - gameShieldTop;
+				}
+			}
+			
+			if (AD.mouseIsDown) {
+				particles[particleCount] = new Particle();
+				particles[particleCount].x1 = mouseXOld;
+				particles[particleCount].y1 = mouseYOld;
+				particles[particleCount].x2 = mouseX;
+				particles[particleCount].y2 = mouseY;
+				particleCount ++;
+			}
+			
+			drawCursor();		
+			gsap.set(AD.crosshair,{left:mouseX,top:mouseY});			
+		}
+		
+		// draw cursor
+		function drawCursor() {
+			if(TXConfig.is_mobile) {
+				ctx_cursor.clearRect(0,0, 960, 500);
+				ctx_cursor.drawImage(cursor,mouseX-10,mouseY-54,cursorWidth,cursorHeight);
+			} else {
+				$('#ie_cursor').css({left:mouseX-10 + 'px', top: mouseY-54 + 'px'});
+			}
+		}
+
+		// start animations
+		function startAnimating() {
+			fpsInterval = 1000 / fps;
+			then = Date.now();
+			startTime = then;
+			animate();
+		}
+
+		// the animation loop calculates time elapsed since the last loop
+		// and only draws if your specified fps interval is achieved
+		function animate() {
+			var i = 0;
+
+			// request another frame
+			requestAnimationFrame(animate);
+
+			// calc elapsed time since last loop
+			now = Date.now();
+			elapsed = now - then;
+
+			// if enough time has elapsed, draw the next frame
+			if (elapsed > fpsInterval) {
+
+				// Get ready for next frame by setting then=now, but also adjust for your
+				// specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+				then = now - (elapsed % fpsInterval);
+
+				// Put your drawing code here
+				ctx_trail.clearRect(0, 0, 960, 500);
+
+				for (i = 0; i < particleCount; i ++) {
+					particles[i].alpha -= alphaFadeRate; // fade particle
+					particles[i].radius -= radiusShrinkRate; // shrink particle
+					if (particles[i].alpha <= 0) {
+						particles.splice(i, 1);
+						particleCount --;
+					}
+					else if (particles[i].radius <= 0) {
+						particles.splice(i, 1);
+						particleCount --;
+					}
+					else {
+						ctx_trail.globalAlpha = particles[i].alpha;
+
+						// Draw outer glow
+						ctx_trail.lineWidth = particles[i].radius;
+						ctx_trail.strokeStyle = '#54dd07';
+						ctx_trail.beginPath();
+						ctx_trail.moveTo(particles[i].x1, particles[i].y1);
+						ctx_trail.lineTo(particles[i].x2, particles[i].y2);
+						ctx_trail.stroke();
+
+						// Draw inner glow
+						ctx_trail.lineWidth = particles[i].radius * 0.35;
+						ctx_trail.strokeStyle = 'white';
+						ctx_trail.beginPath();
+						ctx_trail.moveTo(particles[i].x1, particles[i].y1);
+						ctx_trail.lineTo(particles[i].x2, particles[i].y2);
+						ctx_trail.stroke();
+
+					}
+				}
+			}
+		}
+		
+	}
+	
+	// public
+	return {
+		init : init
+	};
+
+})();
+
+/**###################################################
+ * SET UP AUDIO
+ * ###################################################
+ */
+var TXAudio = (function () {
+	// private
+	function init () {
+		
+		//*** AUDIO VARS ***//
+		AD.btn_sound	= $( '#btn_sound' );
+		AD.sound		= $( '#sound' );
+		
+		AD.sndURL = [
+			new Howl({src:['src/audio/bgm.mp3'], loop:true, volume:1}), //bgm
+			new Howl({src:['src/audio/sfx_woosh1.mp3'], loop:false, volume:1}), //sfx_woosh1
+			new Howl({src:['src/audio/sfx_woosh2.mp3'], loop:false, volume:1}), //sfx_woosh2
+			new Howl({src:['src/audio/sfx_woosh3.mp3'], loop:false, volume:1}), //sfx_woosh3
+			new Howl({src:['src/audio/sfx_woosh4.mp3'], loop:false, volume:1}), //sfx_woosh4
+			new Howl({src:['src/audio/sfx_woosh5.mp3'], loop:false, volume:1}), //sfx_woosh5
+			new Howl({src:['src/audio/sfx_woosh6.mp3'], loop:false, volume:1}) //sfx_woosh6
+		];
+
+		AD.btn_sound.on( 'click', fn_sound);
+
+	}
+	
+	function fn_sound () {		
+		var isMuted = AD.sound.hasClass( 'mute' );
+		if ( isMuted ) {
+			Howler.volume(1);
+			AD.sound.removeClass('mute');
+		}
+		else {
+			Howler.volume(0);
+			AD.sound.addClass('mute');
+		}
+	}
+	
+	// public
+	return {
+		init : init
 	};
 
 })();
 
 TXAd.init();
 
-}());
+})();
