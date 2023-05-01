@@ -723,16 +723,17 @@ footer {
     .education-block span {
         float: none;
     }
-    .project-image {
+    
+    .project-info {
+        right:0;
+        margin: 0;
+        width: 50%;
+    } 
+
+    .project-info p {
         display: none;
     }
-    .project-info {
-        position: relative;
-        margin: 0;
-        padding: 30px 15px;
-        top: auto;
-        transform: none;
-    }
+    
     footer {
         text-align: center;
     }
@@ -753,5 +754,14 @@ footer {
     #lead-content a {
         font-size: 0.9em;
         padding: 5px 10px;
+    }
+
+    .project-info h3 {
+        font-size: 1.2em;
+        margin: 0 0 0 0;
+        /* display: none; */
+    }
+    .project-info a {
+        font-size: 14px;
     }
 }
