@@ -26,34 +26,14 @@ var TXConfig = (function () {
 	],
         loadedAssets = 0,
         totalAssets = init_Images.length + init_JS.length,
-		
-		is_mobile = /Mobi/.test(navigator.userAgent),		
-		is_chrome = navigator.userAgent.indexOf('Chrome') > -1,
-		is_firefox = navigator.userAgent.indexOf('Firefox') > -1,
-		is_safari = navigator.userAgent.indexOf("Safari") > -1,
-		is_opera = navigator.userAgent.toLowerCase().indexOf("op") > -1,
-		is_android = navigator.userAgent.toLowerCase().indexOf("android") > -1,
-		is_explorer;
-		
-	if ((is_chrome)&&(is_safari)) 
-		is_safari = false;
-	
-	if ((is_chrome)&&(is_opera)) 
-		is_chrome = false;	
-	
-	// IE10 || IE11 || IE EDGE
-	if (navigator.userAgent.indexOf('MSIE') > -1 ||
-		navigator.userAgent.indexOf('Trident/') > -1 || 
-		navigator.userAgent.indexOf('Edge/') > -1)
-		is_explorer = true;	
+		is_mobile = ("ontouchstart" in document.documentElement) ? true : false;
 	
 	return {
 		loadedAssets              	: loadedAssets,
 		totalAssets               	: totalAssets,
 		init_Images            		: init_Images,
 		init_JS           			: init_JS,
-		is_mobile					: is_mobile,
-		is_safari					: is_safari
+		is_mobile					: is_mobile
 	};
 
 })();
@@ -143,9 +123,9 @@ var TXVariables = (function () {
 		AD.initHover		= [false, false, false];
 
 		AD.scale			= 1;
-				
-		/* TXCreative.fn_scaling();		
-		$( window ).resize(TXCreative.fn_scaling); */
+
+		TXCreative.fn_scaling();		
+		$( window ).resize(TXCreative.fn_scaling);
 		
 		TXCreative.fn_STEP1();
 	}
@@ -181,11 +161,17 @@ var TXCreative = (function () {
 		
 		AD.mouseIsDown = false;
 
-		AD.mainPanel.on('mousemove', fn_onSnickersMove);
-		AD.snickers.on('mousedown', fn_onSnickersDown);
-		AD.snickers.on('mouseover', fn_onSnickersOver);
-		$(window).on('mouseup', fn_onSnickersUp);
-		
+		if(TXConfig.is_mobile) {
+			AD.mainPanel.on('touchmove', fn_onSnickersMove);
+			AD.snickers.on('touchstart', fn_onSnickersDown);
+			$(window).on('touchend', fn_onSnickersUp);
+		} else {
+			AD.mainPanel.on('mousemove', fn_onSnickersMove);
+			AD.snickers.on('mousedown', fn_onSnickersDown);
+			AD.snickers.on('mouseover', fn_onSnickersOver);
+			$(window).on('mouseup', fn_onSnickersUp);
+		}
+
 		AD.gametime = true;
 		
 		gsap.to(AD.copy, 0.2, {delay:0.3, autoAlpha:1, onComplete: fn_animate2});
@@ -275,10 +261,17 @@ var TXCreative = (function () {
 		
 		if(AD.mouseIsDown){
 			var parentOffset = $(this).parent().offset(),
-				relX = (e.pageX - parentOffset.left)/AD.scale,
-   				relY = (e.pageY - parentOffset.top)/AD.scale,
+				relX = (e.pageX - parentOffset.left) / AD.scale,
+   				relY = (e.pageY - parentOffset.top) / AD.scale,
 				crossX = AD.crosshair.position().left / AD.scale,
 				crossY = AD.crosshair.position().top / AD.scale;
+
+			if ( TXConfig.is_mobile ) {
+				e.preventDefault();
+				var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+				relX = touch.pageX / AD.scale;
+   				relY = touch.pageY / AD.scale;
+			}
 			
 			gsap.set('#'+AD.activeSnicker,{left:relX-280,top:relY-25});
 			gsap.set(AD.crosshair,{left:relX-200,top:relY-8});
@@ -576,8 +569,8 @@ var TXCreative = (function () {
 	
 	}
 	
-	/* function fn_scaling() {
-		var transform = $('#ad_container').css('transform');
+	function fn_scaling() {
+		var transform = $('#container').css('transform');
 		if(transform != 'none' ){
 			var values = transform.split('(')[1],
 				values = values.split(')')[0],
@@ -588,12 +581,12 @@ var TXCreative = (function () {
 		}
 		else
 			AD.scale = 1;
-	} */
+	}
 			
 	return {
 		fn_STEP1 	: fn_STEP1,
 		fn_STEP2 	: fn_STEP2,
-		/* fn_scaling	: fn_scaling */
+		fn_scaling	: fn_scaling
 	};
 
 })();
