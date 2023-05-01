@@ -603,7 +603,7 @@ var TXCursor = (function () {
 		canvas_cursor = document.getElementById('cursorHolder');
 		ctx_cursor = canvas_cursor.getContext('2d');
 				
-		transform = $('#ad_container').css('transform');
+		transform = $('#container').css('transform');
 			
 		if (transform != 'none') {
 			transformExists = true;	
