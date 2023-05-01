@@ -147,11 +147,10 @@ AD.creative = {
 		AD.creative._loadImages(AD.creative._images);
     	AD.creative._loadScripts(AD.creative._scripts);	
         
-        $( document ).on( "mobileinit", function() {
+        $( document ).on("mobileinit", function() {
             $.mobile.loading().hide();  /* Remove Loading Text */ 
             $.mobile.autoInitializePage = false; /* Remove Blue Border */ 
         });
-		
 	},
 
 	_updateAssetsLoaded: function(){
@@ -193,33 +192,27 @@ AD.creative = {
 		AD.dom.video = $("#container #STEP_2 #videoPlayer");
 		AD.dom.video.on("play", AD.creative._videoStarted);
 		AD.dom.video.on("ended", AD.creative._videoEnded);
-		AD.dom.video.on("timeupdate", AD.creative._videoProgress);
 	},
 	
 	_videoClear: function(e){
-		
 		var cache = AD.dom.video.html(); //cache videoPlayer markup
-		
 		//remove video listeners
 		AD.dom.video.off("play", AD.creative._videoStarted);
 		AD.dom.video.off("ended", AD.creative._videoEnded);
-		AD.dom.video.off("timeupdate", AD.creative._videoProgress);
 		
 		AD.dom.video.html(""); //clear videoPlayer markup/destroy video
 		
 		gsap.delayedCall(0.05, function(){
 			AD.dom.video.html(cache); //re-apply videoPlayer markup
 			AD.creative._videoSetup();
-		
 		});
 	},
     
     INTRO: function(e) {
         _random = AD.creative.getRandomInt(0,8);
         function autoAnimate(){
-            gsap.to($('.name_left'), 0.2,{css:{'opacity': 0}, ease:Power2.easeIn});
-            gsap.to($('.name_right'), 0.2,{css:{'opacity': 0}, ease:Power2.easeIn});
-            gsap.to($('.gallery_dancers'), 0.2,{alpha:0, ease:Power2.easeIn,onComplete: doThis});
+            gsap.to('.name_left, .name_right, .gallery_dancers', {
+                duration:0.2, opacity:0, ease:'power2.in', onComplete: doThis});
             function doThis(){
                 switch(_currentFrame){
                     case 'KK_FikShun':
@@ -270,27 +263,26 @@ AD.creative = {
                     }	
                 AD.creative.evt_changeName();
                 }
-           
          }
-        $("#STEP_1").css("display", "block");
+        $("#STEP_1").show();
         $("#STEP_1 #swipetoselect" ).text("Swipe to Select 2 Dancers");
         $(".name_left" ).text(names_Left[_random]);
         $(".name_right" ).text(names_Right[_random]);
         $(".gallery_dancers" ).css({'left': Xframes[_random]});
         
-        gsap.from( $(dancer_left[_random]), 0.6,{delay:0.5, x:-480, ease:Back.easeOut.config(0.9)});
-        gsap.from( $(dancer_right[_random]), 0.6,{delay:0.5, x:960, ease:Back.easeOut.config(0.9)});
-        gsap.from($(".name_left"), 0.4,{delay:1, alpha:0, scale:0, ease:Back.easeOut});
-        gsap.from($(".name_right"), 0.4,{delay:1, alpha:0, scale:0, ease:Back.easeOut});
+        gsap.from(dancer_left[_random], 0.6,{delay:0.5, x:-480, ease:'back.out(0.9)'});
+        gsap.from(dancer_right[_random], 0.6,{delay:0.5, x:960, ease:'back.out(0.9)'});
+        gsap.from(".name_left", 0.4,{delay:1, alpha:0, scale:0, ease:'back.out'});
+        gsap.from(".name_right", 0.4,{delay:1, alpha:0, scale:0, ease:'back.out'});
         
-        gsap.from($("#btn_watchtheirbattle"), 0.5, {delay:1.2, alpha:0});
-        gsap.from($("#btn_arrow"), 0.5, {delay:1.2, alpha:0});
+        gsap.from("#btn_watchtheirbattle", 0.5, {delay:1.2, alpha:0});
+        gsap.from("#btn_arrow", 0.5, {delay:1.2, alpha:0});
         
-        gsap.from($("#btn_watchtheirbattle"), 1, {delay:1.6, ease:Elastic.easeOut.config(0.8, 0.3), css:{borderRadius: "25px", width: '50px', left: '455px'}});
-        gsap.from($("#btn_watchtheirbattle"), 1, {delay:1.9, ease:Elastic.easeOut.config(2, 0.75), css:{height: "30px",top: '380px'}});
-        gsap.from($("#btn_arrow"), 0.3, {delay:1.5, ease:Power2.easeIn, css:{left: '475px'}});
+        gsap.from("#btn_watchtheirbattle", 1, {delay:1.6, width:50, left:455, borderRadius:25, ease:'elastic.out(0.8,0.3)'});
+        gsap.from("#btn_watchtheirbattle", 1, {delay:1.9, top:380, height:30, ease:'elastic.out(2,0.75)'});
+        gsap.from("#btn_arrow", 0.3, {delay:1.5, left:475, ease:'power2.in'});
        
-        gsap.from($("#txt_watchtheirbattle"), 0.2, {delay:1.9, scaleY:0, alpha: 0, ease:Back.easeOut.config(2.5), onComplete: AD.creative.STEP_1 });
+        gsap.from("#txt_watchtheirbattle", 0.2, {delay:1.9, scaleY:0, alpha: 0, ease:'back.out(2.5)', onComplete: AD.creative.STEP_1 });
         
         _currentFrame = myCurrentFrame[_random];
         
@@ -298,7 +290,7 @@ AD.creative = {
 	},
 	
 	STEP_1: function(e) {
-        $("#STEP_1").css("display", "block");
+        $("#STEP_1").show();
         $("#STEP_1 #btn_swipe").on("swipeleft", AD.creative.evt_navleft);
         $("#STEP_1 #btn_swipe").on("swiperight", AD.creative.evt_navright);
         $("#STEP_1 #btn_watchtheirbattle").on("click", AD.creative.STEP_2); 
@@ -357,8 +349,8 @@ AD.creative = {
         gsap.to($(".name_right"), 0,{delay: 0, scale:0});
         gsap.to($(".name_left"), 0.5,{delay: 0.3, alpha:0.7});
         gsap.to($(".name_right"), 0.5,{delay: 0.3, alpha:0.7});
-        gsap.to($(".name_left"), 0.3,{delay: 0.3, scale:1, ease:Back.easeOut});
-        gsap.to($(".name_right"), 0.3,{delay: 0.3, scale:1, ease:Back.easeOut});
+        gsap.to($(".name_left"), 0.3,{delay: 0.3, scale:1, ease:'back.out'});
+        gsap.to($(".name_right"), 0.3,{delay: 0.3, scale:1, ease:'back.out'});
 	},
     
     evt_navleft: function(e) {
@@ -367,7 +359,7 @@ AD.creative = {
         gsap.to('.name_right', 0, {alpha:0});
         function back() {
            $('.gallery_dancers').css({left: 0});
-           $("#STEP_1 #btn_swipe").css("display", "block");
+           $("#STEP_1 #btn_swipe").show();
         }
         if(_currentFrame == "KK_FikShun"){
             gsap.to('.gallery_dancers', 0.5,{left:-960});
@@ -404,7 +396,7 @@ AD.creative = {
         else if(_currentFrame == "Kaity_LilSwagg"){
             gsap.to('.gallery_dancers', 0.5,{left:-8640, onComplete: back});
             _currentFrame = "KK_FikShun";
-            $("#STEP_1 #btn_swipe").css("display", "none");
+            $("#STEP_1 #btn_swipe").hide();
         }
         AD.creative.evt_changeName();
     },
@@ -456,9 +448,9 @@ AD.creative = {
     
     STEP_2: function(e) {
         clearTimeout(_auto);
-        $("#STEP_1").css("display", "none");
-        $("#STEP_2").css("display", "block");
-        $("#btn_vidClose").css("display", "block");
+        $("#STEP_1").hide();
+        $("#STEP_2").show();
+        $("#btn_vidClose").show();
         $("#STEP_1 #btn_swipe").off("swipeleft");
         $("#STEP_1 #btn_swipe").off("swiperight");
         $("#STEP_1 #btn_watchtheirbattle").off("click");
@@ -523,7 +515,7 @@ AD.creative = {
 	},
 	
     STEP_3: function(e) {
-        $("#STEP_3").css("display", "block");
+        $("#STEP_3").show();
         $("#STEP_3 #s3_vs").text("vs.");
         $("#STEP_2 #btn_vidClose").off("click");
         $("#STEP_3 #btn_watchanewbattle").on("click", AD.creative._onClicks);
@@ -566,8 +558,8 @@ AD.creative = {
     
     show_RESULT: function (e){
         _showresult = true;
-        $("#STEP_3 #btn_voteleft").css("display", "none");
-        $("#STEP_3 #btn_voteright").css("display", "none");
+        $("#STEP_3 #btn_voteleft").hide();
+        $("#STEP_3 #btn_voteright").hide();
         $( "#STEP_3 #s3_title" ).text("LIVE RESULTS");
         var _voteData = [];
         var _totalVotes = 0;
@@ -715,10 +707,7 @@ AD.creative = {
             right_ctx.beginPath();
             right_ctx.arc(80, 80, 64, start, right_diff/14+ start, false);
             right_ctx.stroke();
-            if(right_al >= Math.round((_votes[1] / _totalVotes) *100)){
-                clearTimeout(right_sim);
-                // Add scripting here that will run when progress completes
-            }
+            if(right_al >= Math.round((_votes[1] / _totalVotes) *100)) clearTimeout(right_sim);
             right_al++;
          }
         var left_sim = setInterval(left_progressSim, 10);
@@ -726,7 +715,7 @@ AD.creative = {
     },
     
     STEP_4: function(e) {
-        $("#STEP_4").css("display", "block");
+        $("#STEP_4").show();
         $("#STEP_4 #btn_GoBack").on("click", AD.creative._onClicks);
         $("#STEP_4 #btn_shopnow").on("click", AD.creative._onClicks);
         $("#STEP_4 #s4_navleft").on("click", AD.creative._onClicks);
@@ -755,9 +744,9 @@ AD.creative = {
                     onDragStart:function() {
                        if(_2shoes){
                             _2shoes = false;
-                            $("#STEP_4 #PairOfShoes").css('display', 'none');
-                            $("#STEP_4 #btn_shopnow1").css("display", 'none');
-                            $("#STEP_4 #btn_shopnow2").css("display", 'none');
+                            $("#STEP_4 #PairOfShoes").hide();
+                            $("#STEP_4 #btn_shopnow1").hide();
+                            $("#STEP_4 #btn_shopnow2").hide();
                        }else{
                             gsap.killTweensOf($(_id));
                             AD.creative._shoeDOWN();
@@ -766,6 +755,7 @@ AD.creative = {
                     }
                    
                 });
+                
     },
     
     _shoeDOWN: function(){
@@ -787,115 +777,103 @@ AD.creative = {
                 'border-width': '0px'
                 },0);
         } else{ 
-            $("#STEP_4 #PairOfShoes").css('display', 'none');
-            $("#STEP_4 #btn_shopnow1").css("display", 'none');
-            $("#STEP_4 #btn_shopnow2").css("display", 'none');
+            $("#STEP_4 #PairOfShoes").hide();
+            $("#STEP_4 #btn_shopnow1").hide();
+            $("#STEP_4 #btn_shopnow2").hide();
             _2shoes = false
         }
     },
     
     _shoeUP: function(e){
-        var p = $("#STEP_4 #gallery_shoes"),
-        pos = p.position();
-        gsap.delayedCall(0.5, ()=> $("#STEP_4 #btn_shopnow").css("display", "block"));
-        
-        function doThis(){
-            gsap.to($(_id), 0.3,{css:{
-            'width': '251px',
-            'height': '322px',
-            'zIndex': '100',
-            'top': '-37px',
-            'box-shadow': '0px 2px 21px black',
-            'border-width': '1px',
-            'left': ($(_id).position().left-38) + "px"
-            }, ease:Back.easeOut.config(1.5)
-            });
-            gsap.to($(_id), 0.2,{delay:0.1,css:{'background-size': '100%' }});            
-        }   
-                
+        var p   = $("#STEP_4 #gallery_shoes"),
+            pos = p.position();
+        gsap.delayedCall(0.5, ()=> $("#STEP_4 #btn_shopnow").show());
+           
         if(pos.left >= 293){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '390px' }});
-            _id = '#shoe_1'; doThis(); _currentShoe = 390;
+            _id = '#shoe_1'; _currentShoe = 390;
             }
         else if(pos.left <= 292 && pos.left >= 1){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '195px' }});
-            _id = '#shoe_2'; doThis(); _currentShoe = 195; 
+            _id = '#shoe_2'; _currentShoe = 195; 
             }
         else if(pos.left <= 0 && pos.left >= -97){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '0px' }});
-            _id = '#shoe_3'; doThis(); _currentShoe = 0 ;
+            _id = '#shoe_3'; _currentShoe = 0 ;
             }
         else if(pos.left <= -98 && pos.left >= -292){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-195px' }});
-            _id = '#shoe_4'; doThis(); _currentShoe = -195;
+            _id = '#shoe_4'; _currentShoe = -195;
             }
         else if(pos.left <= -293 && pos.left >= -487){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-390px' }});
-            _id = '#shoe_5'; doThis(); _currentShoe = -390;
+            _id = '#shoe_5'; _currentShoe = -390;
             }
         else if(pos.left <= -488 && pos.left >= -684){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-585px' }});
-            _id = '#shoe_6'; doThis(); _currentShoe = -585; 
+            _id = '#shoe_6'; _currentShoe = -585; 
             }
         else if(pos.left <= -685 && pos.left >= -877){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-780px' }});
-            _id = '#shoe_7'; doThis(); _currentShoe = -780;
+            _id = '#shoe_7'; _currentShoe = -780;
             }
         else if(pos.left <= -878 && pos.left >= -1072){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-975px' }});
-            _id = '#shoe_8'; doThis(); _currentShoe = -975;
+            _id = '#shoe_8'; _currentShoe = -975;
             }
         else if(pos.left <= -1073 && pos.left >= -1267){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-1170px' }});
-            _id = '#shoe_9'; doThis(); _currentShoe = -1170;
+             _id = '#shoe_9'; _currentShoe = -1170;
             }
         else if(pos.left <= -1268 && pos.left >= -1462){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-1365px' }});
-            _id = '#shoe_10'; doThis(); _currentShoe = -1365;
+            _id = '#shoe_10'; _currentShoe = -1365;
             }
         else if(pos.left <= -1463 && pos.left >= -1657){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-1560px' }});
-            _id = '#shoe_11'; doThis(); _currentShoe = -1560;
+            _id = '#shoe_11'; _currentShoe = -1560;
             }
         else if(pos.left <= -1657 && pos.left >= -1852){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-1755px' }});
-            _id = '#shoe_12'; doThis(); _currentShoe = -1755;
+             _id = '#shoe_12';  _currentShoe = -1755;
             }
         else if(pos.left <= -1853 && pos.left >= -2047){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-1950px' }});
-            _id = '#shoe_13'; doThis(); _currentShoe = -1950;
+            _id = '#shoe_13';  _currentShoe = -1950;
             }
         else if(pos.left <= -2048 && pos.left >= -2242){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-2145px' }});
-            _id = '#shoe_14'; doThis(); _currentShoe = -2145;
+            _id = '#shoe_14'; _currentShoe = -2145;
             }
         else if(pos.left <= -2243 && pos.left >= -2437){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-2340px' }});
-            _id = '#shoe_15'; doThis(); _currentShoe = -2340;
+           _id = '#shoe_15'; _currentShoe = -2340;
             }
         else if(pos.left <= -2438 && pos.left >= -2632){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-2535px' }});
-            _id = '#shoe_16'; doThis(); _currentShoe = -2535;
+            _id = '#shoe_16'; _currentShoe = -2535;
             }
         else if(pos.left <= -2633 && pos.left >= -2827){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-2730px' }});
-            _id = '#shoe_17'; doThis(); _currentShoe = -2730;
+            _id = '#shoe_17'; _currentShoe = -2730;
             }
         else if(pos.left <= -2828){
-            gsap.to($("#STEP_4 #gallery_shoes"), 0.3,{css:{'left': '-2925px' }});
-            _id = '#shoe_18'; doThis(); _currentShoe = -2925;
+            _id = '#shoe_18'; _currentShoe = -2925;
             }
+
+        doThis();
+        gsap.to(p, 0.3,{left:_currentShoe});
         
         if(pos.left <= -1268){
-            $("#STEP_4 #girls").css("opacity", '0.5');
-            $("#STEP_4 #guys").css("opacity", '1');
+            gsap.set('#STEP_4 #girls', {opacity:0.5});
+            gsap.set('#STEP_4 #guys', {opacity:1});
         } else{
-            $("#STEP_4 #girls").css("opacity", '1');
-            $("#STEP_4 #guys").css("opacity", '0.5');
+            gsap.set('#STEP_4 #girls', {opacity:1});
+            gsap.set('#STEP_4 #guys', {opacity:0.5});
         }
+
+        function doThis(){
+            let y = $(_id).position().left-38;
+            gsap.to(_id, {
+                duration: 0.3,
+                zIndex:100,
+                top:-37, 
+                left:y, 
+                width:251, 
+                height:322, 
+                boxShadow:'0px 2px 21px black',
+                borderWidth:1, 
+                ease:'back.out(1.4)'
+            });
+            gsap.to(_id, {duration: 0.2, delay:0.1, backgroundSize:'100%'});            
+        } 
     },
     
     _pairOfShoes: function(e){
+
         var p = $("#STEP_4 #gallery_shoes"),
         pos = p.position();
         $("#STEP_4 #btn_shopnow1").on("click", AD.creative._onClicks);
@@ -952,30 +930,32 @@ AD.creative = {
             'box-shadow': '0px 0px 0px black',
             'border-width': '0px'
         }); 
-        $("#STEP_4 #PairOfShoes").css("display", 'block');
-        $("#STEP_4 #btn_shopnow1").css("display", 'block');
-        $("#STEP_4 #btn_shopnow2").css("display", 'block');
-        gsap.to($('#STEP_4 #pairshoe_1'), 0.3,{css:{
-            'width': '251px',
-            'height': '322px',
-            'zIndex': '100',
-            'top': '-37px',
-            'box-shadow': '0px 2px 21px black',
-            'border-width': '1px',
-            'left': '1492px'
-            }, ease:Back.easeOut.config(1.5)
-            });
-        gsap.to($('#STEP_4 #pairshoe_2'), 0.3,{css:{
-            'width': '251px',
-            'height': '322px',
-            'zIndex': '100',
-            'top': '-37px',
-            'box-shadow': '0px 2px 21px black',
-            'border-width': '1px',
-            'left': '1755px'
-            }, ease:Back.easeOut.config(1.5)
-            });
-        gsap.to($('.myShoes'), 0.2,{delay:0.1,css:{'background-size': '100%' }}); 
+        $("#STEP_4 #PairOfShoes").show();
+        $("#STEP_4 #btn_shopnow1").show();
+        $("#STEP_4 #btn_shopnow2").show();
+        gsap.to('#STEP_4 #pairshoe_1', {
+            duration: 0.3,
+            zIndex:100,
+            top:-37, 
+            left:1492, 
+            width:251, 
+            height:322, 
+            boxShadow:'0px 2px 21px black',
+            borderWidth:1, 
+            ease:'back.out(1.4)'
+        });
+        gsap.to('#STEP_4 #pairshoe_2', {
+            duration: 0.3,
+            zIndex:100,
+            top:-37, 
+            left:1755, 
+            width:251, 
+            height:322, 
+            boxShadow:'0px 2px 21px black',
+            borderWidth:1, 
+            ease:'back.out(1.4)'
+        });
+        gsap.to('.myShoes', {duration:0.2, delay:0.1, backgroundSize:'100%'}); 
         _id = '#shoe_8'; _currentShoe = -1273;
         $("#STEP_4 #girls").css("opacity", '1');
         $("#STEP_4 #guys").css("opacity", '1');
@@ -1103,20 +1083,8 @@ AD.creative = {
             case "btn_vidClose":                  
                 AD.dom.video.get(0).pause();
                 AD.dom.video.get(0).currentTime = 0;
-                $("#STEP_2").css("display", "none");
+                $("#STEP_2").hide();
                 AD.creative.STEP_3();
-
-                //exit fullscreen
-                /* if(Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0)
-                    AD.dom.video.get(0).webkitExitFullscreen();
-
-                if (document.fullscreenEnabled || document.webkitFullscreenEnabled) {
-                    if (document.exitFullscreen) {
-                      document.exitFullscreen();
-                    } else if (document.webkitExitFullscreen) {
-                      document.webkitExitFullscreen();
-                    }
-                } */
 
                 AD.creative._startPast 			=
                 AD.creative._firstQuartilePast 	=
@@ -1132,9 +1100,9 @@ AD.creative = {
                 $("#STEP_3 #btn_shoeleft").off("click");
                 $("#STEP_3 #btn_shoeright").off("click");
                 $("#STEP_3 #btn_seetheirshoes").off("click");
-                $("#STEP_3").css("display", "none");
-                $("#STEP_3 #btn_voteleft").css("display", "block");
-                $("#STEP_3 #btn_voteright").css("display", "block");
+                $("#STEP_3").hide();
+                $("#STEP_3 #btn_voteleft").show();
+                $("#STEP_3 #btn_voteright").show();
             
                 right_BGctx.clearRect(0,0,160,160);
                 left_BGctx.clearRect(0,0,160,160);
@@ -1149,10 +1117,10 @@ AD.creative = {
                 $(".name_right" ).text(names_Right[_random]);
                 $(".gallery_dancers" ).css({'left': Xframes[_random]});
 
-                gsap.from( $(dancer_left[_random]), 0.6,{x:-480, ease:Back.easeOut.config(0.9)});
-                gsap.from( $(dancer_right[_random]), 0.6,{ x:960, ease:Back.easeOut.config(0.9)});
-                gsap.from($(".name_left"), 0.4,{alpha:0, scale:0, ease:Back.easeOut});
-                gsap.from($(".name_right"), 0.4,{alpha:0, scale:0, ease:Back.easeOut});
+                gsap.from( $(dancer_left[_random]), 0.6,{x:-480, ease:'back.out(0.9)'});
+                gsap.from( $(dancer_right[_random]), 0.6,{ x:960, ease:'back.out(0.9)'});
+                gsap.from($(".name_left"), 0.4,{alpha:0, scale:0, ease:'back.out'});
+                gsap.from($(".name_right"), 0.4,{alpha:0, scale:0, ease:'back.out'});
 
                 _currentFrame = myCurrentFrame[_random];
                 break;
@@ -1167,25 +1135,25 @@ AD.creative = {
             case "btn_shoeleft":
                 AD.creative._dynamicShoes();
                 _currentShoe = -1170;
-                $("#STEP_3").css("display", "none");
+                $("#STEP_3").hide();
                 $("#STEP_4 #gallery_shoes").css('left', "-1170px");
                 AD.creative.STEP_4(); AD.creative._shoeUP();
-                $("#STEP_4 #btn_shopnow1").css("display", 'none');
-                $("#STEP_4 #btn_shopnow2").css("display", 'none');
-                $("#STEP_4 #PairOfShoes").css("display", "none");
+                $("#STEP_4 #btn_shopnow1").hide();
+                $("#STEP_4 #btn_shopnow2").hide();
+                $("#STEP_4 #PairOfShoes").hide();
                 break;
             case "btn_shoeright":
                 AD.creative._dynamicShoes();
                 _currentShoe = -1365;
-                $("#STEP_3").css("display", "none");
+                $("#STEP_3").hide();
                 $("#STEP_4 #gallery_shoes").css('left', "-1365px");
                 AD.creative.STEP_4(); AD.creative._shoeUP();
-                $("#STEP_4 #btn_shopnow1").css("display", 'none');
-                $("#STEP_4 #btn_shopnow2").css("display", 'none');
-                $("#STEP_4 #PairOfShoes").css("display", "none");
+                $("#STEP_4 #btn_shopnow1").hide();
+                $("#STEP_4 #btn_shopnow2").hide();
+                $("#STEP_4 #PairOfShoes").hide();
                 break;
             case "btn_seetheirshoes":
-                $("#STEP_3").css("display", "none");
+                $("#STEP_3").hide();
                 AD.creative.STEP_4();
                 AD.creative._pairOfShoes();
                 _2shoes = true;
@@ -1193,8 +1161,8 @@ AD.creative = {
             case "btn_GoBack":
                 _2shoes = false;
                 AD.creative._shoeDOWN();
-                $("#STEP_4").css("display", "none");
-                $("#STEP_3").css("display", "block");
+                $("#STEP_4").hide();
+                $("#STEP_3").show();
                 $("#STEP_4 #btn_GoBack").off("click");
                 $("#STEP_4 #btn_shopnow").off("click");
                 $("#STEP_4 #s4_navleft").off("click");
@@ -1203,78 +1171,40 @@ AD.creative = {
                 $("#STEP_4 #btn_shopnow2").off("click");
                 break;
             case "btn_shopnow":
-                /* if(_currentShoe === 390) console.log(shop_left[0]);
-                else if(_currentShoe === 195) console.log(shop_left[1]);
-                else if(_currentShoe === 0) console.log(shop_left[2]);
-                else if(_currentShoe === -195) console.log(shop_left[3]);
-                else if(_currentShoe === -390) console.log(shop_left[4]);
-                else if(_currentShoe === -585) console.log(shop_left[5]);
-                else if(_currentShoe === -780) console.log(shop_left[6]);
-                else if(_currentShoe === -975) console.log(shop_left[7]);
-                else if(_currentShoe === -1170) console.log(shop_left[8]);
-                else if(_currentShoe === -1365) console.log(shop_right[0]);
-                else if(_currentShoe === -1560) console.log(shop_right[1]);
-                else if(_currentShoe === -1755) console.log(shop_right[2]);
-                else if(_currentShoe === -1950) console.log(shop_right[3]);
-                else if(_currentShoe === -2145) console.log(shop_right[4]);
-                else if(_currentShoe === -2340) console.log(shop_right[5]);
-                else if(_currentShoe === -2535) console.log(shop_right[6]);
-                else if(_currentShoe === -2730) console.log(shop_right[7]);
-                else if(_currentShoe === -2925) console.log(shop_right[8]); */
                 window.open("https://www.shoecarnival.com/", "_blank");
                 break;
             case "s4_navleft":
                 gsap.killTweensOf(_id);
                 if(_currentShoe == -1273){
                     AD.creative._shoeDOWN();
-                    gsap.to('#STEP_4 #gallery_shoes', 0.2,{
-                        css:{'left': "-975px" }, onComplete: AD.creative._shoeUP});
+                    gsap.to('#STEP_4 #gallery_shoes', {
+                        duration:0.2, left:-975, onComplete: AD.creative._shoeUP});
                 }
                 else{
                     if(_currentShoe != 390){
                         AD.creative._shoeDOWN();
-                        gsap.to('#STEP_4 #gallery_shoes', 0.2,{
-                            css:{'left': (_currentShoe+195) + "px" }, onComplete: AD.creative._shoeUP});
-                        }
+                        gsap.to('#STEP_4 #gallery_shoes', {
+                            duration:0.2, left:_currentShoe+195, onComplete: AD.creative._shoeUP});
+                    }
                 }
                 break;
             case "s4_navright":
                 gsap.killTweensOf(_id);
                 if(_currentShoe == -1273){
                     AD.creative._shoeDOWN();
-                    gsap.to('#STEP_4 #gallery_shoes', 0.2,{
-                        css:{'left': "-1560px" }, onComplete: AD.creative._shoeUP});
+                    gsap.to('#STEP_4 #gallery_shoes', {
+                        duration:0.2, left:-1560, onComplete: AD.creative._shoeUP});
                 }
                 else{
                     if(_currentShoe != -2925){
                         AD.creative._shoeDOWN();
-                        gsap.to('#STEP_4 #gallery_shoes', 0.2,{
-                            css:{'left': (_currentShoe-195) + "px" }, onComplete: AD.creative._shoeUP});
-                        }
+                        gsap.to('#STEP_4 #gallery_shoes', {
+                            duration:0.2, left:_currentShoe-195, onComplete: AD.creative._shoeUP});
+                    }
                 }
                 break;
-            case "btn_shopnow1": 
-                /* if(_currentFrame == "KK_FikShun") console.log("KK_RedBlowfish");
-                else if(_currentFrame == "KK_Josh") console.log("KK_VansorKeds");
-                else if(_currentFrame == "Simrin_FikShun") console.log("Simrin_PinkNike");
-                else if(_currentFrame == "KK_LilSwagg") console.log("KK_WhiteBlowfish");
-                else if(_currentFrame == "Kaity_Josh") console.log("Kaidy_StripeRoxy");
-                else if(_currentFrame == "Simrin_LilSwagg") console.log("Simrin_Ascics");
-                else if(_currentFrame == "Kaity_FikShun") console.log("Kaidy_Boots");
-                else if(_currentFrame == "Simrin_Josh") console.log("Simrin_BlackBoots");
-                else if(_currentFrame == "Kaity_LilSwagg") console.log("Kaidy_BlueNikes"); */
-                window.open("https://www.shoecarnival.com/", "_blank");
-                break;
+            case "btn_shopnow1":
             case "btn_shopnow2": 
-                /* if(_currentFrame == "KK_FikShun") console.log("Fikshun_BlueNike");
-                else if(_currentFrame == "KK_Josh") console.log("Josh_Ascics");
-                else if(_currentFrame == "Simrin_FikShun") console.log("FikShun_CamoNike");
-                else if(_currentFrame == "KK_LilSwagg") console.log("Swagg_BlueSperry");
-                else if(_currentFrame == "Kaity_Josh") console.log("Josh_BlackNike");
-                else if(_currentFrame == "Simrin_LilSwagg") console.log("Swagg_WhiteConverse");
-                else if(_currentFrame == "Kaity_FikShun") console.log("Fikshun_RedConverse");
-                else if(_currentFrame == "Simrin_Josh") console.log("Josh_RedVans");
-                else if(_currentFrame == "Kaity_LilSwagg") console.log("Swagg_GreyKeds"); */
                 window.open("https://www.shoecarnival.com/", "_blank");
                 break;
         } 
@@ -1282,145 +1212,24 @@ AD.creative = {
     
     _playVideo: function(e) {
 		AD.creative.video.get(0).play();
-        //AD.creative._scene2();
-         
     },
 	
 	_videoStarted: function(e) {
-		
-		if(AD.creative._startPast)
-			return;
-			
+		if(AD.creative._startPast) return;
 		AD.creative._startPast = true;
-		
-        /* switch(_currentFrame){
-            case 'KK_FikShun': console.log('[KK_FikShun Vid Start]'); break;
-            case 'KK_Josh': console.log('[KK_Josh Vid Start]'); break;
-            case 'Simrin_FikShun': console.log('[Simrin_FikShun Vid Start]'); break;
-            case 'KK_LilSwagg': console.log('[KK_LilSwagg Vid Start]'); break;
-            case 'Kaity_Josh': console.log('[Kaity_Josh Vid Start]'); break;
-            case 'Simrin_LilSwagg': console.log('[Simrin_LilSwagg Vid Start]'); break;
-            case 'Kaity_FikShun': console.log('[Kaity_FikShun Vid Start]'); break;
-            case 'Simrin_Josh': console.log('[Simrin_Josh Vid Start]'); break;
-            case 'Kaity_LilSwagg': console.log('[Kaity_LilSwagg Vid Start]'); break;
-        } */
-		
 	},
 	
 	_videoEnded: function(e) {
-		
 		AD.dom.video.get(0).currentTime = 0;
 		AD.creative._startPast 			=
 		AD.creative._firstQuartilePast 	=
 		AD.creative._midpointPast 		= 
 		AD.creative._thirdQuartilePast 	= false;
 		
-        /* switch(_currentFrame){
-            case 'KK_FikShun': console.log('[KK_FikShun Vid Complete]'); break;
-            case 'KK_Josh': console.log('[KK_Josh Vid Complete]'); break;
-            case 'Simrin_FikShun': console.log('[Simrin_FikShun Vid Complete]'); break;
-            case 'KK_LilSwagg': console.log('[KK_LilSwagg Vid Complete]'); break;
-            case 'Kaity_Josh': console.log('[Kaity_Josh Vid Complete]'); break;
-            case 'Simrin_LilSwagg': console.log('[Simrin_LilSwagg Vid Complete]'); break;
-            case 'Kaity_FikShun': console.log('[Kaity_FikShun Vid Complete]'); break;
-            case 'Simrin_Josh': console.log('[Simrin_Josh Vid Complete]'); break;
-            case 'Kaity_LilSwagg': console.log('[Kaity_LilSwagg Vid Complete]'); break;
-        } */
-		
 		//destroy and reset video
 		AD.creative._videoClear();
-        $("#STEP_2").css("display", "none");
+        $("#STEP_2").hide();
 		AD.creative.STEP_3();
-	},
-	
-	_videoProgress: function(e) {
-		
-		var progress = e.currentTarget.currentTime / e.currentTarget.duration;
-        
-        /* switch(_currentFrame){
-            case 'KK_FikShun':
-                if (!AD.creative._firstQuartilePast && progress >= 0.25) {
-                  AD.creative._firstQuartilePast = true; //console.log('[KK_FikShun Vid Q1]');
-                } else if (!AD.creative._midpointPast && progress >= 0.50) {
-                  AD.creative._midpointPast = true; //console.log('[KK_FikShun Vid Q2]');
-                } else if (!AD.creative._thirdQuartilePast && progress >= 0.75) {
-                  AD.creative._thirdQuartilePast = true; //console.log('[KK_FikShun Vid Q3]');
-                }
-                break;
-            case 'KK_Josh':
-                if (!AD.creative._firstQuartilePast && progress >= 0.25) {
-                  AD.creative._firstQuartilePast = true; //console.log('[KK_Josh Vid Q1]');
-                } else if (!AD.creative._midpointPast && progress >= 0.50) {
-                  AD.creative._midpointPast = true; //console.log('[KK_Josh Vid Q2]');
-                } else if (!AD.creative._thirdQuartilePast && progress >= 0.75) {
-                  AD.creative._thirdQuartilePast = true; //console.log('[KK_Josh Vid Q3]');
-                }
-                break;
-            case 'Simrin_FikShun':
-                if (!AD.creative._firstQuartilePast && progress >= 0.25) {
-                  AD.creative._firstQuartilePast = true; //console.log('[Simrin_FikShun Vid Q1]');
-                } else if (!AD.creative._midpointPast && progress >= 0.50) {
-                  AD.creative._midpointPast = true; //console.log('[Simrin_FikShun Vid Q2]');
-                } else if (!AD.creative._thirdQuartilePast && progress >= 0.75) {
-                  AD.creative._thirdQuartilePast = true; //console.log('[Simrin_FikShun Vid Q3]');
-                }
-                break;
-            case 'KK_LilSwagg':
-                if (!AD.creative._firstQuartilePast && progress >= 0.25) {
-                  AD.creative._firstQuartilePast = true; //console.log('[KK_LilSwagg Vid Q1]');
-                } else if (!AD.creative._midpointPast && progress >= 0.50) {
-                  AD.creative._midpointPast = true; //console.log('[KK_LilSwagg Vid Q2]');
-                } else if (!AD.creative._thirdQuartilePast && progress >= 0.75) {
-                  AD.creative._thirdQuartilePast = true; //console.log('[KK_LilSwagg Vid Q3]');
-                }
-                break;
-            case 'Kaity_Josh':
-                if (!AD.creative._firstQuartilePast && progress >= 0.25) {
-                  AD.creative._firstQuartilePast = true; //console.log('[Kaity_Josh Vid Q1]');
-                } else if (!AD.creative._midpointPast && progress >= 0.50) {
-                  AD.creative._midpointPast = true; //console.log('[Kaity_Josh Vid Q2]');
-                } else if (!AD.creative._thirdQuartilePast && progress >= 0.75) {
-                  AD.creative._thirdQuartilePast = true; //console.log('[Kaity_Josh Vid Q3]');
-                }
-                break;
-            case 'Simrin_LilSwagg':
-                if (!AD.creative._firstQuartilePast && progress >= 0.25) {
-                  AD.creative._firstQuartilePast = true; //console.log('[Simrin_LilSwagg Vid Q1]');
-                } else if (!AD.creative._midpointPast && progress >= 0.50) {
-                  AD.creative._midpointPast = true; //console.log('[Simrin_LilSwagg Vid Q2]');
-                } else if (!AD.creative._thirdQuartilePast && progress >= 0.75) {
-                  AD.creative._thirdQuartilePast = true; //console.log('[Simrin_LilSwagg Vid Q3]');
-                }
-                break;
-            case 'Kaity_FikShun':
-                if (!AD.creative._firstQuartilePast && progress >= 0.25) {
-                  AD.creative._firstQuartilePast = true; //console.log('[Kaity_FikShun Vid Q1]');
-                } else if (!AD.creative._midpointPast && progress >= 0.50) {
-                  AD.creative._midpointPast = true; //console.log('[Kaity_FikShun Vid Q2]');
-                } else if (!AD.creative._thirdQuartilePast && progress >= 0.75) {
-                  AD.creative._thirdQuartilePast = true; //console.log('[Kaity_FikShun Vid Q3]');
-                }
-                break;
-            case 'Simrin_Josh':
-                if (!AD.creative._firstQuartilePast && progress >= 0.25) {
-                  AD.creative._firstQuartilePast = true; //console.log('[Simrin_Josh Vid Q1]');
-                } else if (!AD.creative._midpointPast && progress >= 0.50) {
-                  AD.creative._midpointPast = true; //console.log('[Simrin_Josh Vid Q2]');
-                } else if (!AD.creative._thirdQuartilePast && progress >= 0.75) {
-                  AD.creative._thirdQuartilePast = true; //console.log('[Simrin_Josh Vid Q3]');
-                }
-                break;
-            case 'Kaity_LilSwagg':
-                if (!AD.creative._firstQuartilePast && progress >= 0.25) {
-                  AD.creative._firstQuartilePast = true; //console.log('[Kaity_LilSwagg Vid Q1]');
-                } else if (!AD.creative._midpointPast && progress >= 0.50) {
-                  AD.creative._midpointPast = true; //console.log('[Kaity_LilSwagg Vid Q2]');
-                } else if (!AD.creative._thirdQuartilePast && progress >= 0.75) {
-                  AD.creative._thirdQuartilePast = true; //console.log('[Kaity_LilSwagg Vid Q3]');
-                }
-                break;
-        } */
-		
 	},
 	    
     getRandomInt: function (min, max) {
