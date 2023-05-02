@@ -76,10 +76,6 @@ var TXAd = (function() {
         if (TXConfig.loadedAssets == TXConfig.totalAssets) TXCreative.init();
     }
 
-    function otherImagesLoaded() {
-        TXConfig.otherAssets += 1;
-    }
-
     return {
         init: init
     };
@@ -117,8 +113,10 @@ var TXCreative = (function() {
             } catch (e) {
                 AD.scale = 1;
             }
-        } else
+        } else {
             AD.scale = 1;
+        }
+            
     }
 
     return {
@@ -187,6 +185,7 @@ var TXMain = (function() {
         // Warn if the browser doesn't support addEventListener or the Page Visibility API
         if (typeof document.addEventListener === "undefined" || hidden === undefined) {
             //console.log("This demo requires a browser, such as Google Chrome or Firefox, that supports the Page Visibility API.");
+            $(body).css('background','red');
         } else {
             // Handle page visibility change   
             document.addEventListener(visibilityChange, handleVisibilityChange, false);
@@ -230,17 +229,11 @@ var TXMain = (function() {
             creative.click = document.querySelector('.click');
         }
 
-        /**
-         * The Enabler is now initialized and any extra modules have been loaded.
-         */
         function init() {
             addListeners();
             startCreative();
         }
 
-        /**
-         * Add appropriate listeners after the creative's DOM has been set up.
-         */
         function addListeners() {
             document.querySelector('#continue-with-mic').addEventListener('click', continueWithMic, false);
             document.querySelector('#continue-without-mic').addEventListener('click', continueWithoutMic, false);
@@ -265,6 +258,7 @@ var TXMain = (function() {
         function startCreative() {
             creative.introContainer.classList.add('animate');
             creative.introVideo.src = 'src/video/intro-video.mp4';
+            
         }
 
         function ctaHandler() {
@@ -499,8 +493,6 @@ var TXMain = (function() {
             showMicOff();
             firstTransition(false);
         }
-
-        
 
         function alexaPrompt(promptID) {
             creative.alexaPromptText.innerHTML = '';

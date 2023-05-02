@@ -19,6 +19,8 @@ div#container {
 	background-color: #000000;
 	background-repeat: no-repeat;
 	overflow: hidden;
+  position: relative;
+  margin: auto;
 }
 
 div#container img {	transform: translateZ(0); }
