@@ -239,7 +239,6 @@ div#container .spr_btn.btn_watchthespot { background-position: 0 -77px; width: 1
 div#container .spr_btn.btn_letsroll { background-position: 0 -112px; width: 135px; height: 30px; } 
 
 div#container #btn_play{
-	display:none;
 	left: 94px;
     top: 416px;
 	width: 143px; height: 32px;

@@ -181,7 +181,6 @@ var TXCreative = (function () {
 			n +=171;
 		}
 
-		TX_Audio.INIT();
 		AD.video.get(0).src = AD.vidURL[0];
 		AD.video.get(0).volume = 0;
 		TXVideo.init();
@@ -768,7 +767,8 @@ var TX_Audio = {
 		}
 		
 		TX_Audio.PLAY(TX_Audio.SND_BGM);
-		$('#btn_play').show();
+		TXAd.init();
+		
 	},
 
 	MOUSECLICK: function(e) {			
@@ -832,6 +832,6 @@ var TX_Audio = {
 	ACTIVE: true
 };
 
-TXAd.init();
+TX_Audio.INIT();
 
 }());
