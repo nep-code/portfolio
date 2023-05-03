@@ -133,10 +133,7 @@ var TXCreative = (function() {
 var TXMain = (function() {
   
     function init() {
-        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition,
-            SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList,
-            SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
-            
+       
         var creative = {};
 
         creative.videoSrc = '';
@@ -145,6 +142,10 @@ var TXMain = (function() {
         var showingSorryExperience = false;
 
         try {
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition,
+            SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList,
+            SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+
             AD.recognition = true;
             var recognition = new SpeechRecognition();
             var speechRecognitionList = new SpeechGrammarList();
@@ -192,10 +193,135 @@ var TXMain = (function() {
                 // Handle page visibility change   
                 document.addEventListener(visibilityChange, handleVisibilityChange, false);
             }
+
+            recognition.onresult = function(event) {
+                var last = event.results.length - 1;
+                speechText = (event.results[last][0].transcript).toLowerCase();
+                isSpeechResult = true;
+    
+                if (speechText.includes('alexa') && callOnce) {
+                    callOnce = false;
+                    clearTimeout(baseOnTim);
+    
+                    creative.onVideo.classList.add('animate');
+                    creative.onVideo.play();
+                    baseOnTim = setTimeout(function() {
+                        creative.baseOnVideo.classList.add('animate');
+                        creative.baseOnVideo.play();
+                        creative.onVideo.classList.remove('animate');
+                    }, 1000);
+                }
+                diagnostic.textContent = speechText;
+            };
+    
+            recognition.onspeechend = function() {
+                if (!callOnce) {
+                    callOnce = true;
+                    setTimeout(function() {
+                        clearTimeout(baseOnTim);
+                        creative.baseOnVideo.classList.remove('animate');
+                        creative.onVideo.classList.remove('animate');
+                        creative.offVideo.classList.add('animate');
+                        creative.offVideo.play();
+                        creative.offVideo.classList.remove('animate');
+                    }, 2200);
+                }
+    
+                setTimeout(function() {
+                    if (!showingExperience && !isPageHidden && isSpeechResult) {
+                        creative.micButton.classList.add('disabled');
+                        cancelTimeout();
+                        if (
+                            speechText.includes('alexa') &&
+                            speechText.includes('do') &&
+                            speechText.includes('aliens') &&
+                            speechText.includes('exist')
+                        ) {
+                            isSpeechResult = false;
+                            alexaPrompt('aliens');
+                        } else if (
+                            speechText.includes('alexa') &&
+                            speechText.includes('do') &&
+                            speechText.includes('barrel') &&
+                            speechText.includes('roll')
+                        ) {
+                            isSpeechResult = false;
+                            alexaPrompt('barrel');
+                        } else if (
+                            speechText.includes('alexa') &&
+                            speechText.includes('turn') &&
+                            speechText.includes('on') &&
+                            speechText.includes('bedtime')
+                        ) {
+                            isSpeechResult = false;
+                            alexaPrompt('bedtime');
+                        } else if (
+                            speechText.includes('alexa') &&
+                            speechText.includes('fire') &&
+                            speechText.includes('jetpack') ||
+                            speechText.includes('thrusters')
+                        ) {
+                            isSpeechResult = false;
+                            alexaPrompt('jetpack');
+                        } else if (
+                            speechText.includes('alexa') &&
+                            speechText.includes('turn') &&
+                            speechText.includes('off') &&
+                            speechText.includes('lights')
+                        ) {
+                            isSpeechResult = false;
+                            alexaPrompt('lights');
+                        } else if (
+                            speechText.includes('alexa') &&
+                            speechText.includes('flash') &&
+                            speechText.includes('the') &&
+                            speechText.includes('toilet')
+                        ) {
+                            isSpeechResult = false;
+                            alexaPrompt('toilet');
+                        } else {
+                            isSpeechResult = false;
+                            alexaPrompt('no-prompt');
+                            creative.micButton.classList.remove('disabled');
+                        }
+                    }
+                }, 500);
+            };
+    
+            recognition.onspeechstart = function() {};
+    
+            recognition.onnomatch = function() {
+                diagnostic.textContent = "I didn't recognise that.";
+            };
+    
+            recognition.onerror = function(event) {
+                diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
+                if (event.error == "not-allowed") {
+                    withMic = false;
+                    alert('No Microphone Access');
+                    for (var i = 0; i < creative.alexa.length; ++i) {
+                        creative.alexa[i].classList.add('disabled');
+                    }
+                    firstTransition(false);
+                }
+            };
+
+            recognition.onend = function() {
+                if (
+                    !showingExperience &&
+                    !showingSorryExperience &&
+                    withMic &&
+                    !isPageHidden
+                ) {
+                    //Recognition Ended - Restarting
+                    recognition.start();
+                }
+            };
         } catch(e) {
             AD.recognition = false;
-            creative.micButton.classList.add('disabled');
-            continueWithoutMic();
+            document.querySelector('#continue-with-mic').style.display = "none";
+            document.querySelector('#continue-without-mic').style.float = "none";
+            document.querySelector('.mic-button').style.pointerEvents = "none";
         }
 
         var diagnostic = document.querySelector('.output');
@@ -248,7 +374,7 @@ var TXMain = (function() {
             document.querySelector('#timeout-continue-without-mic').addEventListener('click', continueWithoutMic, false);
             creative.video.addEventListener('timeupdate', videoProgress, false);
             creative.video.addEventListener('ended', videoEnded, false);
-            creative.micButton.addEventListener('click', micButton, false);
+            if(AD.recognition) creative.micButton.addEventListener('click', micButton, false);
             creative.cta.addEventListener('click', ctaHandler, false);
 
             for (var i = 0; i < creative.alexa.length; ++i) {
@@ -550,7 +676,7 @@ var TXMain = (function() {
             creative.micButton.classList.add('disabled');
             creative.introVideo.volume = 0;
             creative.transition.classList.add('animate');
-            recognition.stop();
+            if(AD.recognition) recognition.stop();
             setTimeout(function() {
                 if (!isPageHidden) {
                     timeoutShowing = false;
@@ -577,7 +703,7 @@ var TXMain = (function() {
                 creative.video.classList.remove('animate');
                 showingExperience = false;
                 videoPlaying = false;
-                if (withMic) recognition.start();
+                if (withMic && AD.recognition) recognition.start();
                 callTimeout();
             }, 500);
         }
@@ -586,120 +712,6 @@ var TXMain = (function() {
         var isSpeechResult = false;
         var callOnce = true;
         var baseOnTim;
-
-        recognition.onresult = function(event) {
-            var last = event.results.length - 1;
-            speechText = (event.results[last][0].transcript).toLowerCase();
-            isSpeechResult = true;
-
-            if (speechText.includes('alexa') && callOnce) {
-                callOnce = false;
-                clearTimeout(baseOnTim);
-
-                creative.onVideo.classList.add('animate');
-                creative.onVideo.play();
-                baseOnTim = setTimeout(function() {
-                    creative.baseOnVideo.classList.add('animate');
-                    creative.baseOnVideo.play();
-                    creative.onVideo.classList.remove('animate');
-                }, 1000);
-            }
-            diagnostic.textContent = speechText;
-        };
-
-        recognition.onspeechend = function() {
-
-            if (!callOnce) {
-                callOnce = true;
-                setTimeout(function() {
-                    clearTimeout(baseOnTim);
-                    creative.baseOnVideo.classList.remove('animate');
-                    creative.onVideo.classList.remove('animate');
-                    creative.offVideo.classList.add('animate');
-                    creative.offVideo.play();
-                    creative.offVideo.classList.remove('animate');
-                }, 2200);
-            }
-
-            setTimeout(function() {
-                if (!showingExperience && !isPageHidden && isSpeechResult) {
-                    creative.micButton.classList.add('disabled');
-                    cancelTimeout();
-                    if (
-                        speechText.includes('alexa') &&
-                        speechText.includes('do') &&
-                        speechText.includes('aliens') &&
-                        speechText.includes('exist')
-                    ) {
-                        isSpeechResult = false;
-                        alexaPrompt('aliens');
-                    } else if (
-                        speechText.includes('alexa') &&
-                        speechText.includes('do') &&
-                        speechText.includes('barrel') &&
-                        speechText.includes('roll')
-                    ) {
-                        isSpeechResult = false;
-                        alexaPrompt('barrel');
-                    } else if (
-                        speechText.includes('alexa') &&
-                        speechText.includes('turn') &&
-                        speechText.includes('on') &&
-                        speechText.includes('bedtime')
-                    ) {
-                        isSpeechResult = false;
-                        alexaPrompt('bedtime');
-                    } else if (
-                        speechText.includes('alexa') &&
-                        speechText.includes('fire') &&
-                        speechText.includes('jetpack') ||
-                        speechText.includes('thrusters')
-                    ) {
-                        isSpeechResult = false;
-                        alexaPrompt('jetpack');
-                    } else if (
-                        speechText.includes('alexa') &&
-                        speechText.includes('turn') &&
-                        speechText.includes('off') &&
-                        speechText.includes('lights')
-                    ) {
-                        isSpeechResult = false;
-                        alexaPrompt('lights');
-                    } else if (
-                        speechText.includes('alexa') &&
-                        speechText.includes('flash') &&
-                        speechText.includes('the') &&
-                        speechText.includes('toilet')
-                    ) {
-                        isSpeechResult = false;
-                        alexaPrompt('toilet');
-                    } else {
-                        isSpeechResult = false;
-                        alexaPrompt('no-prompt');
-                        creative.micButton.classList.remove('disabled');
-                    }
-                }
-            }, 500);
-        };
-
-        recognition.onspeechstart = function() {};
-
-        recognition.onnomatch = function() {
-            diagnostic.textContent = "I didn't recognise that.";
-        };
-
-        recognition.onerror = function(event) {
-            diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
-            if (event.error == "not-allowed") {
-                withMic = false;
-                alert('No Microphone Access');
-                for (var i = 0; i < creative.alexa.length; ++i) {
-                    creative.alexa[i].classList.add('disabled');
-                }
-                firstTransition(false);
-            }
-        };
-
         var timeoutTimeout;
         var timeoutShowing = false;
         var timeoutCalled = false;
@@ -732,18 +744,6 @@ var TXMain = (function() {
             //Speech - Timeout Cancel
             clearTimeout(timeoutTimeout);
         }
-
-        recognition.onend = function() {
-            if (
-                !showingExperience &&
-                !showingSorryExperience &&
-                withMic &&
-                !isPageHidden
-            ) {
-                //Recognition Ended - Restarting
-                recognition.start();
-            }
-        };
 
         preInit();
     }
