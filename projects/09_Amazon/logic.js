@@ -133,18 +133,19 @@ var TXCreative = (function() {
 var TXMain = (function() {
   
     function init() {
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition,
+            SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList,
+            SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+            
         var creative = {};
-        
+
         creative.videoSrc = '';
 
         var showingExperience = false;
         var showingSorryExperience = false;
 
         try {
-            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition,
-            SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList,
-            SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
-
+            AD.recognition = true;
             var recognition = new SpeechRecognition();
             var speechRecognitionList = new SpeechGrammarList();
             // speechRecognitionList.addFromString(grammar, 1);
@@ -153,46 +154,48 @@ var TXMain = (function() {
             recognition.lang = 'en-US';
             recognition.interimResults = true;
             recognition.maxAlternatives = 1;
-        } catch(e) {
-            console.log('ERR');
-        }
-        
 
-        // Set the name of the hidden property and the change event for visibility
-        var hidden, visibilityChange;
-        var isPageHidden = false;
+            // Set the name of the hidden property and the change event for visibility
+            var hidden, visibilityChange;
+            var isPageHidden = false;
 
-        if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support 
-            hidden = "hidden";
-            visibilityChange = "visibilitychange";
-        } else if (typeof document.msHidden !== "undefined") {
-            hidden = "msHidden";
-            visibilityChange = "msvisibilitychange";
-        } else if (typeof document.webkitHidden !== "undefined") {
-            hidden = "webkitHidden";
-            visibilityChange = "webkitvisibilitychange";
-        }
+            if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support 
+                hidden = "hidden";
+                visibilityChange = "visibilitychange";
+            } else if (typeof document.msHidden !== "undefined") {
+                hidden = "msHidden";
+                visibilityChange = "msvisibilitychange";
+            } else if (typeof document.webkitHidden !== "undefined") {
+                hidden = "webkitHidden";
+                visibilityChange = "webkitvisibilitychange";
+            }
 
-        // If the page is hidden, pause the video;
-        // if the page is shown, play the video
-        function handleVisibilityChange() {
-            if (document[hidden]) {
-                isPageHidden = true;
-                recognition.stop();
-            } else {
-                isPageHidden = false;
-                if (withMic) {
-                    recognition.start();
+            // If the page is hidden, pause the video;
+            // if the page is shown, play the video
+            function handleVisibilityChange() {
+                if (document[hidden]) {
+                    isPageHidden = true;
+                    recognition.stop();
+                } else {
+                    isPageHidden = false;
+                    if (withMic) {
+                        recognition.start();
+                    }
                 }
             }
-        }
 
-        // Warn if the browser doesn't support addEventListener or the Page Visibility API
-        if (typeof document.addEventListener === "undefined" || hidden === undefined) {
-            //console.log("This demo requires a browser, such as Google Chrome or Firefox, that supports the Page Visibility API.");
-        } else {
-            // Handle page visibility change   
-            document.addEventListener(visibilityChange, handleVisibilityChange, false);
+            // Warn if the browser doesn't support addEventListener or the Page Visibility API
+            if (typeof document.addEventListener === "undefined" || hidden === undefined) {
+                //console.log("This demo requires a browser, such as Google Chrome or Firefox, that supports the Page Visibility API.");
+                $(body).css('background','red');
+            } else {
+                // Handle page visibility change   
+                document.addEventListener(visibilityChange, handleVisibilityChange, false);
+            }
+        } catch(e) {
+            AD.recognition = false;
+            creative.micButton.classList.add('disabled');
+            continueWithoutMic();
         }
 
         var diagnostic = document.querySelector('.output');
@@ -260,9 +263,9 @@ var TXMain = (function() {
         }
 
         function startCreative() {
-            //creative.introContainer.classList.add('animate');
-            creative.introContainer.style.opacity = 1;
+            creative.introContainer.classList.add('animate');
             creative.introVideo.src = 'src/video/intro-video.mp4';
+            
         }
 
         function ctaHandler() {
@@ -296,8 +299,7 @@ var TXMain = (function() {
             timeoutCalled = false;
             creative.timeout.style.display = 'none';
             creative.timeout.classList.remove('animate');
-            //creative.introContainer.classList.remove('animate');
-            creative.introContainer.style.opacity = 0; 
+            creative.introContainer.classList.remove('animate');
             creative.cta.style.display = 'block';
             creative.base.style.display = 'block';
             setTimeout(function() {
@@ -373,7 +375,7 @@ var TXMain = (function() {
                             recognition.start();
                         }
                     })
-                    .catch(function(err) {
+                    .catch(function(e) {
                         withMic = false;
                         continueWithoutMic();
                     });
@@ -703,7 +705,7 @@ var TXMain = (function() {
         var timeoutCalled = false;
 
         function callTimeout() {
-            if (!timeoutCalled && !videoPlaying) {
+            if (!timeoutCalled && !videoPlaying && AD.recognition) {
                 clearTimeout(timeoutTimeout);
                 //Speech - Timeout Called
                 timeoutCalled = true;
