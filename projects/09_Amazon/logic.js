@@ -133,25 +133,30 @@ var TXCreative = (function() {
 var TXMain = (function() {
   
     function init() {
-        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition,
-            SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList,
-            SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
-            
         var creative = {};
-
+        
         creative.videoSrc = '';
 
         var showingExperience = false;
         var showingSorryExperience = false;
 
-        var recognition = new SpeechRecognition();
-        var speechRecognitionList = new SpeechGrammarList();
-        // speechRecognitionList.addFromString(grammar, 1);
-        recognition.grammars = speechRecognitionList;
-        recognition.continuous = false;
-        recognition.lang = 'en-US';
-        recognition.interimResults = true;
-        recognition.maxAlternatives = 1;
+        try {
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition,
+            SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList,
+            SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+
+            var recognition = new SpeechRecognition();
+            var speechRecognitionList = new SpeechGrammarList();
+            // speechRecognitionList.addFromString(grammar, 1);
+            recognition.grammars = speechRecognitionList;
+            recognition.continuous = false;
+            recognition.lang = 'en-US';
+            recognition.interimResults = true;
+            recognition.maxAlternatives = 1;
+        } catch(e) {
+            console.log('ERR');
+        }
+        
 
         // Set the name of the hidden property and the change event for visibility
         var hidden, visibilityChange;
@@ -185,7 +190,6 @@ var TXMain = (function() {
         // Warn if the browser doesn't support addEventListener or the Page Visibility API
         if (typeof document.addEventListener === "undefined" || hidden === undefined) {
             //console.log("This demo requires a browser, such as Google Chrome or Firefox, that supports the Page Visibility API.");
-            $(body).css('background','red');
         } else {
             // Handle page visibility change   
             document.addEventListener(visibilityChange, handleVisibilityChange, false);
@@ -256,9 +260,9 @@ var TXMain = (function() {
         }
 
         function startCreative() {
-            creative.introContainer.classList.add('animate');
+            //creative.introContainer.classList.add('animate');
+            creative.introContainer.style.opacity = 1;
             creative.introVideo.src = 'src/video/intro-video.mp4';
-            
         }
 
         function ctaHandler() {
@@ -292,7 +296,8 @@ var TXMain = (function() {
             timeoutCalled = false;
             creative.timeout.style.display = 'none';
             creative.timeout.classList.remove('animate');
-            creative.introContainer.classList.remove('animate');
+            //creative.introContainer.classList.remove('animate');
+            creative.introContainer.style.opacity = 0; 
             creative.cta.style.display = 'block';
             creative.base.style.display = 'block';
             setTimeout(function() {
