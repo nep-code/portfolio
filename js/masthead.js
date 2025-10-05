@@ -8,8 +8,8 @@ export function MASTHEAD() {
       CHARACTER();
       STARS();
       SHOOTING_STAR();
-      SCROLL_TRIGGER();
-			AUTOSCALE();
+     if(!is_mobile) SCROLL_TRIGGER();
+	AUTOSCALE();
 
         gsap.fromTo(
             masthead,
