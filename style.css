@@ -432,9 +432,7 @@ body.active {
 
 /* PROJECTS */
 .reel-container {
-    width: 90%;
-    max-width: 480px; /* optional limit for large screens */
-   /*  aspect-ratio: 9 / 16; */
+    width: 100%;
     background: #000;
     border-radius: 12px;
     overflow: hidden;
