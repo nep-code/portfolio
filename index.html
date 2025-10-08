@@ -39,8 +39,25 @@
 
 </head>
 <body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#masthead">Home</a>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#motion">Motion</a>
+    <a href="#interactive">Interactive</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+    <div id="nav-indicator"></div>
+  </div>
+  <div id="nav-toggle"><span></span><span></span><span></span></div>
+</nav>
+
+
     
     <div id="loader">
+
     <div class="bar"></div>
     <p>Loading portfolio...</p>
     </div>
@@ -180,7 +197,9 @@
             <p>
                 I&rsquo;m a hybrid creative developer — someone who bridges design and code, especially for marketing, motion graphics, rich media, email, and interactive content. With 14 years of professional experience, I&rsquo;ve worked on everything from quick-turnaround projects to large-scale campaigns. This range of work has sharpened my skills, enabling me to consistently deliver solutions that support real business objectives.
                 <br><br>
-                I&rsquo;m equally comfortable leading projects or collaborating as part of a team, and I bring a strong mix of creativity, technical skill, and adaptability to every engagement. My core strengths include creating digital advertisements with interactive elements across multiple platforms, using Adobe Creative Suite and HTML5.
+                A graduate of AMA Computer College with a Bachelor of Science in Information Technology, I bring both creative and technical perspectives to every project. I&rsquo;m equally comfortable leading initiatives or collaborating as part of a team, combining design sensibility, technical precision, and adaptability.
+                <br><br>
+                My core strengths include crafting digital advertisements with interactive elements across multiple platforms, using Adobe Creative Suite and HTML5.
                 <br><br>
                 One of my proudest achievements is the <a id="cta-amazon" href="#Amazon">Alexa-Enabled Space Station</a> project for Amazon, which was recognized at the <a href="https://www.mediapost.com/ommaawards/winners/?event=2019#winnerModal" target="_blank">2019 MediaPost OMMA Awards</a>. The project won in three categories: Artificial Intelligence, Interactive: Single Execution, and UX/UI.
         </div>
@@ -277,195 +296,187 @@
         </div>
     </section>
 
-    <section id="education" class="section rel light">
-        
-        
-        <h2 class="rel">Education</h2>
-        <div class="education-block rel">
-            <div id="edu-headline">
-                <h3>AMA Computer College</h3>
-                <span class="education-date">June 2002 - May 2008</span>
-                <h4>Bachelor of Science in Information Technology</h4>
-            </div>
-            <p>The Bachelor of Science in Information Technology program of AMA Computer University is a ten-trimester program designed to produce world-class IT professionals that is not only nationally accredited but also globally competitive and who will be professionally competent, morally upright, and socially responsible contributors to national development. <a href="http://amacollege.amaes.edu.ph/p/bachelor-of-science-in-information.html#:~:text=The%20Bachelor%20of%20Science%20in,morally%20upright%2C%20and%20socially%20responsible" target="_blank">Read More</a></p>
+    <section id="motion" class="section rel light">
+        <h2 class="rel">Motion Graphics</h2>
+        <div class="interactive reel-container shadow-large">
+            <video src="src/reel.mp4" controls muted></video>
         </div>
+        <a id="cta_connect" href="#contact">Have something in mind? Let&rsquo;s talk.</a>
     </section>
 
-    <section id="projects" class="section rel dark">
-        <h2 class="rel">Projects</h2>
+    <section id="interactive" class="section rel dark">
+        <h2 class="rel">Interactive Development</h2>
         
         <div class="container ctrX">
             <div class="row">
-                <div class="project reel-container shadow-large">
-                    <video src="src/reel.mp4" controls muted></video>
-                </div>
+                
                 <!-- Hot Spot, Multiple Content Explorations, Multiple Videos, Personalization, Poll, Product Recommendation -->
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/01_ShoeCarnival/index.html" target="stage"><img src="src/preview/01_ShoeCarnival.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/01_ShoeCarnival/index.html" target="stage"><img src="src/preview/01_ShoeCarnival.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>Shoe Carnival</h3>
                         <p>
                             Swipe to Select 2 dancer. Watch their dance battle. Vote who won and see their shoes.
                         </p>
-                        <a href="projects/01_ShoeCarnival/index.html" target="stage">View Project</a>
+                        <a href="interactive/01_ShoeCarnival/index.html" target="stage">View Project</a>
                     </div>
                 </div>
                 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/02_McDonalds/index.html" target="stage"><img src="src/preview/02_McDonalds.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/02_McDonalds/index.html" target="stage"><img src="src/preview/02_McDonalds.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>Mcdonald's</h3>
                         <p>
                             Choose the correct drink and bring it to your co-worker, Gain extra time for correct matches, and lose time for incorrect matches.
                         </p>
-                        <a href="projects/02_McDonalds/index.html" target="stage">View Project</a>
+                        <a href="interactive/02_McDonalds/index.html" target="stage">View Project</a>
                     </div>
                 </div>
 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/03_SunTrust/index.html" target="stage"><img src="src/preview/03_SunTrust.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/03_SunTrust/index.html" target="stage"><img src="src/preview/03_SunTrust.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>SunTrust</h3>
                         <p>
                             Press the arrows on your keyboard to match those on the screen and make our skater dance.
                         </p>
-                        <a href="projects/03_SunTrust/index.html" target="stage">View Project</a>
+                        <a href="interactive/03_SunTrust/index.html" target="stage">View Project</a>
                     </div>
                 </div>
 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/04_TMobile/index.html" target="stage"><img src="src/preview/04_TMobile.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/04_TMobile/index.html" target="stage"><img src="src/preview/04_TMobile.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>T-Mobile</h3>
                         <p>
                             Use your skills to flip the tiles on the board. Match the tiles and collect pairs.
                         </p>
-                        <a href="projects/04_TMobile/index.html" target="stage">View Project</a>
+                        <a href="interactive/04_TMobile/index.html" target="stage">View Project</a>
                     </div>
                 </div>
 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/05_OnStar/index.html" target="stage"><img src="src/preview/05_OnStar.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/05_OnStar/index.html" target="stage"><img src="src/preview/05_OnStar.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>OnStar</h3>
                         <p>
                             Select Wi-Fi® hotspot, Automatic Crash Response, Advanced Diagnostics or AtYourService™ tab to see how Onstar has you covered.
                         </p>
-                        <a href="projects/05_OnStar/index.html" target="stage">View Project</a>
+                        <a href="interactive/05_OnStar/index.html" target="stage">View Project</a>
                     </div>
                 </div>
 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/06_SimpleMobile/index.html" target="stage"><img src="src/preview/06_SimpleMobile.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/06_SimpleMobile/index.html" target="stage"><img src="src/preview/06_SimpleMobile.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>Simple Mobile</h3>
                         <p>
                             Click + drag your mouse to cut through strings and unlock the deal before the timer runs out.
                         </p>
-                        <a href="projects/06_SimpleMobile/index.html" target="stage">View Project</a>
+                        <a href="interactive/06_SimpleMobile/index.html" target="stage">View Project</a>
                     </div>
                 </div>
 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/07_KFC/index.html" target="stage"><img src="src/preview/07_KFC.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/07_KFC/index.html" target="stage"><img src="src/preview/07_KFC.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>KFC</h3>
                         <p>
                             Use arrow keys to move your player, collect as many chicken singles +5 or buckets +10 and avoid hitting the opposing players.
                         </p>
-                        <a href="projects/07_KFC/index.html" target="stage">View Project</a>
+                        <a href="interactive/07_KFC/index.html" target="stage">View Project</a>
                     </div>
                 </div>
 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/08_Snickers/index.html" target="stage"><img src="src/preview/08_Snickers.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/08_Snickers/index.html" target="stage"><img src="src/preview/08_Snickers.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>Snickers</h3>
                         <p>
                             Match a flavor to its symptom to satisfy the mood. Drag and drop the Snickers to the matching mood.
                         </p>
-                        <a href="projects/08_Snickers/index.html" target="stage">View Project</a>
+                        <a href="interactive/08_Snickers/index.html" target="stage">View Project</a>
                     </div>
                 </div>
 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/09_AmazonMusic/index.html" target="stage"><img src="src/preview/09_AmazonMusic.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/09_AmazonMusic/index.html" target="stage"><img src="src/preview/09_AmazonMusic.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>Amazon Music</h3>
                         <p>
                             Select the Beatles instrument icons to hear each part of "Come Together" on their own, or in any other musical combination.
                         </p>
-                        <a href="projects/09_AmazonMusic/index.html" target="stage">View Project</a>
+                        <a href="interactive/09_AmazonMusic/index.html" target="stage">View Project</a>
                     </div>
                 </div>
 
-                <div class="project shadow-large" id="Amazon">
-                    <div class="project-image">
-                        <a href="projects/10_Amazon/index.html" target="stage"><img src="src/preview/10_Amazon.jpg"/></a>
+                <div class="interactive shadow-large" id="Amazon">
+                    <div class="interactive-image">
+                        <a href="interactive/10_Amazon/index.html" target="stage"><img src="src/preview/10_Amazon.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>Amazon</h3>
                         <p>
                             Use voice commands to mess around with a virtual version of the Space Station.
                         </p>
-                        <a href="projects/10_Amazon/index.html" target="stage">View Project</a>
+                        <a href="interactive/10_Amazon/index.html" target="stage">View Project</a>
                     </div>
                 </div>
 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/11_RXNutButter/index.html" target="stage"><img src="src/preview/11_RXNutButter.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/11_RXNutButter/index.html" target="stage"><img src="src/preview/11_RXNutButter.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>RX Nut Butter</h3>
                         <p>
                             Browse recipes for light snack, sweet treats, and main meals with RX Nut Butter.
                         </p>
-                        <a href="projects/11_RXNutButter/index.html" target="stage">View Project</a>
+                        <a href="interactive/11_RXNutButter/index.html" target="stage">View Project</a>
                     </div>
                 </div>
 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/12_ElectrifyAmerica/index.html" target="stage"><img src="src/preview/12_ElectrifyAmerica.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/12_ElectrifyAmerica/index.html" target="stage"><img src="src/preview/12_ElectrifyAmerica.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>Electrify America</h3>
                         <p>
                             Discover how Electric cars are normal. Change lanes and collect all 5 lightning bolts to win the game.
                         </p>
-                        <a href="projects/12_ElectrifyAmerica/index.html" target="stage">View Project</a>
+                        <a href="interactive/12_ElectrifyAmerica/index.html" target="stage">View Project</a>
                     </div>
                 </div>
 
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <a href="projects/15_MonsterEnergy/index.html" target="stage"><img src="src/preview/15_MonsterEnergy.jpg"/></a>
+                <div class="interactive shadow-large">
+                    <div class="interactive-image">
+                        <a href="interactive/15_MonsterEnergy/index.html" target="stage"><img src="src/preview/15_MonsterEnergy.jpg"/></a>
                     </div>
-                    <div class="project-info">
+                    <div class="interactive-info">
                         <h3>Monster Energy</h3>
                         <p>
                             Scratch off to reveal the two new ZERO SUGAR flavors from Monster Ultra.
                         </p>
-                        <a href="projects/15_MonsterEnergy/index.html" target="stage">View Project</a>
+                        <a href="interactive/15_MonsterEnergy/index.html" target="stage">View Project</a>
                     </div>
                 </div>
             </div>

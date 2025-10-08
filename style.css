@@ -62,6 +62,122 @@ a:focus {
     max-width: 1200px;
 }
 
+/* NAVIGATION */
+/* --- Base layout --- */
+#nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  overflow: hidden;
+  transition: height 0.4s ease;
+}
+
+#nav .nav-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 15px 20px;
+  position: relative;
+}
+
+#nav a {
+  position: relative;
+  color: #eee;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+#nav a:hover {
+  color: #00b2a9;
+}
+
+/* linear-gradient(90deg, #00b2a9, #ff0099, #FF8200); */
+/* --- Indicator (fluid underline) --- */
+#nav-indicator {
+  position: absolute;
+  bottom: 5px;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, #FF8200);
+  border-radius: 1px;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+/* --- Mobile toggle --- */
+#nav-toggle {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  cursor: pointer;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+#nav-toggle span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: 0.3s ease;
+}
+
+/* --- Mobile styles --- */
+@media (max-width: 768px) {
+  #nav .nav-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 28px 25px 25px;
+    gap: 1.2rem;
+    height: 0;
+		font-size: 0;
+    overflow: hidden;
+  }
+
+
+
+  #nav.active .nav-inner {
+    height: auto;
+		padding: 60px 25px 25px;
+		/* align-items: center; */
+  }
+
+	#nav .nav-inner a {
+    display: none;
+		
+  }
+
+	#nav.active .nav-inner a {
+		display: block;	}
+
+  #nav-toggle {
+    display: flex;
+  }
+
+  #nav.active #nav-toggle span:nth-child(1) {
+		transform: rotate(45deg) translate(5px, 5px);
+	}
+
+	#nav.active #nav-toggle span:nth-child(2) {
+		opacity: 0;
+	}
+
+	#nav.active #nav-toggle span:nth-child(3) {
+		transform: rotate(-45deg) translate(5px, -5px);
+	}
+}
+
+
 /* LOADER */
 #loader {
   position: fixed;
@@ -76,10 +192,12 @@ a:focus {
   transition: opacity 0.6s ease;
 }
 
+/* linear-gradient(90deg, #00b2a9, #FF8200); */
+
 .bar {
   width: 200px;
   height: 4px;
-  background: linear-gradient(90deg, #00ffd5, #0077ff, #ff0099);
+  background: linear-gradient(90deg, #00b2a9, #ff0099, #FF8200);
   background-size: 200% 100%;
   border-radius: 2px;
   animation: load 1.2s linear infinite;
@@ -260,7 +378,6 @@ body.active {
     opacity:0;
 }
 
-
 #masthead #cta-down {
     width: 50px;
     height: 50px;
@@ -401,59 +518,54 @@ body.active {
     content: "\f041";
 }
 
-/* EDUCATION */
-#education {
-    padding: 75px 15px 35px;
+/* MOTION */
+#motion {
+  padding: 75px 15px 35px;
+	display: flex;
+  flex-direction: column;
+  align-items: center; /* centers horizontally */
 }
-#education h3 {
+#motion h3 {
     font-weight: 500;
     float: left;
     margin: 0;
     color: #374054;
     font-size: 19px;
 }
-#education span {
+#motion .reel-container {
+  width: 100%;
+  max-width: 960px; /* optional limit for large screens */
+ /*  aspect-ratio: 9 / 16; */
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	margin: 0 auto 30px auto;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, .08), 0 3px 6px rgba(0, 0, 0, .15);
+}
+
+#motion video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* show full video without cropping */
+  background: #000;
+}
+
+#motion #cta_connect {
+    display:block;
+    padding: 20px;
+    border-radius: 5px;
     color: #74808a;
-    float: right;
-}
-#education h4 {
-    color: #74808a;
-    clear: both;
-    font-weight: 500;
-    margin: 0 0 15px 0;
-}
-#education .education-block {
-    max-width: 800px;
-    margin: 0 auto 30px auto;
-    padding: 15px;
-    border: 1px solid #dcd9d9;
-    text-align: left;
 }
 
-/* PROJECTS */
-.reel-container {
-    width: 100%;
-    background: #000;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* show full video without cropping */
-    background: #000;
-  }
-
-#projects {
+/* INTERACTIVE DEVELOPMENT */
+#interactive {
     padding: 75px 15px 35px;
     text-align: center;
     
 }
-#projects .project {
+#interactive .interactive {
     position: relative;
     max-width: 900px;
     margin: 0 auto 30px auto;
@@ -461,36 +573,36 @@ body.active {
     background: #fff;
     border-radius: 8px;
 }
-#projects .shadow-large {
+#interactive .shadow-large {
     box-shadow: 0 3px 6px rgba(0, 0, 0, .08), 0 3px 6px rgba(0, 0, 0, .15);
 }
-#projects .project-image {
+#interactive .interactive-image {
     float: left;
 }
-#projects .project-image img {
+#interactive .interactive-image img {
     width: 50%;
     float: left;
 }
-#projects .project-info {
+#interactive .interactive-info {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     margin-left: 450px;
     padding: 15px;
 }
-#projects .project-info h3 {
+#interactive .interactive-info h3 {
     font-size: 1.5em;
     font-weight: 300;
     color: #374054;
     margin: 0 0 15px 0;
 }
-#projects .project-info p {
+#interactive .interactive-info p {
     color: #74808a;
     margin: 0 0 15px 0;
     font-size: .9em;
 }
 
-#projects #cta_connect {
+#interactive #cta_connect {
     display:block;
     padding: 20px;
     border-radius: 5px;
@@ -754,17 +866,17 @@ footer .social i {
         float: none;
     }
 
-    #projects .project-image img {
+    #interactive .interactive-image img {
         width: 59%;
     }
     
-    #projects .project-info {
+    #interactive .interactive-info {
         right:0;
         margin: 0;
         width: 40%;
     } 
 
-    #projects .project-info p {
+    #interactive .interactive-info p {
         display: none;
     }
     
@@ -781,12 +893,12 @@ footer .social i {
         line-height: 170%;
     }
 
-    #projects .project-info h3 {
+    #interactive .interactive-info h3 {
         font-size: 1.1em;
         margin: 0 0 5px 0;
         /* display: none; */
     }
-    #projects .project-info a {
+    #interactive .interactive-info a {
         font-size: 0.9em;
     }
     footer .container {
