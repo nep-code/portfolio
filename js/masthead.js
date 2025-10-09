@@ -218,13 +218,14 @@ export function MASTHEAD() {
         end: "bottom 30%",
         toggleActions: "play reverse play reverse",
       },
-    });
+    });headline
 
-    tl.from(".headline path", { duration: 1, x: -20, y: -27, z: z0, scale: 2, stagger: 0.1 })
-      .to(".headline path", { duration: 2, strokeDashoffset: 0, stagger: 0.1 }, "<")
-      .to(".headline path", { duration: 1, delay: 0.5, fill: "white", stagger: 0.1 }, "<")
-      .to("#headline", { duration: 1, filter: "drop-shadow(0px 2px 2px #000)" }, "-=0.5")
-      .fromTo("#headline h2", { opacity: 0, y: -15 }, { duration: 0.5, y: 0, opacity: 1 }, "-=2");
+    tl
+    /* .from("#headline", { duration: 2, scale:1.05, z:z0}) */
+    .to(".headline path", { duration: 2, strokeDashoffset: 0/* , stagger: 0.1 */, ease:"none" })
+    .to(".headline path", { duration: 1, delay: 0.5, fill: "white", stagger: 0.05 }, "-=1.5")
+    .to("#headline", { duration: 1, filter: "drop-shadow(0px 2px 2px #000)" }, "-=1")
+    .fromTo("#headline h2", { opacity: 0, scale:0.95, z: z0 }, { duration: 1, scale:1, opacity: 1 }, "<");
   }
 
   function AUTOSCALE() {
