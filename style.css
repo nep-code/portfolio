@@ -140,21 +140,17 @@ a:focus {
     padding: 28px 25px 25px;
     gap: 1.2rem;
     height: 0;
-		font-size: 0;
     overflow: hidden;
   }
 
-
-
   #nav.active .nav-inner {
     height: auto;
-		padding: 60px 25px 25px;
-		/* align-items: center; */
+	padding: 60px 25px 25px;
+	align-items: center;
   }
-
 	#nav .nav-inner a {
     display: none;
-		
+    padding: 9px;
   }
 
 	#nav.active .nav-inner a {

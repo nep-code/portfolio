@@ -1,0 +1,71 @@
+import { GLOBAL } from "./global.js";
+import { MASTHEAD } from "./masthead.js";
+
+(async () => {
+  const preloadImages = [
+    "src/city.jpg",
+    "src/indoor.png",
+    "src/body.png",
+    "src/hand-left.png",
+    "src/hand-right.png"
+  ];
+
+  let loaded = 0;
+  const tl = gsap.timeline({
+    defaults: { ease: "power4.inOut" }
+  });
+
+  preloadImages.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+    img.onload = img.onerror = () => {
+      if (++loaded === preloadImages.length) {
+        
+        tl
+        .to(".bar", { duration: 0.5 , width:"0%" })
+        .add(INIT,"-=0.2")
+        .fromTo("nav", { visibility: "visible", y:-100 }, { duration: 0.5, y:0 })
+        .set("#loader", { display: "none" });
+      }
+    };
+  });
+
+  function INIT() {
+    GLOBAL();
+    MASTHEAD();
+    lazyLoadSections();
+  }
+
+  function lazyLoadSections() {
+    const sections = [
+      { id: "about", module: "./modules/about.js" },
+      { id: "experience", module: "./modules/experience.js" },
+      { id: "motion", module: "./modules/motion.js" },
+      { id: "interactive", module: "./modules/interactive.js" },
+      { id: "skills", module: "./modules/skills.js" },
+      { id: "contact", module: "./modules/contact.js" },
+      { id: "footer", module: "./modules/footer.js" },
+    ];
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach(async (entry) => {
+          if (entry.isIntersecting) {
+            const section = sections.find(s => s.id === entry.target.id);
+            if (section) {
+              const module = await import(section.module);
+              module.init();
+              obs.unobserve(entry.target);
+            }
+          }
+        });
+      },
+      { rootMargin: "200px" }
+    );
+
+    sections.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  }
+})();
