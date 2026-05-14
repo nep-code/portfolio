@@ -1,0 +1,10 @@
+#about {
+    padding: 75px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#about .container{
+    max-width: 800px;
+    padding: 0px 20px;
+}

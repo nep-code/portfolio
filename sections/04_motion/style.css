@@ -1,0 +1,38 @@
+#motion {
+    padding: 75px 15px 35px;
+        display: flex;
+    flex-direction: column;
+    align-items: center; /* centers horizontally */
+    }
+    #motion h3 {
+        font-weight: 500;
+        float: left;
+        margin: 0;
+        color: #374054;
+        font-size: 19px;
+    }
+    #motion .reel-container {
+    width: 100%;
+    max-width: 960px; 
+    background: #000;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+        margin: 0 auto 30px auto;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, .08), 0 3px 6px rgba(0, 0, 0, .15);
+    }
+
+    #motion video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* show full video without cropping */
+    background: #000;
+    }
+
+    #motion #cta_connect {
+        display:block;
+        padding: 20px;
+        border-radius: 5px;
+        color: #74808a;
+    }
