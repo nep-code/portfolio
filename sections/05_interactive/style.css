@@ -1,0 +1,77 @@
+#interactive {
+    padding: 75px 15px 35px;
+    text-align: center;
+    
+}
+#interactive .interactive {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 8px;
+}
+#interactive .shadow-large {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .08), 0 3px 6px rgba(0, 0, 0, .15);
+}
+#interactive .interactive-image {
+    float: left;
+}
+#interactive .interactive-image img {
+    width: 50%;
+    float: left;
+}
+#interactive .interactive-info {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 450px;
+    padding: 15px;
+}
+#interactive .interactive-info h3 {
+    font-size: 1.5em;
+    font-weight: 300;
+    color: #374054;
+    margin: 0 0 15px 0;
+}
+#interactive .interactive-info p {
+    color: #74808a;
+    margin: 0 0 15px 0;
+    font-size: .9em;
+}
+
+#interactive #cta_connect {
+    display:block;
+    padding: 20px;
+    border-radius: 5px;
+    color: #74808a;
+}
+
+@media (max-width: 768px) {
+    #interactive .interactive-image img {
+        width: 59%;
+    }
+    
+    #interactive .interactive-info {
+        right:0;
+        margin: 0;
+        width: 40%;
+    } 
+
+    #interactive .interactive-info p {
+        display: none;
+    }
+}
+@media only screen and (max-width: 480px) {
+
+
+    #interactive .interactive-info h3 {
+        font-size: 1.1em;
+        margin: 0 0 5px 0;
+        /* display: none; */
+    }
+    #interactive .interactive-info a {
+        font-size: 0.9em;
+    }
+
+}
