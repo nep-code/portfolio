@@ -156,6 +156,9 @@ body.active {
 
 #lightbox #cta-close {
     position: absolute;
+    display: block;
+    align-items: center;
+    justify-content: center;
     top: 10px;
     right: 10px;
     width: 40px;
@@ -163,12 +166,9 @@ body.active {
     color: #00B2A9;
     cursor: pointer;
 }
-#lightbox #cta-close span {
-    position: absolute;
-    left: 3px;
-    pointer-events: none;
-}
 
 #lightbox #cta-close i {
+    width: 40px;
+    height: 40px;
     font-size: 40px;
 }

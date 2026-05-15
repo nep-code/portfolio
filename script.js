@@ -91,7 +91,7 @@ function preloadAllImages(images) {
         img.src = src;
 
         img.onload = resolve;
-        img.onerror = resolve; // resolve anyway so one bad image doesn't block everything
+        img.onerror = resolve;
 
       });
 
@@ -117,7 +117,7 @@ function finishLoading() {
 
       loader.remove();
 
-    }, { once: true }); // prevent multiple firings if transition has sub-properties
+    }, { once: true });
 
   }, 400);
 }
