@@ -17,8 +17,7 @@ const sectionOrder = [
 
 // PRELOAD IMAGES
 const preloadImages = [
-  "sections/01_hero/src/city.jpg",
-  "sections/01_hero/src/indoor.png",
+  "sections/01_hero/src/indoor.jpg",
   "sections/01_hero/src/body.png",
   "sections/01_hero/src/hand-left.png",
   "sections/01_hero/src/hand-right.png"
