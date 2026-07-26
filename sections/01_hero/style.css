@@ -263,7 +263,7 @@
             margin-top: -20px;
         }
         #hero { 
-            height: calc(100dvh - env(safe-area-inset-bottom));
+            height: 100dvh;
         }
 
         #hero #nametag {
