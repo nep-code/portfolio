@@ -238,9 +238,6 @@
 
 @media (max-width: 500px) and (orientation: portrait) {
 
-    #hero #headline {
-        margin-bottom: 10em;
-    }
     #hero #headline .hl3 {
         margin-top: -10px;
     }
@@ -250,7 +247,6 @@
     }
 
     #hero #nametag {
-        margin-top: 10em;
         display: flex;
         flex-direction: column;
         z-index: 1;
