@@ -1,24 +1,35 @@
 (function () {
 
-  const IS_MOBILE = /Mobi|Android|iPhone/i.test(navigator.userAgent);
-  const Z0 = /Chrome/.test(navigator.userAgent) ? 0 : 0.01;
   const hero = document.querySelector("#hero");
 
   // ── NΞP | Wait & Init ──
 
   /* Scroll to next section */
-  document.getElementById('scroll-down-arrow').addEventListener('click', () => {
-    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-  });
+  function initScrollArrow() {
+    const arrow = document.getElementById('scroll-down-arrow');
+    const about = document.getElementById('about');
+    if (!arrow || !about) {
+      console.warn("NΞP | scroll-down-arrow or about section not found");
+      return;
+    }
+    arrow.addEventListener('click', () => {
+      about.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
 
   // ── NΞP | Scroll-triggered parallax ──
 
   function initScrollTrigger() {
+    if (!hero) {
+      console.warn("NΞP | #hero not found, skipping scroll trigger");
+      return;
+    }
+
     const layers = [
       { id: "#indoor", y: -300 },
-      { id: "#character",  y: 300 },
-      { id: "#headline",  y: 300 },
-      { id: "#nametag",  y: 150 },
+      { id: "#character", y: 300 },
+      { id: "#headline", y: 300 },
+      { id: "#nametag", y: 150 },
     ];
 
     layers.forEach(({ id, y }) => {
@@ -28,7 +39,7 @@
         scrollTrigger: {
           trigger: hero,
           start: "center center",
-          end:   "bottom top",
+          end: "bottom top",
           scrub: true,
         },
       });
@@ -41,7 +52,7 @@
       scrollTrigger: {
         trigger: "#cta-down",
         start: "top 80%",
-        end:   "bottom 20%",
+        end: "bottom 20%",
         toggleActions: "play none none reverse",
       },
     });
@@ -59,13 +70,13 @@
 
     // 1. Script tagline — light, airy slide-up (sets a quiet, elegant tone)
     tl.from(".hl1", {
-      delay:1,
+      delay: 1,
       clipPath: "inset(0 100% 0 0)",
       duration: 1.1,
       ease: "power2.inOut"
     }, 0)
     .from(".hl1 path", {
-      scale:0,
+      scale: 0,
       yPercent: 40,
       opacity: 0,
       duration: 0.7,
@@ -139,7 +150,6 @@
     });
   }
 
-
   function wait(className, callback) {
     if (document.body.classList.contains(className)) {
       callback();
@@ -162,16 +172,18 @@
   function init() {
     console.log("NΞP | hero initialized");
 
+    initScrollArrow();
     initScrollTrigger();
     initCharacter();
     initHeadline();
 
-    gsap.fromTo(
-      hero,
-      { visibility: "visible", opacity: 0 },
-      { duration: 0.5, opacity: 1, delay: 0.1}
-    );
-
+    if (hero) {
+      gsap.fromTo(
+        hero,
+        { visibility: "visible", opacity: 0 },
+        { duration: 0.5, opacity: 1, delay: 0.1 }
+      );
+    }
   }
 
   wait("loaded", init);
