@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    height: 100dvh;
+    height: 100vh;
     background:black;
 }
 
@@ -260,6 +260,9 @@
 
         #hero #headline .hl2 {
             margin-top: -20px;
+        }
+        #hero { 
+            height: 100dvh;
         }
 
         #hero #nametag {
