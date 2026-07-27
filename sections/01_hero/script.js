@@ -29,7 +29,7 @@
       { id: "#indoor", y: -300 },
       { id: "#character", y: 300 },
       { id: "#headline", y: 300 },
-      { id: "#nametag", y: 150 },
+      { id: "#nametag", y: 100 },
     ];
 
     layers.forEach(({ id, y }) => {
