@@ -252,6 +252,7 @@
 
     #hero #cta-down {
         visibility: hidden;
+        pointer-events: none;
     }
     
 }
