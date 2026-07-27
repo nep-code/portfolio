@@ -256,3 +256,52 @@
     }
     
 }
+
+@media (max-height: 500px) and (orientation: landscape) {
+     /* HEADLINE */
+
+     #hero #foreground {
+        padding-top:70px;
+        justify-content:space-between;
+    }
+     
+    #hero #headline {
+        width: 80%;
+        padding-right: 21%;
+    }
+
+    #hero #headline .hl1,
+    #hero #headline .hl3 {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
+        width: 60%;
+    }
+
+    #hero #headline .hl2 {
+        margin-top: -25px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
+        width: 100%;
+    }
+
+    #hero #nametag {
+        gap: 5px;
+    }
+
+    #hero #cta-down {
+        display:none;
+    }
+
+    #hero h1 {
+        font-size: 2em;
+    }
+
+    #hero h2 {
+        font-size: 0.8em;
+        letter-spacing: 0.2em;
+    }
+    
+    
+}
