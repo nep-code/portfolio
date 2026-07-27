@@ -302,5 +302,7 @@
         letter-spacing: 0.2em;
     }
     
-    
+    #hero #character {
+        height: 88%;
+    }
 }
