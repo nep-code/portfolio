@@ -250,10 +250,10 @@
         padding: 0 20px;
     }
 
-    #hero #cta-down {
+    /* #hero #cta-down {
         visibility: hidden;
         pointer-events: none;
-    }
+    } */
     
 }
 
@@ -302,6 +302,4 @@
         font-size: 0.8em;
         letter-spacing: 0.2em;
     }
-    
-    
 }
