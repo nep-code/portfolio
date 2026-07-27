@@ -115,8 +115,6 @@
 /* CTA Down Arrow */
 
 #hero #cta-down {
-    position: relative;
-    margin: auto;
     width: 50px;
     height: 50px;
     border-radius: 100px;
@@ -180,16 +178,6 @@
     background-position: 90% bottom;
 }
 
-#svg_bubbles {
-    position: absolute; /* required for left/top to take effect */
-    left: 416px;
-    top: 650px;
-    width: 230px;
-    height: auto;
-}
-.glass-outline { stroke: rgba(255,255,255,0); stroke-width: 0; fill: none; }
-
-
 
 @media (orientation: portrait) {
 
@@ -244,7 +232,7 @@
 @media (max-width: 500px) and (orientation: portrait) {
 
     #hero #foreground {
-        padding-top: 50px;
+        padding-top: 40px;
     }
 
     #hero #headline .hl3 {
@@ -261,4 +249,9 @@
         z-index: 1;
         padding: 0 20px;
     }
+
+    #hero #cta-down {
+        visibility: hidden;
+    }
+    
 }
