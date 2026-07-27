@@ -7,9 +7,11 @@
   // ── NΞP | Wait & Init ──
 
   /* Scroll to next section */
-  document.getElementById('scroll-down-arrow').addEventListener('click', () => {
-    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-  });
+  function addCTA() {
+      document.getElementById('cta-down').addEventListener('click', () => {
+      document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+    });
+  }
 
   // ── NΞP | Scroll-triggered parallax ──
 
@@ -165,6 +167,7 @@
     initScrollTrigger();
     initCharacter();
     initHeadline();
+    addCTA();
 
     gsap.fromTo(
       hero,
