@@ -4,15 +4,16 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    height: 100vh;
-    background:black;
+    height: 100vh;   /* fallback for browsers without dvh support */
+    height: 100dvh;  /* excludes mobile browser chrome (address/bottom bar) */
+    background: black;
 }
 
 /* BACKGROUND */
 
 #hero #background {
-    position:fixed;
-    mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent );
+    position: fixed;
+    mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
 }
 #hero #background #indoor {
     /* bottom:0; */
@@ -20,7 +21,7 @@
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    opacity:1;
+    opacity: 1;
 }
 
 
@@ -29,13 +30,13 @@
 #hero #foreground {
     padding-top: 60px;
     padding-bottom: 30px;
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     /* background: rgba(222,0,0,0.15); */
     max-width: 1200px;
     z-index: 1;
-    justify-content:space-between;
+    justify-content: space-between;
 }
 
 #hero #headline {
@@ -47,29 +48,28 @@
     width: 100%;
     max-width: 1100px;
     margin-bottom: 5em;
-    filter:drop-shadow(0 2px 5px #000);
+    filter: drop-shadow(0 2px 5px #000);
 }
 
-#hero #headline .hl1{
+#hero #headline .hl1 {
     max-width: 667px;
-    z-index:1;
+    z-index: 1;
     padding-left: 1.5em;
-    filter:drop-shadow(0 2px 2px #000);
+    filter: drop-shadow(0 2px 2px #000);
 }
 
-
-#hero #headline .hl2{
+#hero #headline .hl2 {
     margin-top: -45px;
     /* 100vh */
-    z-index:0;
+    z-index: 0;
 }
 
-#hero #headline .hl3{
+#hero #headline .hl3 {
     max-width: 552px;
-    z-index:1;
+    z-index: 1;
     margin-top: -21px;
     padding-left: 1.5em;
-    filter:drop-shadow(0 2px 2px #000);
+    filter: drop-shadow(0 2px 2px #000);
 }
 
 
@@ -77,11 +77,10 @@
 
 #hero #nametag {
     margin-top: 5em;
-    display:flex;
+    display: flex;
     flex-direction: column;
-    z-index:1;
-    padding:0 20px;
-    
+    z-index: 1;
+    padding: 0 20px;
 }
 
 #hero h1 {
@@ -92,7 +91,7 @@
   line-height: 1;
   color: white;
   letter-spacing: 0.02em;
-  filter:drop-shadow(0 0 2px #000) drop-shadow(0 0 2px #000);
+  filter: drop-shadow(0 0 2px #000) drop-shadow(0 0 2px #000);
 }
 
 #hero h2 {
@@ -105,7 +104,7 @@
   text-transform: uppercase;
   color: white;
   padding: 5px 100px;
-  filter:drop-shadow(0 0 2px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
   background: linear-gradient(to right, transparent, rgba(0,0,0,0.7) 25%, rgba(0,0,0,0.7) 75%, transparent);
 }
 
@@ -116,26 +115,17 @@
     width: 50px;
     height: 50px;
     border-radius: 100px;
-    z-index:1;
+    z-index: 1;
 }
 
 #hero #cta-down svg {
     background: rgba(0,0,0,0.7);
     border-radius: 100px;
     border: 2px solid rgba(0,0,0,0.7);
-}
-
-#hero #cta-down span {
-    cursor: pointer;
-    display: block;
-    border-radius: 50%;
-    border: 3px solid #00B2A9;
-    text-align: center;
-}
-#hero #cta-down svg {
     animation: pulsate 1.5s ease;
     animation-iteration-count: infinite;
 }
+
 @keyframes pulsate {
     0%   { transform: translateY(10px); }
     50%  { transform: translateY(18px); }
@@ -143,19 +133,19 @@
 }
 
 #scroll-down-arrow .ring {
-      fill: none;
-      stroke: #00B2A9;
-      stroke-width: 1.2;
-      opacity:1;
-      transition: opacity 0.25s ease, stroke-width 0.25s ease;
-    }
-    #scroll-down-arrow .chevron {
-      fill: none;
-      stroke: #00B2A9;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
+    fill: none;
+    stroke: #00B2A9;
+    stroke-width: 1.2;
+    opacity: 1;
+    transition: opacity 0.25s ease, stroke-width 0.25s ease;
+}
+#scroll-down-arrow .chevron {
+    fill: none;
+    stroke: #00B2A9;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 
 
 /* CHARACTER */
@@ -163,10 +153,8 @@
     bottom: 0;
     display: block;
     width: 100%;
-    height:82%;
+    height: 82%;
     max-width: 1200px;
-}
-#hero #nep {
 }
 #hero #character #body {
     background: url(src/body.png);
@@ -188,6 +176,7 @@
 }
 
 #svg_bubbles {
+    position: absolute; /* required for left/top to take effect */
     left: 416px;
     top: 650px;
     width: 230px;
@@ -197,7 +186,7 @@
 
 
 
-@media (orientation:portrait) {
+@media (orientation: portrait) {
 
     /* FOREGROUND */
     #hero #foreground {
@@ -213,7 +202,6 @@
         width: 85%;
     }
 
-
     #hero #headline .hl2 {
         margin-left: auto;
         margin-right: auto;
@@ -223,7 +211,7 @@
 
     /* NAMETAG */
     #hero #nametag {
-        gap:5px;
+        gap: 5px;
     }
 
     #hero h2 {
@@ -231,45 +219,41 @@
     }
 
     #hero h2 span {
-        display:none;
+        display: none;
     }
     #hero h2 br {
-        display:block !important;
+        display: block !important;
     }
 
     /* CHARACTER */
     #hero #character {
         height: 70%;
-        min-width:450px;
+        min-width: 450px;
     }
     #hero #character #nep > div {
         background-position-x: center;
     }
 }
 
-    
 
-    @media (max-width: 500px) and (orientation: portrait) {
+@media (max-width: 500px) and (orientation: portrait) {
 
-        #hero #headline {
-            margin-bottom: 10em;
-        }
-        #hero #headline .hl3 {
-            margin-top: -10px;
-        }
+    #hero #headline {
+        margin-bottom: 10em;
+    }
+    #hero #headline .hl3 {
+        margin-top: -10px;
+    }
 
-        #hero #headline .hl2 {
-            margin-top: -20px;
-        }
-        #hero { 
-            height: 100dvh;
-        }
+    #hero #headline .hl2 {
+        margin-top: -20px;
+    }
 
-        #hero #nametag {
-            margin-top: 10em;
-            display:flex;
-            flex-direction: column;
-            z-index:1;
-            padding:0 20px;
-        }
+    #hero #nametag {
+        margin-top: 10em;
+        display: flex;
+        flex-direction: column;
+        z-index: 1;
+        padding: 0 20px;
+    }
 }

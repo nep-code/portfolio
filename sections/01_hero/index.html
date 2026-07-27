@@ -78,33 +78,7 @@
             <div id="nep" class="full abs">
                 <div id="hand-left" class="full abs"></div>
                 <div id="body" class="full abs"></div>
-                <div id="hand-right" class="full abs">
-                    <svg id="svg_bubbles" class="abs" viewBox="0 0 228 212" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <path id="bowlPath" d="M2.000,-0.000 C2.000,-0.000 59.152,7.000 116.102,7.000 C172.651,7.000 229.000,-0.000 229.000,-0.000 C229.000,-0.000 232.813,212.000 112.000,212.000 C69.566,212.000 47.370,187.564 31.000,157.000 C19.605,135.724 9.717,110.844 5.590,87.244 C-2.464,41.185 2.000,-0.000 2.000,-0.000 Z"/>
-                        <mask id="wineMask">
-                            <use href="#bowlPath" fill="white"/>
-                        </mask>
-                        <radialGradient id="bubbleGrad" cx="30%" cy="30%" r="70%">
-                            <stop offset="0%" stop-color="#912a0f" stop-opacity="0.9"/>
-                            <stop offset="80%" stop-color="#912a0f" stop-opacity="0.2"/>
-                            <stop offset="100%" stop-color="#912a0f" stop-opacity="0"/>
-                        </radialGradient>
-                        <filter id="bubbleGlow" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur"/>
-                            <feMerge>
-                                <feMergeNode in="blur"/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                        </filter>
-                    </defs>
-                    <use href="#bowlPath" class="glass-outline"/>
-                    <g mask="url(#wineMask)">
-                        <use href="#bowlPath" fill="rgba(175,10,55,0)"/>
-                        <g id="bubbles"></g>
-                    </g>
-                    </svg>
-                </div>
+                <div id="hand-right" class="full abs"></div>
             </div>
         </div>
 
