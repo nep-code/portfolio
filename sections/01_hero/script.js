@@ -91,7 +91,7 @@
       opacity: 0,
       transformOrigin: "50% 100%",
       duration: 1.15,
-      ease: "back.out(1.6)",
+      ease: "back.out(1.2)",
       stagger: {
         each: 0.035,
         from: "start"

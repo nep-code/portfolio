@@ -28,7 +28,7 @@
 /* FOREGROUND */
 
 #hero #foreground {
-    padding-top: 60px;
+    padding-top: 80px;
     padding-bottom: 30px;
     height: 100vh;   /* fallback for browsers without dvh support */
     height: 100dvh;  /* excludes mobile browser chrome (address/bottom bar) */
@@ -53,23 +53,22 @@
 }
 
 #hero #headline .hl1 {
-    max-width: 667px;
+    max-width: 604px;
     z-index: 1;
-    padding-left: 1.5em;
     filter: drop-shadow(0 2px 2px #000);
 }
 
 #hero #headline .hl2 {
-    margin-top: -45px;
+    margin-top: -15px;
+    max-width: 700px;
     /* 100vh */
     z-index: 0;
 }
 
 #hero #headline .hl3 {
-    max-width: 552px;
+    max-width: 454px;
     z-index: 1;
-    margin-top: -21px;
-    padding-left: 1.5em;
+    margin-top: -20px;
     filter: drop-shadow(0 2px 2px #000);
 }
 
@@ -187,14 +186,18 @@
     }
 
     /* HEADLINE */
-    #hero #headline .hl1,
-    #hero #headline .hl3 {
+    #hero #headline .hl1 {
         margin-left: auto;
         margin-right: auto;
         padding: 0;
         width: 85%;
     }
-
+    #hero #headline .hl3 {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
+        width: 64%;
+    }
     #hero #headline .hl2 {
         margin-left: auto;
         margin-right: auto;
@@ -240,7 +243,7 @@
     }
 
     #hero #headline .hl2 {
-        margin-top: -20px;
+        margin-top: -7px;
     }
 
     #hero #nametag {
