@@ -1,4 +1,5 @@
 (function () {
+  const is_mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   function SCROLL_TRIGGER() {
     gsap.utils.toArray(".interactive").forEach((el, i) => {
