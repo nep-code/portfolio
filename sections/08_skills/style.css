@@ -2,6 +2,10 @@
     padding: 75px 15px;
     text-align: center;
 }
+#skills h2{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
 #skills .wrapper {
     padding-top:10px;
     width: 100%;
