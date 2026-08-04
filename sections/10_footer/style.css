@@ -1,8 +1,15 @@
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 footer {
     background: white;
     padding: 20px;
     color: #74808a;
 }
+
 footer a:hover, footer a:focus {
     text-decoration: none;
 }
@@ -10,6 +17,7 @@ footer .container {
     display: flex;
     justify-content: space-between;
     align-items: center; 
+    line-height: 1.5;
 }
 footer .top span {
     cursor: pointer;
@@ -18,7 +26,6 @@ footer .top span {
     border-radius: 50%;
     border: 3px solid #b9bfc4;
     text-align: center;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,6 +37,7 @@ footer .top span i {
 footer .copyright, footer .social {
     padding: 20px;
     width: 40%;
+    
 }
 footer .social {
     text-align: right;
