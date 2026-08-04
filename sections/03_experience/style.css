@@ -1,6 +1,10 @@
 #experience {
     padding: 70px 25px;
 }
+#experience h2{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
 
 #experience-timeline {
     margin: 30px auto 0 auto;
