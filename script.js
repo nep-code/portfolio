@@ -36,7 +36,10 @@ async function loadSections() {
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-      const html = await res.text();
+      const html = (await res.text()).replace(
+        /(src|href)="src\//g,
+        `$1="sections/${name}/src/`
+      );
 
       // INJECT HTML
       content.insertAdjacentHTML("beforeend", html);
