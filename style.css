@@ -219,3 +219,25 @@ section header h1 svg {
     width: 80px;
     height: 80px;
 }
+
+section.dark header h1 svg path,
+section.dark header h1 svg circle{
+    stroke: silver;
+    opacity:0.5;
+}
+
+
+section.light header h1 svg path,
+section.light header h1 svg circle {
+    stroke: silver;
+    opacity:1;
+}
+
+@media (max-width: 800px) {
+    section header h1 svg {
+        left: -26px;
+        top: -5px;
+        width: 40px;
+        height: 40px;
+    }
+}
