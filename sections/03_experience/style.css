@@ -8,7 +8,6 @@
   --purple: #9c5cff;
   --border: rgba(121, 211, 231, .22);
   --radius: 22px;
-  
   width: 100%;
   color: var(--text);
 }
@@ -326,10 +325,6 @@
   #experience .experience-inner {
     width: min(100% - 26px, 680px);
     padding-top: 70px;
-  }
-
-  #experience h1 svg {
-    display: none;
   }
 
   #experience .timeline::before,
