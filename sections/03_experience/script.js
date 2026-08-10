@@ -21,7 +21,7 @@
         /* ---------- Header reveal ---------- */
         var head = root.querySelector('.section-head');
         if (head) {
-          gsap.from(head.querySelectorAll('.eyebrow, .section-title, .section-subtitle'), {
+          gsap.from(head.querySelectorAll('.section-title, .section-subtitle'), {
             opacity: 0,
             y: reduceMotion ? 0 : 26,
             duration: .8,
@@ -207,6 +207,6 @@ function init() {
 
 }
 
-wait("loaded", init);
+init();
 
 })();
