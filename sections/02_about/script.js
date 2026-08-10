@@ -29,6 +29,6 @@ function init() {
 
 }
 
-wait("loaded", init);
+init();
 
 })();
