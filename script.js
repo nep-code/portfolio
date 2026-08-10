@@ -22,61 +22,269 @@ const preloadImages = [
 
 const content = document.getElementById("content");
 
+
+/* =========================================================
+   LOAD ALL SECTIONS
+========================================================= */
+
 async function loadSections() {
 
-  // Preload critical images before any section initializes
   await preloadAllImages(preloadImages);
 
-  for (const name of sectionOrder) {
+  // 1. HTML
+  await loadAllHTML();
+  // 2. CSS
+  await loadAllCSS();
+  // 3. SVG
+  await loadAllSVG();
+  // 4. JS
+  await loadAllJS();
+  // 5. Reveal
+  finishLoading();
 
-    try {
+}
 
-      // LOAD HTML
-      const res = await fetch(`./sections/${name}/index.html`);
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+/* =========================================================
+  LOAD HTML
+========================================================= */
+
+async function loadAllHTML() {
+
+  const results = await Promise.all(
+
+    sectionOrder.map(async (name) => {
+
+      //console.log(`NΞP | HTML START: ${name}`);
+
+      const res = await fetch(
+        `./sections/${name}/index.html`
+      );
+
+      if (!res.ok) {
+        throw new Error(
+          `${name} HTML failed: HTTP ${res.status}`
+        );
+      }
 
       const html = (await res.text()).replace(
-        /(src|href)="src\//g,
+        /(src|href|poster)="src\//g,
         `$1="sections/${name}/src/`
       );
 
-      // INJECT HTML
-      content.insertAdjacentHTML("beforeend", html);
+      return {
+        name,
+        html
+      };
 
-      // LOAD CSS — wait for it to apply before running JS
-      await new Promise((resolve) => {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = `./sections/${name}/style.css`;
-        link.onload = resolve;
-        link.onerror = resolve; // don't block on missing/optional CSS
-        document.head.appendChild(link);
-      });
+    })
 
-      // LOAD JS — wait for it to execute before moving to next section
-      await new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-        script.type = "module";
-        script.src = `./sections/${name}/script.js`;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.body.appendChild(script);
-      });
+  );
 
-    } catch (err) {
 
-      console.error(`Failed loading ${name}:`, err);
-      // Continue loading remaining sections even if one fails
+  // Inject in the correct visual order
+  results.forEach(({ name, html }) => {
 
-    }
-  }
+  const wrapper = document.createElement("div");
 
-  // All sections loaded, CSS applied, JS executed — safe to dismiss loader
-  finishLoading();
+  wrapper.dataset.section = name;
+  wrapper.innerHTML = html;
+
+  content.appendChild(wrapper);
+
+    //console.log(`NΞP | HTML INJECTED: ${name}`);
+
+  });
+
 }
 
-// IMAGE PRELOADER
+
+/* =========================================================
+  LOAD CSS
+========================================================= */
+
+async function loadAllCSS() {
+
+  await Promise.all(
+
+    sectionOrder.map((name) => {
+
+      return new Promise((resolve) => {
+
+        const link = document.createElement("link");
+
+        link.rel = "stylesheet";
+        link.href = `./sections/${name}/style.css`;
+
+        link.onload = () => {
+
+          //console.log(`NΞP | CSS LOADED: ${name}`);
+
+          resolve();
+
+        };
+
+        link.onerror = () => {
+
+          console.warn(
+            `NΞP | CSS FAILED: ${name}`
+          );
+
+          // Don't prevent the rest of the page
+          resolve();
+
+        };
+
+        document.head.appendChild(link);
+
+      });
+
+    })
+
+  );
+
+}
+
+/* =========================================================
+  LOAD SVG
+========================================================= */
+async function loadAllSVG() {
+
+  const placeholders = content.querySelectorAll("[data-svg]");
+
+  //console.log(`NΞP | SVG FOUND: ${placeholders.length}`);
+
+  await Promise.all(
+
+    [...placeholders].map(async (placeholder) => {
+
+      const rawSrc = placeholder.dataset.svg;
+
+      // Convert section-relative src path
+      const src = rawSrc.startsWith("src/")
+        ? `sections/${getSectionName(placeholder)}/${rawSrc}`
+        : rawSrc;
+
+      try {
+
+        //console.log(`NΞP | SVG REQUEST: ${src}`);
+
+        const response = await fetch(src);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const svgText = await response.text();
+
+        const parser = new DOMParser();
+
+        const doc = parser.parseFromString(
+          svgText,
+          "image/svg+xml"
+        );
+
+        const svg = doc.documentElement;
+
+        if (
+          !svg ||
+          svg.nodeName.toLowerCase() !== "svg"
+        ) {
+          throw new Error("Invalid SVG document");
+        }
+
+        const importedSVG = document.importNode(
+          svg,
+          true
+        );
+
+        // Keep placeholder classes
+        importedSVG.classList.add(
+          ...placeholder.classList
+        );
+
+        placeholder.replaceWith(importedSVG);
+
+        //console.log(`NΞP | SVG LOADED: ${src}`);
+
+      } catch (error) {
+
+        console.error(
+          `NΞP | SVG FAILED: ${src}`,
+          error
+        );
+
+      }
+
+    })
+
+  );
+}
+function getSectionName(element) {
+
+  const section = element.closest("[data-section]");
+
+  if (!section) {
+    throw new Error(
+      "SVG placeholder is not inside a [data-section] element"
+    );
+  }
+
+  return section.dataset.section;
+}
+
+
+/* =========================================================
+  LOAD JS
+========================================================= */
+
+async function loadAllJS() {
+
+  await Promise.all(
+
+    sectionOrder.map((name) => {
+
+      return new Promise((resolve) => {
+
+        const script = document.createElement("script");
+
+        script.type = "module";
+        script.src = `./sections/${name}/script.js`;
+
+        script.onload = () => {
+
+          //console.log(`NΞP | JS LOADED: ${name}`);
+
+          resolve();
+
+        };
+
+        script.onerror = () => {
+
+          console.warn(
+            `NΞP | JS FAILED: ${name}`
+          );
+
+          // Don't prevent other sections
+          resolve();
+
+        };
+
+        document.body.appendChild(script);
+
+      });
+
+    })
+
+  );
+
+}
+
+
+/* =========================================================
+  IMAGE PRELOADER
+========================================================= */
+
 function preloadAllImages(images) {
 
   return Promise.all(
@@ -97,9 +305,14 @@ function preloadAllImages(images) {
     })
 
   );
+
 }
 
-// LOADER OUTRO
+
+/* =========================================================
+  LOADER OUTRO
+========================================================= */
+
 function finishLoading() {
 
   const loader = document.getElementById("loader");
@@ -112,13 +325,23 @@ function finishLoading() {
 
     loader.classList.add("outro");
 
-    loader.addEventListener("transitionend", () => {
+    loader.addEventListener(
+      "transitionend",
+      () => {
 
-      loader.remove();
+        loader.remove();
 
-    }, { once: true });
+      },
+      { once: true }
+    );
 
   }, 400);
+
 }
+
+
+/* =========================================================
+  START
+========================================================= */
 
 loadSections();
