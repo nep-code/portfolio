@@ -8,7 +8,6 @@
     width:100%;
     height: 100vh;   /* fallback for browsers without dvh support */
     height: 100dvh;  /* excludes mobile browser chrome (address/bottom bar) */
-
 }
 
 /* BACKGROUND */
@@ -16,8 +15,8 @@
 #hero #background {
     position: fixed;
     mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
-    width:100%;
-    height:100%;
+    height: 100vh;   /* fallback for browsers without dvh support */
+    height: 100dvh;  /* excludes mobile browser chrome (address/bottom bar) */
 }
 #hero #background #indoor {
     /* bottom:0; */
@@ -27,6 +26,7 @@
     background-repeat: no-repeat;
     opacity: 1;
 }
+
 
 /* FOREGROUND */
 
@@ -75,7 +75,6 @@
     filter: drop-shadow(0 2px 2px #000);
 }
 
-
 /* NAMETAG */
 
 #hero #nametag {
@@ -106,7 +105,7 @@
     text-align: center;
     letter-spacing: 0.02em;
     line-height: 1.6;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     color: white;
     padding: 5px 100px;
     filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
@@ -116,11 +115,11 @@
 /* CTA Down Arrow */
 
 #hero #cta-down {
+    position:relative;
     margin-top: 10px;
     width: 50px;
     height: 50px;
     border-radius: 100px;
-    z-index: 1;
 }
 
 #hero #cta-down svg {
@@ -255,11 +254,6 @@
         z-index: 1;
         padding: 0 20px;
     }
-
-    /* #hero #cta-down {
-        visibility: hidden;
-        pointer-events: none;
-    } */
     
 }
 

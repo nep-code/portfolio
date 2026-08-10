@@ -61,61 +61,55 @@
   // ── NΞP | Headline SVG draw-on animation ──
 
   function initHeadline() {
-    gsap.set(".hl1 path, .hl2 path, .hl3 path", { opacity: 1 });
-    gsap.set(".hl1", { clipPath: "inset(0 0 0 0)" });
 
-    const tl = gsap.timeline({
-      defaults: { ease: "power4.out" }
+    gsap.set(".hl1 path, .hl2 path, .hl3 path", {
+      opacity: 1
     });
 
-    // 1. Script tagline — light, airy slide-up (sets a quiet, elegant tone)
-    tl.from(".hl1", {
-      delay: 1,
-      clipPath: "inset(0 100% 0 0)",
-      duration: 1.1,
-      ease: "power2.inOut"
-    }, 0)
-    .from(".hl1 path", {
-      scale: 0,
-      yPercent: 40,
-      opacity: 0,
-      duration: 0.7,
-      ease: "power2.out",
-      stagger: 0.02
-    }, "<")
+    const tl = gsap.timeline({
+      defaults: {
+        ease: "power4.out"
+      }
+    });
 
-    // 2. CREATIVE — the hero moment: big scale-punch with overshoot
+    tl
+    .from(".hl1", {
+      clipPath: "inset(0 100% 0 0)",
+      duration: 1.4,
+      ease: "expo.inOut"
+    }, 0)
+
+    .from(".hl1 path", {
+      y: 20,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      stagger: 0.04
+    }, "<0.25")
+
     .from(".hl2 path", {
-      yPercent: 140,
-      scale: 1.35,
+      y: 40,
+      scale: 1.15,
       opacity: 0,
       transformOrigin: "50% 100%",
-      duration: 1.15,
+      duration: 1,
       ease: "back.out(1.2)",
-      stagger: {
-        each: 0.035,
-        from: "start"
-      }
-    }, "-=0.55") // overlaps tail of hl1 for continuous motion
+      stagger: 0.035
+    }, "-=1")
 
-    // 3. DEVELOPER — sharp, confident settle with slight skew for energy
+    .from(".hl3", {
+      clipPath: "inset(0 100% 0 0)",
+      duration: 1,
+      ease: "expo.inOut"
+    }, "-=1")
+
     .from(".hl3 path", {
-      yPercent: 100,
+      y: 20,
       opacity: 0,
-      duration: 0.85,
+      duration: 0.8,
       ease: "power3.out",
-      stagger: 0.022
-    }, "-=0.65")
-
-    // 4. Subtle premium finish — a soft glow pulse on CREATIVE to draw the eye
-    .to(".hl2 path", {
-      filter: "drop-shadow(0 0 14px rgba(45,212,191,0.55))",
-      duration: 0.6,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: 1,
-      stagger: 0.01
-    }, "-=0.1");
+      stagger: 0.04
+    }, "<0.25");
   }
 
   // ── NΞP | Character idle animations ──
@@ -186,6 +180,6 @@
     }
   }
 
-  wait("loaded", init);
+init();
 
 })();
